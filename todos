@@ -1,0 +1,21 @@
+:Router Routes to the Following: 
+
+    Shopping Cart Object / State:
+        ✔ Add Item to Cart Function @done(23-11-26 14:03)
+        ✔ Edit Item Quantity Function @done(23-11-26 14:03)
+        ✔ Remove From Cart Function @done(23-11-26 14:03)
+        - Note: The state of the cart should persist between all pages and constantly update 
+
+    Landing Page:
+        Menu Item Objects:
+            ☐ Menu Item Titles
+            ☐ Menu Item Amounts
+            ☐ Menu Item Prices
+            ☐ Menu Item Description
+            ☐ Top Nav Bar (Web) / Bottom Nav Bar (Mobile)
+
+    Shopping Cart Page:
+        ☐ UI to populate the contents of the cart
+
+    Checkout Page:
+        ☐ Google Forms API
