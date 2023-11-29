@@ -18,7 +18,7 @@
     "halfDozenPrice": 10,
     "dozenPrice": 15,
     "price": null,
-    "image": "ensaymada",
+    "image": "chocolateCrinkleCookies",
     "halfDozen": true,
     "dozen": true
     },
@@ -55,7 +55,7 @@
     "name": "Walnut & Chocolate Banana Cake",
     "description": "A Yummy Dessert",
     "price": 20,
-    "image": "chocolatecake",
+    "image": "walnutAndChocolateBananaCake",
     "halfDozen": false,
     "dozen": false
     }

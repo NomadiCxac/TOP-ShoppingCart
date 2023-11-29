@@ -47,7 +47,11 @@ const FoodMenu = () => {
         <div className="food-menu">
             {foodItems.map((item) => (
                 <div key={item.name} className="menu-item">
-                    <img className="menuItemImage" src={item.imageURL}></img>
+                    <img className="menuItemImage" src={item.imageURL}
+                         onError={(e) => e.currentTarget.src = '/images/defaultFood.jpeg'} 
+                         alt={item.name} 
+                    />
+                    
                         {
                             !item.price ?
                             (
