@@ -1,18 +1,20 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ShoppingCartPage from './components/ShoppingCartPage';
-import CheckoutPage from './components/CheckoutPage';
-import Root from './components/Root';
+// import useShoppingCart from './states/useShopingCart'
+import LandingPage from "./pages/LandingPage";
+import ShoppingCartPage from './pages/ShoppingCartPage';
+import CheckoutPage from './pages/CheckoutPage';
 // ... other imports
 
-const Router = createBrowserRouter([
+function AppRouter () {
+  const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
-    loader: rootLoader, // Assuming rootLoader is defined
+    element: <LandingPage/>,
+    // loader: landingPageLoader, 
     children: [
       {
         path: "shoppingCartPage",
-        element: <ShoppingCartPage />,
+        element: <ShoppingCartPage/>,
         // loader: shoppingCartLoader, // If needed
       },
       {
@@ -21,8 +23,14 @@ const Router = createBrowserRouter([
         // loader: checkoutLoader, // If needed
       },
       // Additional routes can be added here
-    ],
+    ],  
   },
 ]);
+  
+return (<RouterProvider 
+    router={router}
+  />)
+}
 
-export default Router;
+
+export default AppRouter;
