@@ -1,10 +1,13 @@
 :Router Routes to the Following: 
 
     Shopping Cart Object / State:
-        ✔ Add Item to Cart Function @done(23-11-26 14:03)
-        ✔ Edit Item Quantity Function @done(23-11-26 14:03)
-        ✔ Remove From Cart Function @done(23-11-26 14:03)
-        - Note: The state of the cart should persist between all pages and constantly update 
+
+        Create Shoppng Cart State Object:
+            ✔ Add Item to Cart Function @done(23-11-26 14:03)
+            ✔ Edit Item Quantity Function @done(23-11-26 14:03)
+            ✔ Remove From Cart Function @done(23-11-26 14:03)
+            ✔ Returns an array of shopping cart items @done(23-11-26 14:13)
+
 
     Landing Page:
         Menu Item Objects:
@@ -18,4 +21,30 @@
         ☐ UI to populate the contents of the cart
 
     Checkout Page:
-        ☐ Google Forms API
+
+        UI Component that Summarizes Order Amount:
+            ☐ Menu Items, Quantity, Price, Subtotal
+
+        Calendar Component that User Selects to Determine Order Pick Up Date:
+            ☐ Calendar API
+            
+        Required Personal Details for Form Data:
+            ☐ First Name
+            ☐ Last Name
+            ☐ Email
+            ☐ Referral (Optional)
+
+        Integrate with Google Forms API:
+            ☐ Collect Form Data
+
+            Form Submission Handler:
+                ☐ Set API End Point
+
+                AJAX / Async (Fetch Fn) to Query to API:
+                    ☐ Try POST Method
+                    ☐ Try Headers
+                    ☐ Try Data (Content) Body
+                    ☐ Check if Query Response is OK
+                    ☐ Handle Errors
+
+        ☐ Check Out Loader
