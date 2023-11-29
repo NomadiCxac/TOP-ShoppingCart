@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './FoodMenu.css'; // Make sure to import the CSS file
 import fetchItems from '../functions/fetchItems';
-import fetchImage from '../functions/fetchImage';
+import resolveImageUrl from '../functions/resolveImageUrl';
 import { useCart } from '../context/CartContext';
 
 const FoodMenu = () => {
@@ -19,7 +19,7 @@ const FoodMenu = () => {
         async function loadData () {
             try {
                 const items = await fetchItems('items');
-                const resolvedItems = items.map(item => ({...item, imageURL: fetchImage(item.image)}))
+                const resolvedItems = items.map(item => ({...item, imageURL: resolveImageUrl(item.image)}))
                 setFoodItems(resolvedItems);
             } catch (error) {
                 setError(true);
