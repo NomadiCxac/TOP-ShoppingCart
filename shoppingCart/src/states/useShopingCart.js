@@ -11,7 +11,12 @@ const useShoppingCart = () => {
         sessionStorage.setItem('shoppingCart', JSON.stringify(cartItems));
     }, [cartItems])
 
-    const addToCart = (item, userQuantity = 1, isEdit = false) => {
+    const addToCart = (item, userQuantity = 1, price, isEdit = false) => {
+        console.log("Pressed");
+        console.log(item);
+        console.log(userQuantity);
+        console.log(price);
+        console.log(cartItems);
         setCartItems(previousItems => {
 
             let itemExistsInCart = false;
@@ -27,12 +32,16 @@ const useShoppingCart = () => {
                 return currentItem
             })
 
+
             if (itemExistsInCart) {
                 return updatedCart; // If the item was found and updated, return the updated cart
             } else {
+                console.log(updatedCart);
                 return [...updatedCart, { ...item, quantity: userQuantity }]; // Add the new item to the cart
             }
         });
+
+
     }
 
       const removeFromCart = (item) => {
@@ -43,7 +52,7 @@ const useShoppingCart = () => {
       });
     }
 
-    return { cartItems, addToCart, removeFromCart };
+    return { cartItems, setCartItems, addToCart, removeFromCart };
 }
 
 export default useShoppingCart
