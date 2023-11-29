@@ -1,17 +1,23 @@
 [
     {
+    "id": "ensaymada",
     "name": "Ensaymada",
-    "description": "A Yummy Dessert",
-    "price": 40,
+    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
+    "halfDozenPrice": 22,
+    "dozenPrice": 40,
+    "price": null,
     "image": "ensaymada",
     "halfDozen": true,
     "dozen": true
     },
 
     {
+    "id": "chocolateCrinkleCookies",
     "name": "Chocolate Crinkle Cookies",
     "description": "A Yummy Dessert",
-    "price": 69.69,
+    "halfDozenPrice": 10,
+    "dozenPrice": 15,
+    "price": null,
     "image": "ensaymada",
     "halfDozen": true,
     "dozen": true
@@ -19,9 +25,12 @@
 
 
     {
+    "id": "redVelvetCupcakes",
     "name": "Red Velvet Cupcakes",
     "description": "A Yummy Dessert",
-    "price": 36,
+    "halfDozenPrice": 18.50,
+    "dozenPrice": 36,
+    "price": null,
     "image": "redvelvetcupcake",
     "halfDozen": true,
     "dozen": true
@@ -31,9 +40,10 @@
     
 
     {
+    "id": "chocolateCake",
     "name": "Chocolate Cake",
     "description": "A Yummy Dessert but Chocolatey",
-    "price": 2.69,
+    "price": 48,
     "image": "chocolatecake",
     "halfDozen": false,
     "dozen": false
@@ -41,9 +51,10 @@
 
 
     {
+    "id": "walnutAndChocolateBananaCake",
     "name": "Walnut & Chocolate Banana Cake",
     "description": "A Yummy Dessert",
-    "price": 2.69,
+    "price": 20,
     "image": "chocolatecake",
     "halfDozen": false,
     "dozen": false

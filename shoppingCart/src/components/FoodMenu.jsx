@@ -48,17 +48,38 @@ const FoodMenu = () => {
             {foodItems.map((item) => (
                 <div key={item.name} className="menu-item">
                     <img className="menuItemImage" src={item.imageURL}></img>
-                    <h3>{item.name}</h3>
-                    <p>{item.description}</p>
-                    <span className="price">${item.price}</span>
-                    <button>Add to Cart</button>
-                    {/* <input type="number" name="quantity" min="1" value="1"></input> */}
-                    {item.halfDozen && 
-                        <button onClick={() => addToCart(item, 6, item.price, false)}>Add Half a Dozen (+ 6)</button>
-                    }
-                    {item.dozen && 
-                        <button onClick={() => addToCart(item, 12, item.price, false)}>Add a Dozen (+ 12)</button>
-                    }
+                        {
+                            !item.price ?
+                            (
+                                <>
+                                    <h3 className='menuItemName'>{item.name}</h3>
+                                    <div className='priceContainer'>
+                                        <span className="price">Half a Dozen: ${item.halfDozenPrice} CAD</span>
+                                        <span className="price">One Dozen: ${item.dozenPrice} CAD</span>
+                                    </div>
+                                    <div className='buttonContainer'>
+                                        <button onClick={() => addToCart(item, 6, item.price, false)}>Add Half a Dozen (+ 6)</button>
+                                        <button onClick={() => addToCart(item, 12, item.price, false)}>Add a Dozen (+ 12)</button>
+                                    </div>
+     
+                                </>
+                            ) :
+                            (
+                                <>
+                                    <h3>{item.name}</h3>
+                                    <div className='priceContainer'>
+                                        <span className="price">${item.price}</span>
+                                    </div>
+                                    <div className='buttonContainer'>
+                                        <button>Add to Cart</button>
+                                    </div>
+
+                                </>
+                            )
+                        }
+
+                        <p className='itemDescription'>{item.description}</p>
+
                 </div>
             ))}
         </div>

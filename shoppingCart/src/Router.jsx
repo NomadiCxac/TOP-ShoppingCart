@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import ShoppingCartPage from './pages/ShoppingCartPage';
 import CheckoutPage from './pages/CheckoutPage';
+import ErrorPage from "./pages/ErrorPage";
 // ... other imports
 
 function AppRouter () {
@@ -11,6 +12,7 @@ function AppRouter () {
     path: "/",
     element: <LandingPage/>,
     // loader: landingPageLoader, 
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "shoppingCartPage",
