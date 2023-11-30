@@ -12,10 +12,15 @@
     Landing Page:
         Menu Item Objects:
             ☐ Menu Item Titles
+                ☐ Added to cart changing text
             ☐ Menu Item Amounts
             ☐ Menu Item Prices
             ☐ Menu Item Description
             ☐ Top Nav Bar (Web) / Bottom Nav Bar (Mobile)
+                ☐ Shopping Cart Updated Animation 
+                or 
+                ☐ Shopping Cart Preview Modal 
+            
 
     Shopping Cart Page:
         ☐ UI to populate the contents of the cart

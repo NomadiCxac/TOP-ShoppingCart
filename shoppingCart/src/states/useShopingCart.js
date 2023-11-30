@@ -11,37 +11,51 @@ const useShoppingCart = () => {
         sessionStorage.setItem('shoppingCart', JSON.stringify(cartItems));
     }, [cartItems])
 
-    const addToCart = (item, userQuantity = 1, price, isEdit = false) => {
-        console.log("Pressed");
-        console.log(item);
-        console.log(userQuantity);
-        console.log(price);
-        console.log(cartItems);
+    const addToCart = (item, userQuantity = 1, isDozen, isHalfDozen, isEdit = false,) => {
+ 
         setCartItems(previousItems => {
-
             let itemExistsInCart = false;
-
+    
             const updatedCart = previousItems.map(currentItem => {
                 if (currentItem.id === item.id) {
-                    itemExistsInCart = true; // Set the flag to true if the item is found
-
-                     // Update the quantity: if it's an edit, set to userQuantity; otherwise, add userQuantity
-                    const newQuantity = isEdit ? userQuantity : currentItem.quantity + userQuantity;
-                    return { ...currentItem, quantity: newQuantity }; // Update the quantity
+                    itemExistsInCart = true;
+                    // Determine new quantity based on isEdit flag
+                    let newQuantity = isEdit ? userQuantity : currentItem.quantity + userQuantity;
+                    
+                    // Update half dozen and dozen quantities if applicable
+                    let newHalfDozenQuantity = currentItem.halfDozenQuantity || 0;
+                    if (isHalfDozen) {
+                        newHalfDozenQuantity += 1;
+                    }
+    
+                    let newDozenQuantity = currentItem.dozenQuantity || 0;
+                    if (isDozen) {
+                        newDozenQuantity += 1;
+                    }
+    
+                    return { 
+                        ...currentItem, 
+                        quantity: newQuantity, 
+                        halfDozenQuantity: newHalfDozenQuantity, 
+                        dozenQuantity: newDozenQuantity 
+                    };
                 }
-                return currentItem
-            })
-
-
+                return currentItem;
+            });
+    
             if (itemExistsInCart) {
-                return updatedCart; // If the item was found and updated, return the updated cart
+                return updatedCart;
             } else {
-                console.log(updatedCart);
-                return [...updatedCart, { ...item, quantity: userQuantity }]; // Add the new item to the cart
+                // Add new item with appropriate quantities
+                let newItem = {
+                    ...item,
+                    quantity: userQuantity,
+                    halfDozenQuantity: isHalfDozen ? 1 : 0,
+                    dozenQuantity: isDozen ? 1 : 0
+                };
+                return [...updatedCart, newItem];
             }
         });
-
-
     }
 
       const removeFromCart = (item) => {

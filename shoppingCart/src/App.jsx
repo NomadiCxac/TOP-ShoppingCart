@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 import './App.css'
 import { CartProvider } from './context/CartContext'
 import AppRouter from './Router'
@@ -8,11 +8,11 @@ function App() {
   const {cartItems, setCartItems, addToCart, removeFromCart} = useShoppingCart()
 
   return (
-    <>
+    <div className='appPage'>
       <CartProvider>
         <AppRouter cartItems={cartItems} addToCart={addToCart} setCartItems={setCartItems} removeFromCart={removeFromCart} />
       </CartProvider>
-    </>
+    </div>
   )
 }
 

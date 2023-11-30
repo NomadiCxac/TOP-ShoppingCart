@@ -7,8 +7,7 @@
     "dozenPrice": 40,
     "price": null,
     "image": "ensaymada",
-    "halfDozen": true,
-    "dozen": true
+    "batched": true
     },
 
     {
@@ -19,8 +18,7 @@
     "dozenPrice": 15,
     "price": null,
     "image": "chocolateCrinkleCookies",
-    "halfDozen": true,
-    "dozen": true
+    "batched": true
     },
 
 
@@ -32,8 +30,7 @@
     "dozenPrice": 36,
     "price": null,
     "image": "redvelvetcupcake",
-    "halfDozen": true,
-    "dozen": true
+    "batched": true
     },
     
 
@@ -45,8 +42,7 @@
     "description": "A Yummy Dessert but Chocolatey",
     "price": 48,
     "image": "chocolatecake",
-    "halfDozen": false,
-    "dozen": false
+    "batched": false
     },
 
 
@@ -56,8 +52,7 @@
     "description": "A Yummy Dessert",
     "price": 20,
     "image": "walnutAndChocolateBananaCake",
-    "halfDozen": false,
-    "dozen": false
+    "batched": false
     }
     
 

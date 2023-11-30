@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import { Link } from "react-router-dom";
 
 const ShoppingCartPage = () => {
 
@@ -7,7 +7,10 @@ const ShoppingCartPage = () => {
     return (
     
     <div>
-        Hello    
+        Hello
+        <Link to="/">
+        You can go back to the home page by clicking here, though!
+      </Link>    
     </div>
     
     )

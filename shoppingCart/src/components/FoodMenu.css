@@ -32,14 +32,22 @@
     color: red;
 }
 
+.priceContainer {
+    display: flex;
+    width: 90%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
 .price {
     font-weight: 600;
 }
 
-.priceContainer,
+
 .buttonContainer {
     display: flex;
-    width: 70%;
+    width: 80%;
     align-items: center;
     justify-content: space-evenly;
 }
@@ -48,8 +56,17 @@
     margin-top: 1em;
 }
 
-.buttonContainer > button:hover {
+.buttonContainer > button {
+    min-width: 260px;
+}
+
+.validSelector:hover {
     background-color: orange;
+}
+
+
+.invalidSelector:hover {
+    color: red;
 }
 
 .food-item p {

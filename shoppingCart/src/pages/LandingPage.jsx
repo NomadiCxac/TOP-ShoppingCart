@@ -1,19 +1,18 @@
-import React, {useState, useEffect} from "react";
-import FoodMenu from "../components/FoodMenu";
-import items from "../data/testData.js"
-import NavigationBar from "../components/NavigationBar.jsx";
+// import React from 'react';
+import { Outlet } from 'react-router-dom';
+import NavigationBar from '../components/NavigationBar';
+// import FoodMenu from '../components/FoodMenu';
+// import items from '../data/testData.js';
 
 const LandingPage = () => {
+
 
     return (
     
     <div>
-        <NavigationBar
-        
-        />
-        <FoodMenu 
-            items={items}
-        />
+        <NavigationBar/>
+        <Outlet /> {/* This will render child routes */}
+        {/* <FoodMenu /> */}
     </div>
     
     )

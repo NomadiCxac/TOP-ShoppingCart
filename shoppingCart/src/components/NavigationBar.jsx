@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import {  useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import "./NavigationBar.css";
@@ -11,10 +11,31 @@ const NavigationBar = () => {
     let itemCount = 0;
 
     for (let item in cartItems) {
-        itemCount += cartItems[item].quantity;
+
+        console.log(cartItems[item]);
+
+        if (cartItems[item].batched) {
+            itemCount += (cartItems[item].halfDozenQuantity + cartItems[item].dozenQuantity)
+
+        } else {
+            itemCount += cartItems[item].quantity;
+        }
+
     }
 
-    console.log(cartItems);
+    useEffect(() => {
+        const element = document.querySelector('.cartItemCount');
+    
+        if (element) {
+            element.classList.add('animate');
+    
+            const timeout = setTimeout(() => {
+                element.classList.remove('animate');
+            }, 500); // Match this with the animation duration
+    
+            return () => clearTimeout(timeout);
+        }
+    }, [cartItems]);
 
         return (
             <div className="navBar">
@@ -24,11 +45,8 @@ const NavigationBar = () => {
                 </div>
     
                 {/* If you have routes for these, wrap them in Link as well */}
-                <div className='checkoutPage'>
-                    <Link to="/checkout">Checkout</Link>
-                </div>
                 <div className='shoppingCartPage'>
-                    <Link to="/cart">Shopping Cart</Link>
+                    <Link to="/shoppingCartPage" className='clickableLink'>Shopping Cart</Link>
                     {itemCount > 0 && <span className="cartItemCount">{itemCount}</span>}
                 </div>
             </div>
