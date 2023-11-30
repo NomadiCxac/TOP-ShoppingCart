@@ -13,7 +13,7 @@
     {
     "id": "chocolateCrinkleCookies",
     "name": "Chocolate Crinkle Cookies",
-    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
+    "description": "Savor the rich, chocolatey delight of our Chocolate Crinkle Cookies, dusted with powdered sugar for a perfect sweet and cocoa balance.",
     "halfDozenPrice": 10,
     "dozenPrice": 15,
     "price": null,
@@ -25,7 +25,7 @@
     {
     "id": "redVelvetCupcakes",
     "name": "Red Velvet Cupcakes",
-    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
+    "description": "Indulge in our elegant Red Velvet Cupcakes, offering that unique 'Red Velvet' flavor paired with creamy cheese frosting for a luxurious treat.",
     "halfDozenPrice": 18.50,
     "dozenPrice": 36,
     "price": null,
@@ -34,12 +34,11 @@
     },
     
 
-    
 
     {
     "id": "chocolateCake",
     "name": "Chocolate Cake",
-    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
+    "description": "Delight in our Chocolate Cake, a layered sensation of moist sponge and smooth ganache, offering a deeply satisfying chocolate experience.",
     "price": 48,
     "image": "chocolatecake",
     "batched": false
@@ -49,7 +48,7 @@
     {
     "id": "walnutAndChocolateChipBananaCake",
     "name": "Walnut & Chocolate Chip Banana Cake",
-    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
+    "description": "Enjoy the comforting blend of our Walnut & Chocolate Chip Banana Cake, a perfect mix of nutty crunch and sweet chocolate in every slice.",
     "price": 20,
     "image": "walnutAndChocolateChipBananaCake",
     "batched": false

@@ -8,11 +8,11 @@ function App() {
   const {cartItems, setCartItems, addToCart, removeFromCart} = useShoppingCart()
 
   return (
-    <div className='appPage'>
-      <CartProvider>
+    <>
+      <CartProvider >
         <AppRouter cartItems={cartItems} addToCart={addToCart} setCartItems={setCartItems} removeFromCart={removeFromCart} />
       </CartProvider>
-    </div>
+    </>
   )
 }
 

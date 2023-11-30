@@ -62,7 +62,7 @@ const FoodMenu = () => {
     }
 
     return (
-        <div className="food-menu">
+        <div id="food-menu">
             {foodItems.map((item) => (
                 <div key={item.name} className="menu-item">
                     <img className="menuItemImage" src={item.imageURL}

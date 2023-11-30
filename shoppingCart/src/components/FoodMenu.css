@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 1000px;
+    width: 100%;
 }
 
 .detailsContainer {
@@ -16,7 +16,7 @@
     height: 300px;
 }
 
-.food-menu {
+#food-menu {
     position: relative;
     /* background-image: url('/path-to-your-background-image.jpg'); */
     background-attachment: fixed;

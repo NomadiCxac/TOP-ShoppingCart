@@ -1,4 +1,4 @@
-const checkoutTotal = (item)=> {
+const checkoutItemTotal = (item)=> {
 
     let price = 0;
 
@@ -17,4 +17,4 @@ const checkoutTotal = (item)=> {
     return price;
 }
 
-export default checkoutTotal
+export default checkoutItemTotal

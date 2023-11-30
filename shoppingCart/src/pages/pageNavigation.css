@@ -1,0 +1,10 @@
+.pageContent {
+    width: 1000px;
+}
+
+#shoppingCartPage {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}

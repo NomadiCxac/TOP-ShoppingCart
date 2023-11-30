@@ -13,8 +13,6 @@ const NavigationBar = () => {
     for (let item in cartItems) {
 
 
-        console.log(cartItems[item]);
-
         if (cartItems[item].batched) {
             itemCount += (cartItems[item].halfDozenQuantity + cartItems[item].dozenQuantity)
 
