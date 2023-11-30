@@ -13,7 +13,7 @@
     {
     "id": "chocolateCrinkleCookies",
     "name": "Chocolate Crinkle Cookies",
-    "description": "A Yummy Dessert",
+    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
     "halfDozenPrice": 10,
     "dozenPrice": 15,
     "price": null,
@@ -25,7 +25,7 @@
     {
     "id": "redVelvetCupcakes",
     "name": "Red Velvet Cupcakes",
-    "description": "A Yummy Dessert",
+    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
     "halfDozenPrice": 18.50,
     "dozenPrice": 36,
     "price": null,
@@ -39,7 +39,7 @@
     {
     "id": "chocolateCake",
     "name": "Chocolate Cake",
-    "description": "A Yummy Dessert but Chocolatey",
+    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
     "price": 48,
     "image": "chocolatecake",
     "batched": false
@@ -47,11 +47,11 @@
 
 
     {
-    "id": "walnutAndChocolateBananaCake",
-    "name": "Walnut & Chocolate Banana Cake",
-    "description": "A Yummy Dessert",
+    "id": "walnutAndChocolateChipBananaCake",
+    "name": "Walnut & Chocolate Chip Banana Cake",
+    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
     "price": 20,
-    "image": "walnutAndChocolateBananaCake",
+    "image": "walnutAndChocolateChipBananaCake",
     "batched": false
     }
     

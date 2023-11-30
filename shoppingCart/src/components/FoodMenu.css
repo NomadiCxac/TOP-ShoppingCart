@@ -1,9 +1,19 @@
 /* FoodMenu.css */
 .menu-item {
-    margin-bottom: 1em;
+    margin-bottom: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 1000px;
+}
+
+.detailsContainer {
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
+    height: 300px;
 }
 
 .food-menu {
@@ -29,27 +39,40 @@
 
 .menuItemName {
     margin-top: 1em;
+    margin-bottom: -0.5em;
     color: red;
+}
+
+.menuItemImage {
+    height: 250px;
+    width: 250px;
+    object-fit: cover; /* This property ensures the image covers the area without distorting its aspect ratio */
+    border-radius: 8px; /* Optional: If you want rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: If you want to add a shadow */
 }
 
 .priceContainer {
     display: flex;
-    width: 90%;
-    align-items: center;
-    justify-content: space-evenly;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.priceContainer > label {
+    margin-right: 1em;
 }
 
 
 .price {
     font-weight: 600;
+    margin-right: 2em;
 }
 
 
 .buttonContainer {
     display: flex;
-    width: 80%;
-    align-items: center;
-    justify-content: space-evenly;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .buttonContainer {
@@ -57,7 +80,7 @@
 }
 
 .buttonContainer > button {
-    min-width: 260px;
+    min-width: 230px;
 }
 
 .validSelector:hover {
@@ -77,10 +100,3 @@
     max-width: 700px;
 }
 
-.menuItemImage {
-    height: 225px;
-    width: 225px;
-    object-fit: cover; /* This property ensures the image covers the area without distorting its aspect ratio */
-    border-radius: 8px; /* Optional: If you want rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: If you want to add a shadow */
-}
