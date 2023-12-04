@@ -11,50 +11,55 @@ const useShoppingCart = () => {
         sessionStorage.setItem('shoppingCart', JSON.stringify(cartItems));
     }, [cartItems])
 
-    const addToCart = (item, userQuantity = 1, isDozen, isHalfDozen, isEdit = false,) => {
- 
+    const addToCart = (item, userQuantity = 1, isDozen, isHalfDozen, isEdit = false) => {
+
+        let defaultQuantity = 1;
+
         setCartItems(previousItems => {
-            let itemExistsInCart = false;
+            // Check if the item already exists in the cart
+            let existingItemIndex = previousItems.findIndex(currentItem => currentItem.id === item.id);
+            let updatedItems = [...previousItems];
     
-            const updatedCart = previousItems.map(currentItem => {
-                if (currentItem.id === item.id) {
-                    itemExistsInCart = true;
-                    // Determine new quantity based on isEdit flag
-                    let newQuantity = isEdit ? userQuantity : currentItem.quantity + userQuantity;
-                    
-                    // Update half dozen and dozen quantities if applicable
-                    let newHalfDozenQuantity = currentItem.halfDozenQuantity || 0;
-                    if (isHalfDozen) {
-                        newHalfDozenQuantity += 1;
-                    }
+            // Convert userQuantity to integer
+            let quantity = parseInt(userQuantity, 10);
     
-                    let newDozenQuantity = currentItem.dozenQuantity || 0;
+            if (existingItemIndex !== -1) {
+                // If the item exists, update the quantity based on the flags
+                let existingItem = {...updatedItems[existingItemIndex]};
+    
+                if (isEdit) {
+                    // In edit mode, set the specific quantity type
                     if (isDozen) {
-                        newDozenQuantity += 1;
+                        existingItem.dozenQuantity = quantity;
+                    } else if (isHalfDozen) {
+                        existingItem.halfDozenQuantity = quantity;
+                    } else {
+                        existingItem.quantity = quantity;
                     }
-    
-                    return { 
-                        ...currentItem, 
-                        quantity: newQuantity, 
-                        halfDozenQuantity: newHalfDozenQuantity, 
-                        dozenQuantity: newDozenQuantity 
-                    };
+                } else {
+                    // Not in edit mode, increment the specific quantity type
+                    if (isDozen) {
+                        existingItem.dozenQuantity += defaultQuantity;
+                    } else if (isHalfDozen) {
+                        existingItem.halfDozenQuantity += defaultQuantity;
+                    } else {
+                        existingItem.quantity += quantity;
+                    }
                 }
-                return currentItem;
-            });
     
-            if (itemExistsInCart) {
-                return updatedCart;
+                updatedItems[existingItemIndex] = existingItem;
             } else {
-                // Add new item with appropriate quantities
+                // If the item does not exist, add it with the specified quantity
                 let newItem = {
                     ...item,
-                    quantity: userQuantity,
-                    halfDozenQuantity: isHalfDozen ? 1 : 0,
-                    dozenQuantity: isDozen ? 1 : 0
+                    quantity: isDozen || isHalfDozen ? 0 : quantity,
+                    halfDozenQuantity: isHalfDozen ? defaultQuantity : 0,
+                    dozenQuantity: isDozen ? defaultQuantity : 0
                 };
-                return [...updatedCart, newItem];
+                updatedItems.push(newItem);
             }
+    
+            return updatedItems;
         });
     }
 

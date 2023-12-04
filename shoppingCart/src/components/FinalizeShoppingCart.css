@@ -1,4 +1,4 @@
-.cart-item {
+/* .cart-item {
     display: flex;
     align-items: center;
     border-bottom: 1px solid #ccc;
@@ -29,4 +29,36 @@
 
 .cart-item-quantity {
     font-size: 14px;
+} */
+
+
+/* Test */
+
+.cart-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.cart-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-item-name {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.cart-item-price,
+.cart-item-quantity {
+    font-size: 14px;
+    color: #555;
 }

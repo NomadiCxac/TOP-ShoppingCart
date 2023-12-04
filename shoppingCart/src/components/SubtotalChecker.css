@@ -1,0 +1,36 @@
+.subtotal-container {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 35%;
+}
+
+.subtotal-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: -2.5em;
+}
+
+.subtotal-amount {
+    font-size: 18px;
+    color: #B12704; /* Amazon's subtotal price color */
+}
+
+.headerContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 2em;
+}
+
+.checkoutButton {
+    background-color: rgb(231, 231, 30);
+    margin-bottom: 2em;
+}
