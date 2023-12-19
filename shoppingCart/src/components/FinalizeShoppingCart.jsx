@@ -1,105 +1,91 @@
 import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
+import CartItemCard from "./cartItemCard";
 import "./FinalizeShoppingCart.css"
 
 const FinalizeShoppingCart = () => {
+    const { addToCart, removeFromCart, cartItems } = useCart();
 
-const { addToCart, cartItems } = useCart()
+    // Define the maximum quantity
+    const maxQuantity = 30;
 
-    return (
-    
-    <div>
-        <h2>Shopping Cart:</h2>
-        {cartItems.map(item => (
-            <>
-                {item.batched && item.dozenQuantity > 0 &&
-                    <div key={item.id + "-dozen"} className="cart-item">
-                       
-                        <img 
-                        src={item.imageURL}  
-                        className="cart-item-image" 
-                        onError={(e) => e.currentTarget.src = '/images/defaultFood.jpeg'} 
-                        alt={item.name} 
+    // Create an array of option elements
+    const quantityOptions = [];
+    for (let i = 1; i <= maxQuantity; i++) {
+        quantityOptions.push(<option key={i} value={i}>{i}</option>);
+    }
+
+    const handleQuantityChange = (e, item, isDozen) => {
+        const newQuantity = e.target.value;
+        if (newQuantity === '0') {
+            removeFromCart(item, isDozen);
+        } else {
+            addToCart(item, newQuantity, isDozen, false, false);
+        }
+    };
+      // Determine the id based on whether the cart is empty
+      const containerId = cartItems.length > 0 ? "notEmpty" : "empty";
+
+
+      return (
+        <div className="checkoutShoppingCartContainer" id={containerId}>
+            {cartItems.length > 0 ? (
+                <div className="cartHeader">
+                    <h2>Your Shopping Cart:</h2>
+                    <h4>Price:</h4>
+                </div>
+            ) : (
+                <h2>Your Shopping Cart is Empty.</h2>
+            )}
+
+            {cartItems.length === 0 && (
+                <div id="emptyShoppingCart">
+                    <p>Your shopping cart is hungry for delicious baked goods.</p>
+                    <p>Continue shopping by going back to the <Link to="/">homepage.</Link></p>
+                </div>
+            )}
+
+            {cartItems.map(item => item.batched ? (
+                <>
+                    {item.dozenQuantity > 0 && (
+                        <CartItemCard
+                            key={item.id + "-dozen"}
+                            item={item}
+                            handleQuantityChange={handleQuantityChange}
+                            quantityOptions={quantityOptions}
+                            batched={true}
+                            dozenQuantity={item.dozenQuantity}
+                            halfDozenQuantity={0}
+                            isDozen={true}
                         />
-
-                        <div className="cart-item-details">
-                            <h3 className="cart-item-name">{item.name} (Box of 12)</h3>
-                            <p className="cart-item-price">Price: ${item.dozenPrice.toFixed(2)}</p>
-                            <p className="cart-item-quantity">Quantity: {item.dozenQuantity}</p>
-                            <div>
-                            <input 
-                                type="number" 
-                                className="quantity-input" 
-                                value={item.dozenQuantity} 
-                                onChange={(e) => addToCart(item, e.target.value, true, false, true)} 
-                                min="1" 
-                            />
-                        </div>
-                            {/* Add more details as needed */}
-                        </div>
-
-
-                    </div>
-                }
-
-                {item.batched && item.halfDozenQuantity > 0 &&
-                    <div key={item.id + "-halfDozen"} className="cart-item">
-
-                        <img 
-                        src={item.imageURL}  
-                        className="cart-item-image" 
-                        onError={(e) => e.currentTarget.src = '/images/defaultFood.jpeg'} 
-                        alt={item.name} 
+                    )}
+                    {item.halfDozenQuantity > 0 && (
+                        <CartItemCard
+                            key={item.id + "-halfDozen"}
+                            item={item}
+                            handleQuantityChange={handleQuantityChange}
+                            quantityOptions={quantityOptions}
+                            batched={true}
+                            dozenQuantity={0}
+                            halfDozenQuantity={item.halfDozenQuantity}
+                            isDozen={false}
                         />
-
-                        <div className="cart-item-details">
-                            <h3 className="cart-item-name">{item.name} (Box of 6)</h3>
-                            <p className="cart-item-price">Price: ${item.halfDozenPrice.toFixed(2)}</p>
-                            <p className="cart-item-quantity">Quantity: {item.halfDozenQuantity}</p>
-                            
-                            <div>
-                                <input 
-                                    type="number" 
-                                    className="quantity-input" 
-                                    value={item.halfDozenQuantity} 
-                                    onChange={(e) => addToCart(item, e.target.value, false, true, true)} 
-                                    min="1" 
-                                />
-                            </div>
-                        </div>
-
-                    </div>
-                }
-
-                {!item.batched &&
-                    <div key={item.id} className="cart-item">
-                        <img 
-                        src={item.imageURL}  
-                        className="cart-item-image" 
-                        onError={(e) => e.currentTarget.src = '/images/defaultFood.jpeg'} 
-                        alt={item.name} 
-                        />
-                        <div className="cart-item-details">
-                            <h3 className="cart-item-name">{item.name}</h3>
-                            <p className="cart-item-price">Price: ${item.price.toFixed(2)}</p>
-                            <p className="cart-item-quantity">Quantity: {item.quantity}</p>
-                            {/* Add more details as needed */}
-                        </div>
-
-                        <div>
-                            <input 
-                                type="number" 
-                                className="quantity-input" 
-                                value={item.quantity} 
-                                onChange={(e) => addToCart(item, e.target.value, false, false, true)} 
-                                min="1" 
-                            />
-                        </div>
-                    </div>
-                }
-            </>
-        ))}
-    </div>
-    )
-}
+                    )}
+                </>
+            ) : (
+                <CartItemCard
+                    key={item.id}
+                    item={item}
+                    handleQuantityChange={handleQuantityChange}
+                    quantityOptions={quantityOptions}
+                    batched={false}
+                    dozenQuantity={0}
+                    halfDozenQuantity={0}
+                    isDozen={false}
+                />
+            ))}
+        </div>
+    );
+};
 
 export default FinalizeShoppingCart;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import './FoodMenu.css'; // Make sure to import the CSS file
 import fetchItems from '../functions/fetchItems';
 import resolveImageUrl from '../functions/resolveImageUrl';
@@ -28,6 +29,12 @@ const FoodMenu = () => {
 
         setSelectedItem(item)
         setQuantity(e.target.value)
+    }
+
+    const quantityOptions = [];
+    const maxQuantity = 30;
+    for (let i = 1; i <= maxQuantity; i++) {
+        quantityOptions.push(<option key={i} value={i}>{i}</option>);
     }
 
 
@@ -100,19 +107,17 @@ const FoodMenu = () => {
                                 <div className='priceContainer'>
                                     <span className="price">${item.price.toFixed(2)} per {getItemBaseName(item.name)}</span>
                                     <label htmlFor={`${item.name}amount`}>Quantity:</label>
-                                    <input 
-                                    type='number' 
-                                    id={`${item.name}amount`}
-                                    placeholder='0' 
-                                    min={0} 
-                                    value={selectedItem === item ? quantity || '' : ''}
-                                    onChange={(e) => handleIndividualQuantities(e, item)}
-                                    // onBlur={() => {
-                                    //     if(selectedItem === item) {
-                                    //         setQuantity(0) 
-                                    //     }
-                                    // }} 
-                                    />
+                                    <select 
+                                        id={`${item.name}amount`}
+                                        value={selectedItem === item ? quantity || 0 : 0}
+                                        onChange={(e) => handleIndividualQuantities(e, item)}
+                                    >
+                                    {/* Drop down select set at 0 */}
+                                    <option value={0}> 0 </option>
+
+                                    {/* Array of quantity options from 1 to 30 */}
+                                    {quantityOptions}
+                                    </select>
                                 </div>
                                 
                                 <div className='buttonContainer'>

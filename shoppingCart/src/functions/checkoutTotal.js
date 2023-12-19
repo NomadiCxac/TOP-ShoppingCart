@@ -17,4 +17,18 @@ const checkoutItemTotal = (item)=> {
     return price;
 }
 
-export default checkoutItemTotal
+const checkoutItemQuantity = (item)=> {
+
+    let quantity = 0;
+
+    // multi Item Case
+    if (item.batched) {
+        return quantity += item.halfDozenQuantity + item.dozenQuantity ;
+    } else {
+        return quantity = item.quantity;
+    }
+
+}
+
+
+export { checkoutItemTotal, checkoutItemQuantity }

@@ -63,13 +63,34 @@ const useShoppingCart = () => {
         });
     }
 
-      const removeFromCart = (item) => {
+    const removeFromCart = (item, isDozen) => {
         setCartItems(previousItems => {
-
-            const updatedCart = previousItems.filter(currentItem => currentItem.id !== item.id);
-            return updatedCart;
-      });
-    }
+            return previousItems.reduce((acc, currentItem) => {
+                if (currentItem.id === item.id) {
+                    // If the item is batched, update the specific variant's quantity
+                    if (currentItem.batched) {
+                        if (isDozen) {
+                            currentItem.dozenQuantity = 0;
+                        } else {
+                            currentItem.halfDozenQuantity = 0;
+                        }
+                        // If both quantities are not 0, keep the item
+                        if (currentItem.dozenQuantity !== 0 || currentItem.halfDozenQuantity !== 0) {
+                            acc.push(currentItem);
+                        }
+                    }
+                    // If the item is not batched, remove it
+                    else if (!currentItem.batched && !isDozen) {
+                        // Do not add it back to the accumulator, effectively removing it
+                    }
+                } else {
+                    // Keep all other items
+                    acc.push(currentItem);
+                }
+                return acc;
+            }, []);
+        });
+    };
 
     return { cartItems, setCartItems, addToCart, removeFromCart };
 }
