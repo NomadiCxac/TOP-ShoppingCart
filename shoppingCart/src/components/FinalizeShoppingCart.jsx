@@ -29,6 +29,7 @@ const FinalizeShoppingCart = () => {
 
       return (
         <div className="checkoutShoppingCartContainer" id={containerId}>
+        
             {cartItems.length > 0 ? (
                 <div className="cartHeader">
                     <h2>Your Shopping Cart:</h2>
@@ -37,7 +38,7 @@ const FinalizeShoppingCart = () => {
             ) : (
                 <h2>Your Shopping Cart is Empty.</h2>
             )}
-
+        <div className="cartItemContainer">
             {cartItems.length === 0 && (
                 <div id="emptyShoppingCart">
                     <p>Your shopping cart is hungry for delicious baked goods.</p>
@@ -84,6 +85,7 @@ const FinalizeShoppingCart = () => {
                     isDozen={false}
                 />
             ))}
+            </div>
         </div>
     );
 };
