@@ -1,9 +1,10 @@
 import { useCart } from "../context/CartContext";
 import { checkoutItemTotal, checkoutItemQuantity }from "../functions/checkoutTotal";
+import PropTypes from 'prop-types';
 import './SubtotalChecker.css'
 // import "./FinalizeShoppingCart.css"
 
-const SubtotalChecker = () => {
+const SubtotalChecker = ({ handleCheckout }) => {
     const { cartItems } = useCart();
 
     const subtotalCart = () => {
@@ -29,10 +30,16 @@ const SubtotalChecker = () => {
                 <div className="subtotal-amount">${subtotalCart().toFixed(2)}</div>
             </div>
             <div className="checkoutButtonContainer">
-                <button className="checkoutButton">Check Out</button>
+            <   button className="checkoutButton" onClick={handleCheckout} disabled={cartItems.length <= 0}>
+                    Check Out
+                </button>
             </div>
         </div>
     );
 };
+
+SubtotalChecker.propTypes = {
+    handleCheckout: PropTypes.func.isRequired
+}
 
 export default SubtotalChecker;

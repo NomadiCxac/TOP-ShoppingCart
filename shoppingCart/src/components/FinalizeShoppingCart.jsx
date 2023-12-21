@@ -38,7 +38,7 @@ const FinalizeShoppingCart = () => {
             ) : (
                 <h2>Your Shopping Cart is Empty.</h2>
             )}
-        <div className="cartItemContainer">
+        <div className="cartItemContainer" id={containerId}>
             {cartItems.length === 0 && (
                 <div id="emptyShoppingCart">
                     <p>Your shopping cart is hungry for delicious baked goods.</p>

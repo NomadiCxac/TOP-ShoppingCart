@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import ShoppingCartPage from './pages/ShoppingCartPage';
-// import CheckoutPage from './pages/CheckoutPage';
+import CheckoutPage from './pages/CheckoutPage';
 import ErrorPage from "./pages/ErrorPage";
 import FoodMenu from "./components/FoodMenu";
 // ... other imports
@@ -22,19 +22,12 @@ function AppRouter () {
           path: "shoppingCartPage",
           element: <ShoppingCartPage />,
         },
-        // ... other child routes
+        {
+          path: "checkoutPage", // New route for the checkout page
+          element: <CheckoutPage />,
+        },
       ],
      },
-//   {
-//     path: "/shoppingCartPage",
-//     element: <ShoppingCartPage />,
-//     children: [
-//       {
-//         path: "checkout",
-//         element: <CheckoutPage />,
-//       },
-//     ],
-//   },
 ]);
   
 return (<RouterProvider
