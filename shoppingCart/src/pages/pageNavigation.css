@@ -5,14 +5,23 @@
 #shoppingCartPage,
 #checkoutPage {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     width: 100%;
+}
+
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: flex-start;
 }
 
 .checkoutItemsContainer {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 50%;
-    align-items: flex-start;
+    /* margin-right: 1.35em; */
 }
