@@ -10,8 +10,9 @@ const ShoppingCartPage = () => {
   const navigate = useNavigate();
   const { cartItems } = useCart();
 
-  const handleCheckout = () => {
+  const navigateToCheckoutPage = () => {
     if (cartItems.length > 0) {
+      console.log(cartItems)
       navigate("/checkoutPage"); // Navigate to the checkout page
     }
   }
@@ -22,7 +23,8 @@ const ShoppingCartPage = () => {
     <div id="shoppingCartPage">
       <FinalizeShoppingCart/>
       <SubtotalChecker 
-        handleCheckout={handleCheckout}
+          navigateToCheckoutPage={navigateToCheckoutPage}
+          isShoppingCartPage={true}
       />
     </div>
        

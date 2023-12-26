@@ -1,45 +1,41 @@
 import { useCart } from "../context/CartContext";
-import { checkoutItemTotal, checkoutItemQuantity }from "../functions/checkoutTotal";
+import { calculateSubtotal, calculateTotalItems } from "../functions/checkoutTotal"
 import PropTypes from 'prop-types';
 import './SubtotalChecker.css'
 // import "./FinalizeShoppingCart.css"
 
-const SubtotalChecker = ({ handleCheckout }) => {
+const SubtotalChecker = ({ navigateToCheckoutPage, isShoppingCartPage }) => {
     const { cartItems } = useCart();
-
-    const subtotalCart = () => {
-        return cartItems.reduce((total, item) => total + checkoutItemTotal(item), 0);
-    };
-
-    // Function to calculate the total number of items
-    const totalCartItems = () => {
-        return cartItems.reduce((total, item) => total + checkoutItemQuantity(item), 0);
-    };
 
     if (cartItems.length <= 0) {
         return; // Return null or some JSX to indicate empty cart
     }
 
-    const itemCountLabel = totalCartItems() === 1 ? "item" : "items";
 
+    const subtotal = calculateSubtotal(cartItems); // Correctly use calculateSubtotal
+    const totalItems = calculateTotalItems(cartItems); // Correctly use calculateTotalItems
+    const itemCountLabel = totalItems === 1 ? "item" : "items";
 
     return (
         <div className="subtotal-container">
             <div className="headerContainer">
-                <div className="subtotal-text">Subtotal ({totalCartItems()} {itemCountLabel}):</div>
-                <div className="subtotal-amount">${subtotalCart().toFixed(2)}</div>
+                <div className="subtotal-text">Subtotal ({totalItems} {itemCountLabel}):</div>
+                <div className="subtotal-amount">${subtotal.toFixed(2)}</div> {/* Use the calculated subtotal */}
             </div>
-            <div className="checkoutButtonContainer">
-            <   button className="checkoutButton" onClick={handleCheckout} disabled={cartItems.length <= 0}>
-                    Check Out
-                </button>
-            </div>
+            {isShoppingCartPage && 
+                <div className="checkoutButtonContainer">
+                    <button className="checkoutButton" onClick={navigateToCheckoutPage} disabled={cartItems.length <= 0}>
+                        Check Out
+                    </button>
+                </div>
+            }
         </div>
     );
 };
 
 SubtotalChecker.propTypes = {
-    handleCheckout: PropTypes.func.isRequired
-}
+    navigateToCheckoutPage: PropTypes.func,
+    isShoppingCartPage: PropTypes.bool.isRequired,
+};
 
 export default SubtotalChecker;

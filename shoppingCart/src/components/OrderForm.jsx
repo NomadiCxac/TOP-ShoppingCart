@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './OrderForm.css'
 // import { db } from '../path/to/your/firebase/config';
 
-const OrderForm = () => {
+const OrderForm = ({ setUserDetails, pushOrderRequest } ) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
@@ -11,22 +11,8 @@ const OrderForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // try {
-    //   // Add the form data to Firebase
-    //   await db.collection('orders').add({
-    //     name,
-    //     email,
-    //     date,
-    //     comments,
-    //     // Include other shopping cart details
-    //   });
-
-    //   // Reset form or give user feedback
-    // } catch (error) {
-    //   console.error('Error submitting order:', error);
-    //   // Handle errors and give user feedback
-    // }
+    setUserDetails({ name, email, date, comments });
+    await pushOrderRequest(); // Call pushOrderRequest to submit the order.
   };
 
   return (
@@ -40,7 +26,7 @@ const OrderForm = () => {
         <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} />
         <label htmlFor="comments">Additional Comments</label>
         <textarea id="comments" value={comments} onChange={(e) => setComments(e.target.value)} placeholder="Additional Comments"></textarea>
-        <button type="submit">Submit Order</button>
+        <button type="submit" onSubmit={handleSubmit}>Submit Order</button>
     </form>
     );
 };

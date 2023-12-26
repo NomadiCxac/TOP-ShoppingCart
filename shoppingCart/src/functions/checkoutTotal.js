@@ -30,5 +30,12 @@ const checkoutItemQuantity = (item)=> {
 
 }
 
+const calculateSubtotal = (cartItems) => {
+    return cartItems.reduce((total, item) => total + checkoutItemTotal(item), 0);
+};
 
-export { checkoutItemTotal, checkoutItemQuantity }
+const calculateTotalItems = (cartItems) => {
+    return cartItems.reduce((total, item) => total + checkoutItemQuantity(item), 0);
+};
+
+export { checkoutItemTotal, checkoutItemQuantity, calculateSubtotal, calculateTotalItems };

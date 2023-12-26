@@ -1,8 +1,8 @@
 import './App.css';
 import { CartProvider } from './context/CartContext';
-import { OrderProvider } from './path/to/OrderProvider'; // Import OrderProvider
+import { OrderProvider } from './context/fireBaseOrders';
 import AppRouter from './Router';
-import useShoppingCart from './states/useShopingCart';
+import useShoppingCart from './hooks/useShoppingCart';
 
 function App() {
     const {cartItems, setCartItems, addToCart, removeFromCart} = useShoppingCart();
