@@ -1,27 +1,40 @@
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
-import { useOrders } from "../context/fireBaseOrders";
 import FinalizeShoppingCart from "../components/finalizeShoppingCart";
 import SubtotalChecker from "../components/SubtotalChecker";
 import OrderForm from "../components/orderForm";
 import { calculateSubtotal } from "../functions/checkoutTotal"; // Import the calculateSubtotal function
 import './pageNavigation.css';
+import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 // import CreateGoogleForm from "../components/createGoogleForm";
 // import UseGoogleForm from "../components/useGoogleForm";
 // import useFirebaseOrders from "../states/useFirebaseOrders";
+
+function getCurrentDateTime() {
+  const current = new Date(); // Get the current date and time
+
+  // Extracting individual components
+  const month = current.toLocaleString('default', { month: 'long' }); // Full month name
+  const day = current.getDate(); // Day of the month
+  const year = current.getFullYear(); // Year
+
+  // Combine the components in the desired format "Month, Day, Year, Time"
+  return `${month}, ${day}, ${year}`;
+}
 
 
 const CheckoutPage = () => {
   // const navigate = useNavigate();
   const { cartItems } = useCart();
-  const { pushOrderToDatabase } = useOrders()
-  console.log(pushOrderToDatabase)
+  const { pushOrderToDatabase } = useFirebaseOrders();
   const [ userDetails, setUserDetails] = useState({
     name: '',
     email: '',
     date: '',
     comments: '',
 });
+
+console.log("Current userDetails state:", userDetails);
 
 
   const pushOrderRequest = async () => {
@@ -52,6 +65,7 @@ const CheckoutPage = () => {
         items: formattedItems,
         subtotal: subtotal, // Use the calculated subtotal
         ...userDetails,
+        dateOrderGenerated: getCurrentDateTime(),
       };
 
       try {
@@ -91,5 +105,6 @@ const CheckoutPage = () => {
        
     )
   }
+
 
 export default CheckoutPage;

@@ -1,0 +1,120 @@
+.order-list {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.filters {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.filters input, .filters button {
+    padding: 10px;
+    margin: 0 5px;
+}
+
+.scrollable-table-container {
+    overflow-x: auto; /* Enables horizontal scrolling if needed */
+    width: 100%; /* Use 100% of the parent's width */
+    margin: auto; /* Center the container */
+}
+
+.scrollable-table-container::-webkit-scrollbar {
+    display: none; /* Optional: Hide scrollbar for Webkit browsers */
+}
+
+.orders-table-container {
+    overflow-x: auto; /* Allow horizontal scrolling on the table */
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.orders-table th, .orders-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.orders-table th {
+    background-color: #f2f2f2;
+}
+
+.orders-table td button {
+    width: 100%; /* Make the button fit the size of its container */
+    height: 100%; /* Adjust the height as needed */
+    padding: 5px 10px; /* Add some padding inside the button */
+    border: 1px solid #ddd; /* Optional: adds a border to the button */
+    background-color: #fff; /* Background color for the button */
+    cursor: pointer;
+    text-align: center; /* Center the text/icon inside the button */
+    box-sizing: border-box; /* Ensures padding does not affect the final size */
+}
+
+.orders-table td button:hover {
+    background-color: #5cb33a; /* Green background color on hover */
+    color: #ffffff; /* Optional: change text color on hover */
+}
+
+.orders-table th, .orders-table td {
+    /* Ensure no fixed widths that exceed the container's width are set */
+    white-space: normal; /* This change allows text to wrap */
+    text-overflow: ellipsis; /* Use ellipsis for overflowed text */
+    overflow: hidden; /* Hide overflowed content */
+}
+
+#orderId {
+    font-size: 12px;
+}
+
+.paid {
+    color: green;
+}
+
+.unpaid {
+    color: red;
+}
+
+.status.fulfilled {
+    color: green;
+}
+
+.status.unfulfilled {
+    color: red;
+}
+
+@media (max-width: 768px) {
+    .orders-table, .orders-table thead, .orders-table tbody, .orders-table th, .orders-table td, .orders-table tr {
+        display: block;
+    }
+
+    .orders-table th {
+        display: none;
+    }
+
+    .orders-table td {
+        border: none;
+        position: relative;
+        text-align: right;
+        white-space: normal; /* Allow wrapping in responsive layout */
+        width: auto; /* Reset width for responsive design */
+        height: auto; /* Reset height for responsive design */
+        padding: 0; /* Reset padding for responsive design */
+    }
+
+    .orders-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        font-weight: bold;
+        text-align: left;
+    }
+}

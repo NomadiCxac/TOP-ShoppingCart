@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+
 const useShoppingCart = () => {
     // Cart items state will be set to a function that retrieves the current shoppingCart state OR an empty shopping cart array
     const[cartItems, setCartItems] = useState(() => {

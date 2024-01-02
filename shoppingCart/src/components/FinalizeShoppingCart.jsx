@@ -1,7 +1,7 @@
 import React from 'react'; // Ensure React is in scope when using JSX since React 17
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import CartItemCard from "./cartItemCard";
+import CartItemCard from "./CartItemCard";
 import "./FinalizeShoppingCart.css"
 
 const FinalizeShoppingCart = () => {

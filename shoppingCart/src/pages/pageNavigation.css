@@ -1,5 +1,16 @@
-.pageContent {
-    width: 1000px;
+.pageContent,
+.pageContent#shoppingCartPage,
+.pageContent#checkoutPage{
+    width: 63em;
+    /* width: 1000px; */
+}
+
+
+.pageContent#adminPage {
+    width: 100%; /* Use percentage instead of viewport width */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 #shoppingCartPage,

@@ -53,3 +53,30 @@
                     ☐ Handle Errors
 
         ☐ Check Out Loader
+
+
+        Admin Page:
+            New Header:
+                Retrieve All Fulfilled Orders
+                
+                Step 1 (Mom and Dad to do):
+                Order Verification: Status Pending
+                
+                Set Actual Pickup Date (Date Selector)
+                
+                Step 2 (Client Pays):
+                - Deposit Exists?: Yes or No
+                - Amount Deposited:
+                (Editable Input Field)
+                - Full Amount Paid: Yes or No
+                - Immutable Amount:
+                - Dependent on Amount Deposited
+                
+                Step 3 (Mom and Dad to do):
+                Order Ready for PU/D: Yes / No
+                (Manually Controlled)
+                Button to Send Notifications or Email or SMS/TEXT 
+                
+                Step 4 (Order Completion Check M & D to do):
+                Order Fulfilled: Yes or No
+                Date of Fulfilment: Date Selector

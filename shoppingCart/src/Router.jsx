@@ -4,9 +4,15 @@ import ShoppingCartPage from './pages/ShoppingCartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import ErrorPage from "./pages/ErrorPage";
 import FoodMenu from "./components/FoodMenu";
+import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
+import { useFirebase } from "./context/FirebaseContext";
 // ... other imports
 
 function AppRouter () {
+
+  const { isAdmin } = useFirebase();
+
   const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +31,14 @@ function AppRouter () {
         {
           path: "checkoutPage", // New route for the checkout page
           element: <CheckoutPage />,
+        },
+        {
+          path: "loginPage",
+          element: <LoginPage />,
+        },
+        {
+          path: "adminPage",
+          element: isAdmin ? <AdminPage /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
         },
       ],
      },
