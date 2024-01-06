@@ -8,33 +8,40 @@ import './OrderList.css'
 
 const OrderList = () => {
 
+    const { retrieveOrdersFromDatabase, retrieveOrdersByEmail } = useFirebaseOrders()
     const [email, setEmail] = useState("")
     const [ordersData, setOrdersData] = useState([])
-    const [minimizedOrders, setMinimizedOrders] = useState(new Set()); // Tracks the IDs of minimized orders
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentOrder, setCurrentOrder] = useState(null);
+    const [orderItemsPrepared, setOrderItemsPrepared] = useState({});
+
+        // Function to handle the prepared toggle
+        const handleItemPreparedToggle = (order, itemName) => {
+          setOrderItemsPrepared(prevState => {
+            const orderPrepared = prevState[order] || {};
+            const isPrepared = orderPrepared[itemName] || false;
+        
+            return {
+              ...prevState,
+              [order]: {
+                ...orderPrepared,
+                [itemName]: !isPrepared
+              }
+            };
+          });
+        };
+  
+      // Function to calculate the number of prepared items
+      const countPreparedItems = (orderId) => {
+          const orderPrepared = orderItemsPrepared[orderId];
+          return orderPrepared ? Object.values(orderPrepared).filter(isPrepared => isPrepared).length : 0;
+      };
 
     const toggleModal = (order) => {
       setCurrentOrder(order);
       setModalOpen(!isModalOpen);
-      console.log(currentOrder);
-      console.log(currentOrder.items);
-    };
-  
-
-    const toggleMinimize = (orderId) => {
-        setMinimizedOrders(prevState => {
-            const newSet = new Set(prevState);
-            if (newSet.has(orderId)) {
-                newSet.delete(orderId);
-            } else {
-                newSet.add(orderId);
-            }
-            return newSet;
-        });
     };
 
-    const { retrieveOrdersFromDatabase, retrieveOrdersByEmail } = useFirebaseOrders()
 
     function emailQueryHandler (e) {
         setEmail(e.target.value);
@@ -43,18 +50,11 @@ const OrderList = () => {
     const handleRetrieveOrders = async () => {
         const orders = await retrieveOrdersFromDatabase();
         setOrdersData(orders); // Update the state with the fetched orders
-        if (orders) {
-            setMinimizedOrders(new Set(orders.map(order => order.id)));
-        }
-        console.log(ordersData);
     };
 
     const handleRetrieveOrdersByEmail = async () => {
         const orders = await retrieveOrdersByEmail(email);
         setOrdersData(orders); // Update the state with the fetched orders
-        if (orders) {
-            setMinimizedOrders(new Set(orders.map(order => order.id)));
-        }
     };
 
 
@@ -89,8 +89,9 @@ const OrderList = () => {
             <tr key={order.id}>
               <td className="no-wrap" id="orderId">{order.id}</td>
               <td>
+              {countPreparedItems(order.id)}/{Object.keys(order.items).length}
                 <button onClick={() => toggleModal(order)}>
-                  {minimizedOrders.has(order.id) ? '+' : '-'}
+                  {!isModalOpen ? '+' : '-'}
                 </button>
               </td>
               <td className="no-wrap">{order.dateOrderGenerated}</td>
@@ -100,8 +101,8 @@ const OrderList = () => {
               <td>{order.name}</td>
               <td>{order.email}</td>
               <td>
-              <button onClick={() => toggleMinimize(order.id)}>
-                  {minimizedOrders.has(order.id) ? '+' : '-'}
+              <button onClick={() => toggleModal(order.id)}>
+                  {!isModalOpen ? '+' : '-'}
                 </button>
               </td>
 
@@ -115,31 +116,25 @@ const OrderList = () => {
 
             
             </tr>
-
-            {!minimizedOrders.has(order.id) && (
-              <tr>
-                <td colSpan="9">
-                  <OrderItemView items={order.items} />
-                </td>
-              </tr>
-            )}
           </React.Fragment>
         ))}
         </tbody>
       </table>
   </div>
-  {currentOrder && <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-                <div className="modalHeader">
-                  <p className="modalText">Order ID: {currentOrder.id}</p>
-                  <p className="modalText">Customer Email: {currentOrder.email}</p>
-                  <p className="modalText">Customer Name: {currentOrder.name}</p>
-                  <p className="modalText">Order Subtotal: ${currentOrder.subtotal}.00 </p>
-                </div>
-
-                <OrderItemView items={currentOrder.items} />
-          
-                {/* ... other order details */}
-              </Modal>}
+  {currentOrder && 
+    <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+      <div className="modalHeader">
+        <p className="modalText">Order ID: {currentOrder.id}</p>
+        <p className="modalText">Customer Email: {currentOrder.email}</p>
+        <p className="modalText">Customer Name: {currentOrder.name}</p>
+        <p className="modalText">Order Subtotal: ${currentOrder.subtotal}.00 </p>
+      </div>
+        <OrderItemView 
+          items={currentOrder.items} 
+          preparedStatus={orderItemsPrepared[currentOrder.id] || {}} 
+          onItemPreparedToggle={(itemName) => handleItemPreparedToggle(currentOrder.id, itemName)} 
+        />
+     </Modal>}
     </div>
   );
 };
