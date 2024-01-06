@@ -1,0 +1,52 @@
+/* The backdrop that covers the entire screen */
+.modal-backdrop {
+    position: fixed; /* Stay in place */
+    z-index: 999; /* Lower than the navbar, but still high */
+    left: 0;
+    top: 0; /* Initially set to 0 */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow-y: auto; /* Enable scroll if needed */
+    background-color: rgba(255,255,255,0.2); /* Light white w/ opacity */
+    display: flex;
+    align-items: flex-start; /* Start aligning items from the top */
+    justify-content: center; /* Center horizontally */
+    backdrop-filter: blur(10px); /* Blur effect */
+    padding-top: 50px; /* This padding pushes the content below the navbar */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin-top: 20px; /* This gives some space from the top of the modal backdrop */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 95%; /* Nearly full width */
+    max-width: 1200px; /* Maximum width */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    overflow-y: auto; /* Scroll inside modal if content is long */
+    /* Ensure the modal content is not too tall for the viewport */
+    max-height: calc(100vh - 70px); /* Adjusted for navbar height and modal top margin */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+  
+  /* The Close Button */
+  .modal-content button {
+    color: #aaa;
+    border: 1px solid black;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .modal-content button:hover,
+  .modal-content button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Ensure that the body does not scroll when the modal is open */
+  body.modal-open {
+    overflow: hidden;
+  }

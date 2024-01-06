@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
-import { firebaseConfig } from '../firebaseConfig';
+import firebaseConfig from '../firebaseConfig';
 
 const FirebaseContext = createContext();
 export const useFirebase = () => useContext(FirebaseContext);

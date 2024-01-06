@@ -1,0 +1,59 @@
+.item-details {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; /* Space between cards */
+    padding: 15px; /* Padding inside the card */
+    border: 1px solid #ddd; /* Border around the card */
+    border-radius: 8px; /* Rounded corners for the card */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    background-color: #fff; /* White background */
+  }
+
+    .item-details.not-completed {
+        background-color: #e0838b; /* Light red background */
+    }
+
+    .item-details.completed {
+        background-color: #99e9ab; /* Light green background */
+    }
+    
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Space between the header and the body */
+  }
+  
+  .item-pricing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow items to wrap in smaller screens */
+  }
+
+  .item-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .item-checkbox {
+    margin-left: 10px; /* Space next to the checkbox */
+  }
+  
+  h5 {
+    margin: 0 0 10px 0; /* Margin for the title */
+    font-size: 1.1em; /* Slightly larger font for the title */
+    font-weight: bold; /* Bold font for the title */
+  }
+  
+  /* Optional: Style for the label text next to the checkbox */
+  .item-checkbox label {
+    display: flex;
+    align-items: center; /* Align checkbox and label text vertically */
+  }
+  
+  /* Optional: Style for the checkbox */
+  .item-checkbox input[type="checkbox"] {
+    margin-right: 5px; /* Space between the checkbox and the label text */
+  }

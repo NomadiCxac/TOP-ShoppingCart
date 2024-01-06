@@ -4,7 +4,7 @@
     left: 50%;       /* Align the left edge of the bar to the center of the viewport */
     transform: translateX(-50%); /* Shift the bar to the left by half its width to center it */
     width: 60%;      /* Adjust the width as needed, e.g., 80% of the viewport width */
-    z-index: 1000;   /* Ensure it stays on top of other content */
+    z-index: 1000000;   /* Ensure it stays on top of other content */
     
     display: flex; /* Enables flexbox */
     justify-content: space-around; /* Spaces items evenly with space around them */

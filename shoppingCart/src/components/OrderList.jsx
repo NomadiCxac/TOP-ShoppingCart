@@ -1,6 +1,8 @@
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 import { useState } from "react";
 import OrderItemView from "./orderItemView";
+import React from "react";
+import Modal from "./Modal";
 import './OrderList.css'
 
 
@@ -9,6 +11,16 @@ const OrderList = () => {
     const [email, setEmail] = useState("")
     const [ordersData, setOrdersData] = useState([])
     const [minimizedOrders, setMinimizedOrders] = useState(new Set()); // Tracks the IDs of minimized orders
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [currentOrder, setCurrentOrder] = useState(null);
+
+    const toggleModal = (order) => {
+      setCurrentOrder(order);
+      setModalOpen(!isModalOpen);
+      console.log(currentOrder);
+      console.log(currentOrder.items);
+    };
+  
 
     const toggleMinimize = (orderId) => {
         setMinimizedOrders(prevState => {
@@ -34,7 +46,7 @@ const OrderList = () => {
         if (orders) {
             setMinimizedOrders(new Set(orders.map(order => order.id)));
         }
-
+        console.log(ordersData);
     };
 
     const handleRetrieveOrdersByEmail = async () => {
@@ -73,11 +85,11 @@ const OrderList = () => {
             </thead>
             <tbody>
         {ordersData && ordersData.map(order => (
-          <>
+          <React.Fragment key={`order-${order.id}`}>
             <tr key={order.id}>
               <td className="no-wrap" id="orderId">{order.id}</td>
               <td>
-                <button onClick={() => toggleMinimize(order.id)}>
+                <button onClick={() => toggleModal(order)}>
                   {minimizedOrders.has(order.id) ? '+' : '-'}
                 </button>
               </td>
@@ -87,10 +99,12 @@ const OrderList = () => {
               <td className="no-wrap">Actual Pick Up Date Here</td>
               <td>{order.name}</td>
               <td>{order.email}</td>
-
+              <td>
               <button onClick={() => toggleMinimize(order.id)}>
                   {minimizedOrders.has(order.id) ? '+' : '-'}
                 </button>
+              </td>
+
            
               <td className={order.clientPaid ? 'paid' : 'unpaid'}>
                 {order.clientPaid ? 'Paid' : 'Unpaid'}
@@ -98,7 +112,10 @@ const OrderList = () => {
               <td className={`status ${order.itemsFulfilled ? 'fulfilled' : 'unfulfilled'}`}>
                 {order.itemsFulfilled ? 'Fulfilled' : 'Unfulfilled'}
               </td>
+
+            
             </tr>
+
             {!minimizedOrders.has(order.id) && (
               <tr>
                 <td colSpan="9">
@@ -106,11 +123,23 @@ const OrderList = () => {
                 </td>
               </tr>
             )}
-          </>
+          </React.Fragment>
         ))}
-      </tbody>
-        </table>
-        </div>
+        </tbody>
+      </table>
+  </div>
+  {currentOrder && <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+                <div className="modalHeader">
+                  <p className="modalText">Order ID: {currentOrder.id}</p>
+                  <p className="modalText">Customer Email: {currentOrder.email}</p>
+                  <p className="modalText">Customer Name: {currentOrder.name}</p>
+                  <p className="modalText">Order Subtotal: ${currentOrder.subtotal}.00 </p>
+                </div>
+
+                <OrderItemView items={currentOrder.items} />
+          
+                {/* ... other order details */}
+              </Modal>}
     </div>
   );
 };
