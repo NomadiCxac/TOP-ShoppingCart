@@ -8,7 +8,7 @@ import { useFirebase } from '../context/FirebaseContext';
 const NavigationBar = () => {
 
     const { cartItems } = useCart() 
-    const { isAdmin } = useFirebase()
+    const { isAdmin, user } = useFirebase()
    
     let itemCount = 0;
 
@@ -46,7 +46,14 @@ const NavigationBar = () => {
                 </div>
 
                 <div className='loginPage'>
+                {user ? (
+                    <Link to={{
+                        pathname: "loginPage/userDashboard",
+                        state: { user }
+                      }}>User Dashboard</Link>
+                    ) : (
                     <Link to="/loginPage" className='clickableLink'>Login</Link>
+                    )}
                 </div>
     
                 {/* If you have routes for these, wrap them in Link as well */}

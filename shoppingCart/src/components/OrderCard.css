@@ -1,0 +1,45 @@
+.orderCard {
+    display: block;
+    background-color: #f0f0f0; /* Default grey background */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    text-align: left; /* Ensure text alignment is consistent */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.orderCard:hover {
+    background-color: #ccffcc; /* Light green background on hover */
+}
+
+.orderSummary {
+    /* Additional summary styling if needed */
+}
+
+.orderDetails {
+    display: none; /* Initially hide the details */
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.orderCard.expanded .orderDetails {
+    display: flex; /* Show the details when the card is expanded */
+    flex-direction: row;
+}
+
+.orderItemDetail {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Adjust spacing as needed */
+}
+
+.itemImage {
+    width: 60px; /* Adjust size as needed */
+    height: 60px;
+    margin-right: 10px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+

@@ -1,0 +1,49 @@
+/* UserDashboard Container Styles */
+.userDashboardContainer {
+    position: relative;
+    overflow-x: hidden; /* Ensures no horizontal scroll */
+    overflow-y: auto; /* Allows vertical scrolling */
+    background-color: #121212; /* Dark mode background color */
+    color: #fff; /* Light text color for dark mode */
+    min-height: 50vh;
+}
+
+.ordersContainer {
+    display: flex;
+    flex-direction: column; /* Stack cards in a column */
+    align-items: center; /* Center cards horizontally */
+    overflow-y: auto; /* Allow vertical scrolling */
+    max-height: 50%; /* Maximum height to fit three cards */
+    gap: 20px; /* Space between cards */
+    padding: 20px 0; /* Padding at top and bottom */
+}
+
+/* OrderCard Styles */
+.orderCard {
+    background-color: #333; /* Darker card background for contrast */
+    color: #fff;
+    border: 1px solid #666;
+    border-radius: 8px;
+    margin: 0; /* Reset margins */
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transition for all properties */
+    width: 90%; /* Each card takes up to 30% of the container width */
+    box-sizing: border-box; /* Include padding and border in the width */
+    flex-shrink: 0; /* Prevent cards from shrinking */
+}
+
+.orderCard:hover {
+    background-color: #444; /* Slightly lighter on hover */
+}
+
+/* Expanded OrderCard Styles */
+.orderCard.expanded {
+    position: absolute; /* Take out of flow to cover the container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10; /* Ensure it's above other content */
+    overflow-y: auto; /* Allow scrolling inside the expanded card */
+}

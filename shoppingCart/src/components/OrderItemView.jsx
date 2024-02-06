@@ -1,4 +1,3 @@
-import React from 'react';
 import formatName from "../functions/formatName";
 import './OrderItemView.css';
 

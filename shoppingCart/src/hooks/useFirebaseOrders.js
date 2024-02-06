@@ -76,7 +76,7 @@ export const useFirebaseOrders = () => {
         }
     };
 
-const retrieveOrdersByEmail = async (email) => {
+const retrieveOrdersByEmail = async (email, status = 'all') => {
     setLoading(true);
     setError(null);
 
@@ -91,9 +91,21 @@ const retrieveOrdersByEmail = async (email) => {
 
             // Retrieve all order details concurrently
             const orderSnapshots = await Promise.all(orderPromises);
-            const ordersByEmail = orderSnapshots.map((snap) => snap.val());
+            let ordersByEmail = orderSnapshots.map((snap) => snap.val());
 
-            console.log(ordersByEmail)
+            ordersByEmail = ordersByEmail.filter(order => {
+                switch (status) {
+                    case 'complete':
+                        return order.orderComplete === true;
+                    case 'incomplete':
+                        return order.orderComplete === false;
+                    case 'all':
+                    default:
+                        return true; // No filtering
+                }
+            });
+
+
             return ordersByEmail; // You might want to update state or return the value
         } else {
             console.log("No orders found for this email.");

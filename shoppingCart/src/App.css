@@ -4,4 +4,9 @@
   /* padding: 2rem; */
   text-align: center;
   height: 90vh;
+  --primary-color: #5c6bc0; /* Primary color for your theme */
+  --secondary-color: #ffeb3b; /* Secondary color for highlights */
+  --text-color: #333; /* Main text color */
+  --background-color: #fff; /* Background color of the page */
+  --border-color: #e0e0e0; /* Border color for containers */
 }

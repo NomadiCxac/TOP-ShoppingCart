@@ -1,0 +1,124 @@
+:root {
+    --primary-color: #5c6bc0; /* Primary color for your theme */
+    --secondary-color: #ffeb3b; /* Secondary color for highlights */
+    --text-color: #333; /* Main text color */
+    --background-color: #fff; /* Background color of the page */
+    --border-color: #e0e0e0; /* Border color for containers */
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }
+  
+  /* Responsive container */
+  .login-page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px; /* Max width of the container */
+    margin: 0 auto; /* Center the container */
+  }
+  
+  /* Logged in state layout */
+  .loggedIn-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  /* User details and sign out side by side */
+  .user-details-container {
+    display: flex;
+    border: 1px solid var(--border-color);
+    margin-top: 2em; /* Adjust top margin */
+    margin-bottom: 1em;
+  }
+  
+  /* User info styles */
+  .user-info-container {
+    flex: 0 0 70%; /* Fixed width but can't shrink or grow */
+    padding: 1.5em;
+    border-right: 1px solid var(--border-color);
+    background-color: var(--primary-color);
+    color: var(--background-color);
+  }
+  
+  /* Sign out button container */
+  .sign-out-container {
+    flex: 1; /* Take the remaining space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+  }
+  
+  .sign-out-button {
+    padding: 0.5em 1em;
+    border: none;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .sign-out-button:hover,
+  .sign-out-button:focus {
+    background-color: var(--primary-color);
+  }
+  
+  /* Orders outlet container */
+  .orders-outlet-container {
+    flex-grow: 1;
+    padding: 1em;
+    border: 1px solid var(--border-color);
+    margin-bottom: 2em; /* Space at the bottom */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .user-details-container {
+      flex-direction: column;
+    }
+  
+    .user-info-container,
+    .sign-out-container {
+      width: 100%;
+      border-right: none;
+    }
+  
+    .sign-out-container {
+      order: -1; /* Bring the sign-out container above the user info on mobile */
+    }
+  }
+  
+  /* Typography */
+  h1, h2, h3 {
+    margin: 0.5em 0;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+  }
+  
+  p {
+    font-size: 1em;
+  }
+  
+  /* Utilities */
+  .animate {
+    animation: pop 0.5s ease;
+  }
+  
+  @keyframes pop {
+    0% {
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }

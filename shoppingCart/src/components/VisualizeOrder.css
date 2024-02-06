@@ -1,0 +1,56 @@
+.orderDetailsContainer {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.orderHeader {
+    margin-bottom: 20px;
+}
+
+.orderItemContainer {
+    display: flex;
+    overflow-x: auto; /* Allows horizontal scrolling if items overflow */
+    gap: 20px; /* Spacing between items */
+}
+
+.orderItemCard {
+    flex: 0 0 auto; /* Do not grow, do not shrink, initial basis auto */
+    width: 240px; /* Fixed width for each card */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden; /* Ensures the content does not overflow the card's boundary */
+}
+
+.orderItemImage {
+    width: 100%; /* Makes image fully cover the card width */
+    height: 160px; /* Fixed height for images */
+    object-fit: cover; /* Ensures the image covers the area nicely */
+}
+
+.orderItemDetails {
+    padding: 10px;
+}
+
+.orderItemName, .orderItemQuantity, .orderItemPrice {
+    margin: 5px 0; /* Adds margin to each item for spacing */
+}
+
+/* Simple show/hide functionality using checkbox for demonstration */
+/* This will not automatically hide content but provides a basic idea */
+.detailsCheckbox {
+    display: none; /* Hide the actual checkbox */
+}
+
+.detailsCheckbox + label {
+    cursor: pointer; /* Change cursor to indicate clickable */
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.detailsCheckbox:checked + label + .orderItemDetails {
+    display: none; /* Hide details when checkbox is checked */
+}

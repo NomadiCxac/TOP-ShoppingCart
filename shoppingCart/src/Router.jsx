@@ -6,6 +6,7 @@ import ErrorPage from "./pages/ErrorPage";
 import FoodMenu from "./components/FoodMenu";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
+import UserDashboard from "./components/UserDashboard";
 import { useFirebase } from "./context/FirebaseContext";
 // ... other imports
 
@@ -35,6 +36,12 @@ function AppRouter () {
         {
           path: "loginPage",
           element: <LoginPage />,
+          children: [
+            {
+              path: "userDashboard", // Nested route for the UserDashboard
+              element: <UserDashboard />,
+            },
+          ],
         },
         {
           path: "adminPage",
