@@ -6,6 +6,7 @@
     background-color: #121212; /* Dark mode background color */
     color: #fff; /* Light text color for dark mode */
     min-height: 50vh;
+    max-height: 56vh;
 }
 
 .ordersContainer {

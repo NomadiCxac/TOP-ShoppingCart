@@ -50,6 +50,10 @@ const LoginPage = () => {
 
 
                     <div className="orders-outlet-container">
+                        <div className='order-list-title'>
+                            <h3>Your Outstanding Order(s)</h3>
+                        </div>
+
                         <Outlet /> {/* This will render nested routes such as UserDashboard */}
                     </div>
                 </div>

@@ -8,14 +8,16 @@ const OrderCard = ({ order, onClick }) => {
         ...itemDetails,
         name: formatName(itemName), // Use your formatName function or adjust accordingly
     }));
-    
+
+
+
     return (
         <div className="orderCard" onClick={() => onClick(order)}>
             <div className="orderSummary">
-                <h3>Order Date: {order.dateOrderGenerated}</h3>
+                <h3> Order Date: {order.dateOrderGenerated}</h3>
+                <p>(Click Me)</p>
                 {/* You can add a summary of the order here, like order status or total price */}
             </div>
-            {/* Details will be rendered in the Modal, not here */}
         </div>
     );
 

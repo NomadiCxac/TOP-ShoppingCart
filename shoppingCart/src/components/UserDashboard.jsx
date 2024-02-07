@@ -48,7 +48,6 @@ const UserDashboard = () => {
 
     return (
         <div className="userDashboardContainer">
-            <h2>Your Outstanding Orders</h2>
             {orders.length > 0 ? (
                 <div className="ordersContainer">
                     {orders.map((order) => (
@@ -60,7 +59,7 @@ const UserDashboard = () => {
                     ))}
                 </div>
             ) : (
-                <p>You have no orders.</p>
+                <p>You have no outstanding orders.</p>
             )}
             
             {selectedOrder && (
