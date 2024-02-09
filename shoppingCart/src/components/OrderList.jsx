@@ -122,7 +122,7 @@ const OrderList = () => {
       </table>
   </div>
   {currentOrder && 
-    <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+    <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} orientation={'close-button-default'}>
       <div className="modalHeader">
         <p className="modalText">Order ID: {currentOrder.id}</p>
         <p className="modalText">Customer Email: {currentOrder.email}</p>

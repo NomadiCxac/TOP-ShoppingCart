@@ -9,13 +9,16 @@ const OrderCard = ({ order, onClick }) => {
         name: formatName(itemName), // Use your formatName function or adjust accordingly
     }));
 
+    console.log(order)
 
 
     return (
         <div className="orderCard" onClick={() => onClick(order)}>
             <div className="orderSummary">
                 <h3> Order Date: {order.dateOrderGenerated}</h3>
-                <p>(Click Me)</p>
+                <h5> Order Status: {order.orderVerifiedStatus}</h5>
+                <h5> Order Subtotal: {order.subtotal}</h5>
+                <p>(Click to View Order Details)</p>
                 {/* You can add a summary of the order here, like order status or total price */}
             </div>
         </div>

@@ -22,7 +22,7 @@
     padding: 20px;
     border: 1px solid #888;
     width: 95%; /* Nearly full width */
-    max-width: 1200px; /* Maximum width */
+    max-width: 75em; /* Maximum width */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     overflow-y: auto; /* Scroll inside modal if content is long */
     /* Ensure the modal content is not too tall for the viewport */
@@ -32,7 +32,7 @@
   
   /* The Close Button */
   .modal-content button {
-    color: #aaa;
+    color: #aaaaaa;
     border: 1px solid black;
     float: right;
     font-size: 20px;
@@ -49,4 +49,8 @@
   /* Ensure that the body does not scroll when the modal is open */
   body.modal-open {
     overflow: hidden;
+  }
+
+  .orderDetailsModalContent {
+    color: black;
   }

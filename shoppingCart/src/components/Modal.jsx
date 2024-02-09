@@ -1,14 +1,17 @@
 import './Modal.css'
-function Modal({ isOpen, onClose, children }) {
+function Modal({ isOpen, onClose, children, orientation }) {
   if (!isOpen) return null;
 
-  console.log("clicked")
+  const closeButtonClass = orientation === 'top-right' ? 'close-button-top-right' : 'close-button-default';
 
   return (
     <div className="modal-backdrop">
       <div className="modal-content">
+        
         {children}
-        <button onClick={onClose}>Close</button>
+        {orientation == 'close-button-default' && 
+           <button className='modalCloseButton' id={closeButtonClass} onClick={onClose}>Close</button>
+        }
       </div>
     </div>
   );

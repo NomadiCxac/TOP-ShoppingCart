@@ -9,6 +9,7 @@
     max-height: 56vh;
 }
 
+
 .ordersContainer {
     display: flex;
     flex-direction: column; /* Stack cards in a column */
@@ -48,3 +49,77 @@
     z-index: 10; /* Ensure it's above other content */
     overflow-y: auto; /* Allow scrolling inside the expanded card */
 }
+
+
+.modal-content {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.clientInteractionContainer {
+    display: flex;
+    height: 60%;
+    color: black;
+    border: 1px solid black;
+}
+
+.contentContainer {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.closeButtonContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 2em;
+    height: 2em;
+}
+
+.carouselContainer {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    color: black;
+}
+
+.your-order-title {
+    display: flex;
+}
+
+.close-button {
+    display: inline-block;
+    width: auto; /* Or you can set a specific width */
+    height: auto; /* Or you can set a specific height, like 1em for proportion to the font size */
+    font-size: 2.5em;
+    line-height: 1;
+    cursor: pointer;
+    color: #333; /* Adjust color as needed */
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Ensure the button does not inherit global styles */
+  .close-button:focus {
+    outline: none;
+    color: red;
+  }
+  
+  /* Optional: Add a hover effect */
+  .close-button:hover {
+    color: #ff0000; /* Adjust hover color as needed */
+  }
+
+  .status-paid {
+    color: green;
+  }
+  
+  .status-unpaid {
+    color: red;
+  }

@@ -94,6 +94,7 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
             let ordersByEmail = orderSnapshots.map((snap) => snap.val());
 
             ordersByEmail = ordersByEmail.filter(order => {
+                console.log(order)
                 switch (status) {
                     case 'complete':
                         return order.orderComplete === true;

@@ -51,6 +51,7 @@ const OrderForm = () => {
         readyForClientPickUp: false, // Default value for the new parameter
         orderComplete: false, // Default value for the new parameter
         dateOrderComplete: null,
+        orderPhase: "step1"
       };
 
       try {
@@ -72,11 +73,10 @@ const OrderForm = () => {
     const day = current.getDate(); // Day of the month
     const year = current.getFullYear(); // Year
 
-    // Formatting the time in HH:MM:SS format
-    const time = current.toLocaleTimeString('en-US', { hour12: true }); // Time with AM/PM
+
 
     // Combine the components in the desired format "Month, Day, Year, Time"
-    return `${month}, ${day}, ${year}, ${time}`;
+    return `${month}, ${day}, ${year}`;
 }
 
   // Handler for the name input

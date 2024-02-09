@@ -29,7 +29,7 @@
     "halfDozenPrice": 18.50,
     "dozenPrice": 36,
     "price": null,
-    "image": "redvelvetcupcake",
+    "image": "redVelvetCupcakes",
     "batched": true
     },
     
@@ -40,7 +40,7 @@
     "name": "Chocolate Cake",
     "description": "Delight in our Chocolate Cake, a layered sensation of moist sponge and smooth ganache, offering a deeply satisfying chocolate experience.",
     "price": 48,
-    "image": "chocolatecake",
+    "image": "chocolateCake",
     "batched": false
     },
 
