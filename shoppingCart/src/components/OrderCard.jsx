@@ -1,6 +1,7 @@
 // OrderCard.jsx
 import formatName from "../functions/formatName";
 import resolveImageUrl from "../functions/resolveImageUrl";
+import countItems from "../functions/countItems";
 import './UserDashboard.css'
 
 const OrderCard = ({ order, onClick }) => {
@@ -11,19 +12,31 @@ const OrderCard = ({ order, onClick }) => {
     }));
 
 
+
     
 
     return (
         <div className="orderCard" onClick={() => onClick(order)}>
             <div className="orderSummary">
-                <h3> Order Date: {order.dateOrderGenerated}</h3>
-                <h5> Order Status: {order.orderVerifiedStatus}</h5>
-                <h5> Order Subtotal: {order.subtotal}</h5>
-                <p>(Click to View Order Details)</p>
+                <div className="orderIdContainer"> 
+                    <h3>Order Date: {order.dateOrderGenerated}</h3>
+                    <h6>Click to View Order Details&gt;</h6>
+                </div>
+                <div className="orderConfirmationStatuses">
+                    <h5> Order Status: {order.orderVerifiedStatus}</h5>
+                    <h5> Order Date: {order.dateOrderGenerated}</h5>
+                </div>
+
+
                 <div className="orderImages">
-                    {orderItemsArray.map((item) => (
-                        <img className="orderCardIcon" key={item.id} src={resolveImageUrl(item.id)} alt={item.name} />
-                    ))}
+                    <div className="orderCardIconTitle">
+                        <h6>{countItems(orderItemsArray)} item(s) - ${order.subtotal} CAD</h6>
+                    </div>
+                    <div className="orderCardIconContainer">
+                        {orderItemsArray.map((item) => (
+                            <img className="orderCardIcon" key={item.id} src={resolveImageUrl(item.id)} alt={item.name} />
+                        ))}
+                    </div>
                 </div>
                 {/* You can add a summary of the order here, like order status or total price */}
             </div>

@@ -30,7 +30,7 @@
     padding: 20px;
     cursor: pointer;
     transition: all 0.3s ease; /* Transition for all properties */
-    width: 90%; /* Each card takes up to 30% of the container width */
+    width: 90%; 
     box-sizing: border-box; /* Include padding and border in the width */
     flex-shrink: 0; /* Prevent cards from shrinking */
 }
@@ -50,11 +50,52 @@
     overflow-y: auto; /* Allow scrolling inside the expanded card */
 }
 
+.orderIdContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.orderIdContainer > h3,
+.orderIdContainer > h6 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.orderConfirmationStatuses {
+    display: flex;
+    font-size: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.orderImages {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: -1em;
+}
+
+.orderCardIconTitle {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+/* .orderCardIconContainer {
+
+} */
+
 
 .orderCardIcon {
-    width: 100px;
-    height: 100px;
+    width: 5em;
+    height: 5em;
 }
+
+
+
+
+/* Modal CSS below */
 
 
 .modal-content {

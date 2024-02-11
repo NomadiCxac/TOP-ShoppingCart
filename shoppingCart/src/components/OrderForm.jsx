@@ -112,7 +112,7 @@ const OrderForm = () => {
       <input type="text" id="name" value={userDetails.name} onChange={handleNameChange} placeholder="Name" />
       <label htmlFor="email">Email</label>
       <input type="email" id="email" value={userDetails.email} onChange={handleEmailChange} placeholder="Email" />
-      <label htmlFor="date">Select a Date for Pickup</label>
+      <label htmlFor="date">Choose a Pickup-Date </label>
       <input type="date" id="date" value={userDetails.date} onChange={handleDateChange} />
       <label htmlFor="comments">Additional Comments</label>
       <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Additional Comments"></textarea>

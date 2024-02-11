@@ -3,7 +3,10 @@ import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 import { useFirebase } from '../context/FirebaseContext'; // Import the useFirebase hook
 import OrderCard from './OrderCard';
 import Modal from './Modal';
-import Carousel from './Carousel';
+import countItems from '../functions/countItems';
+import formatName from '../functions/formatName';
+import resolveImageUrl from '../functions/resolveImageUrl';
+// import Carousel from './Carousel';
 import './Modal.css';
 import './UserDashboard.css';
 
@@ -14,6 +17,7 @@ const UserDashboard = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [orderItemsArray, setOrderItemsArray] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
     const [orderPhase, setOrderPhase] = useState(null)
 
@@ -34,6 +38,17 @@ const UserDashboard = () => {
         // Return the formatted date string
         return formattedDate;
       }
+
+
+      const transformOrderItems = (order) => {
+        if (!order || !order.items) return [];
+
+        return Object.entries(order.items).map(([itemName, itemDetails]) => ({
+            ...itemDetails,
+            name: formatName(itemName), // Assuming formatName is a function that formats item names
+            imageUrl: resolveImageUrl(itemDetails.id) // Assuming resolveImageUrl is a function that returns image URL
+        }));
+    };
 
     
 
@@ -61,7 +76,7 @@ const UserDashboard = () => {
         setSelectedOrder(order);
         setModalOpen(true);
         setOrderPhase(order.orderPhase); // Update the orderPhase state based on the selected order's phase
-        console.log(selectedOrder)
+        setOrderItemsArray(transformOrderItems(order))
     };
 
     const handleCloseModal = () => {
@@ -93,11 +108,29 @@ const UserDashboard = () => {
                     <div className='clientInteractionContainer'>
                         {orderPhase === 'step1' && (
                             <div className='contentContainer'>
-                                <h2>Step 1: Awaiting Pick-Up Date Confirmation</h2>
-                                <h3>Name Attached to Order: {selectedOrder.name}</h3>
-                                <h3>Your Chosen Pick-Up Date: {formatDate(selectedOrder.date)}</h3>
-                                <h3>Date Order Generated: {selectedOrder.dateOrderGenerated}</h3>
-                                {/* Content specific to Step 1 */}
+                                <div className="orderSummary">
+                                    <div className="orderIdContainer"> 
+                                        <h3>Order Date: {selectedOrder.dateOrderGenerated}</h3>
+                                    </div>
+
+                                    <div className="orderConfirmationStatuses">
+                                        <h5> Order Status: {selectedOrder.orderVerifiedStatus}</h5>
+                                        <h5> Order Date: {selectedOrder.dateOrderGenerated}</h5>
+                                    </div>
+
+
+                                <div className="orderImages">
+                                <div className="orderCardIconTitle">
+                                <h6>{countItems(orderItemsArray)} item(s) - ${selectedOrder.subtotal} CAD</h6>
+                                </div>
+                                <div className="orderCardIconContainer">
+                                {orderItemsArray.map((item) => (
+                                <img className="orderCardIcon" key={item.id} src={resolveImageUrl(item.id)} alt={item.name} />
+                                ))}
+                                </div>
+                                </div>
+                                {/* You can add a summary of the order here, like order status or total price */}
+                                </div>
                             </div>
                         )}
 
@@ -135,16 +168,6 @@ const UserDashboard = () => {
                                 </p>
                             </div>
                     </div>
-
-                <div className='carouselContainer'>
-                    <div className='your-order-title'>
-                        <h3>Your Order Subtotal: ${selectedOrder.subtotal}.00 CAD - Status: <span className={selectedOrder.clientPaid ? 'status-paid' : 'status-unpaid'}>
-                            {selectedOrder.clientPaid ? 'Paid' : 'Unpaid'}
-                            </span>
-                        </h3>
-                    </div>
-                    <Carousel items={selectedOrder.items}></Carousel>
-                </div>
             </Modal>
             )}
         </div>
