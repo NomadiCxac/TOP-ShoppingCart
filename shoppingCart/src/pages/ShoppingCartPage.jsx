@@ -1,5 +1,5 @@
 // import "./ShoppingCartPage.css"
-import FinalizeShoppingCart from "../components/finalizeShoppingCart";
+import FinalizeShoppingCart from "../components/FinalizeShoppingCart";
 import SubtotalChecker from "../components/SubtotalChecker";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";

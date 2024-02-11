@@ -51,6 +51,12 @@
 }
 
 
+.orderCardIcon {
+    width: 100px;
+    height: 100px;
+}
+
+
 .modal-content {
     height: 85vh;
     display: flex;

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
-import FinalizeShoppingCart from "../components/finalizeShoppingCart";
+import FinalizeShoppingCart from "../components/FinalizeShoppingCart";
 import SubtotalChecker from "../components/SubtotalChecker";
-import OrderForm from "../components/orderForm";
+import OrderForm from "../components/OrderForm";
 import { calculateSubtotal } from "../functions/checkoutTotal"; // Import the calculateSubtotal function
 import './pageNavigation.css';
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";

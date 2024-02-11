@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import './cartItemCard.css'
+import './CartItemCard.css'
 
 
 const CartItemCard = ({ item, handleQuantityChange, quantityOptions, isDozen }) => {

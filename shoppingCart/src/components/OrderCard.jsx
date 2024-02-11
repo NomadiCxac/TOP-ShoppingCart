@@ -1,5 +1,6 @@
 // OrderCard.jsx
 import formatName from "../functions/formatName";
+import resolveImageUrl from "../functions/resolveImageUrl";
 import './UserDashboard.css'
 
 const OrderCard = ({ order, onClick }) => {
@@ -9,8 +10,8 @@ const OrderCard = ({ order, onClick }) => {
         name: formatName(itemName), // Use your formatName function or adjust accordingly
     }));
 
-    console.log(order)
 
+    
 
     return (
         <div className="orderCard" onClick={() => onClick(order)}>
@@ -19,6 +20,11 @@ const OrderCard = ({ order, onClick }) => {
                 <h5> Order Status: {order.orderVerifiedStatus}</h5>
                 <h5> Order Subtotal: {order.subtotal}</h5>
                 <p>(Click to View Order Details)</p>
+                <div className="orderImages">
+                    {orderItemsArray.map((item) => (
+                        <img className="orderCardIcon" key={item.id} src={resolveImageUrl(item.id)} alt={item.name} />
+                    ))}
+                </div>
                 {/* You can add a summary of the order here, like order status or total price */}
             </div>
         </div>

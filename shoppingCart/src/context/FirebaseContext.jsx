@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import firebaseConfig from '../firebaseConfig';
@@ -14,26 +14,41 @@ export const FirebaseProvider = ({ children }) => {
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
-        const app = initializeApp(firebaseConfig);
-        const authInstance = getAuth(app);
-        const databaseInstance = getDatabase(app);
 
-        setAuth(authInstance);
-        setDatabase(databaseInstance);
-
-        const unsubscribe = onAuthStateChanged(authInstance, async (currentUser) => {
-            setUser(currentUser); // Set the user state
-
-            if (currentUser) {
-                const idTokenResult = await currentUser.getIdTokenResult();
-                setIsAdmin(!!idTokenResult.claims.admin); // Update isAdmin based on the admin claim
+        
+        try {
+            let app;
+            if (!getApps().length) {
+                app = initializeApp(firebaseConfig); // Initialize if no apps
             } else {
-                setIsAdmin(false); // No user signed in, not an admin
+                app = getApps()[0]; // Use the existing app if already initialized
             }
-        });
-
-        return () => unsubscribe();  // Cleanup listener
-    }, [auth]);
+    
+            const authInstance = getAuth(app);
+            setAuth(authInstance);
+            const databaseInstance = getDatabase(app);
+            setDatabase(databaseInstance);
+    
+            const unsubscribe = onAuthStateChanged(authInstance, async (currentUser) => {
+                setUser(currentUser); // Set the user state
+            
+                if (currentUser) {
+                    try {
+                        const idTokenResult = await currentUser.getIdTokenResult();
+                        setIsAdmin(!!idTokenResult.claims.admin); // Update isAdmin based on the admin claim
+                    } catch (error) {
+                        console.error("Error fetching ID token result: ", error);
+                    }
+                } else {
+                    setIsAdmin(false); // No user signed in, not an admin
+                }
+            });
+    
+            return () => unsubscribe(); // Cleanup listener
+        } catch (error) {
+            console.error("Firebase initialization error: ", error);
+        }
+    }, []);
 
     // Log when isAdmin changes
     useEffect(() => {

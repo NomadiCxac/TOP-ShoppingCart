@@ -1,6 +1,6 @@
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 import { useState } from "react";
-import OrderItemView from "./orderItemView";
+import OrderItemView from "./OrderItemView";
 import React from "react";
 import Modal from "./Modal";
 import './OrderList.css'
