@@ -1,5 +1,6 @@
 // import React from 'react';
 import NavigationBar from '../components/NavigationBar';
+import { Link } from 'react-router-dom';
 import './pageNavigation.css'
 import { useFirebase } from '../context/FirebaseContext';
 import OrderList from '../components/OrderList';
@@ -17,6 +18,9 @@ const AdminPage = () => {
     
     <>
         <OrderList />
+        <button>
+            <Link to="/setPickUpDates" className='clickableLink'>Set Calendar</Link>
+        </button>
     </>
     
     )

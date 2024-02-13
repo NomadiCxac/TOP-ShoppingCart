@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import UserDashboard from "./components/UserDashboard";
 import { useFirebase } from "./context/FirebaseContext";
+import SetPickUpDates from "./pages/SetPickUpDates";
 // ... other imports
 
 function AppRouter () {
@@ -46,7 +47,18 @@ function AppRouter () {
         {
           path: "adminPage",
           element: isAdmin ? <AdminPage /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
+          // children: [
+          //   {
+          //     path: "setPickUpDates", // Nested route for the UserDashboard
+          //     element: isAdmin ? <SetPickUpDates /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
+          //   },
+          // ],
         },
+        {
+          path: "setPickUpDates", // Nested route for the UserDashboard
+          element: isAdmin ? <SetPickUpDates /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
+        },
+
       ],
      },
 ]);
