@@ -163,19 +163,42 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
     const updatePickupTimesForDate = async (selectedDate, times) => {
         setLoading(true);
         setError(null);
-    
-        const formattedDate = `${selectedDate.getFullYear()}/${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}_${selectedDate.toLocaleString('default', { month: 'long' })}/${selectedDate.getDate()}`;
+        
+        // Extract the month in 'MM_MonthName' format and the formatted date
+        const yearMonth = `${selectedDate.getFullYear()}/${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}_${selectedDate.toLocaleString('default', { month: 'long' })}`;
+        const day = selectedDate.getDate().toString();
+        const formattedDate = `${yearMonth}/${day}`;
+        
+        // Define the paths for times and isPickUpDate at the day level, and pickUpDates at the month level
         const timesPath = `validPickUpDates/${formattedDate}/times`;
         const pickUpDateFlagPath = `validPickUpDates/${formattedDate}/isPickUpDate`;
+        const pickUpDatesPath = `validPickUpDates/${yearMonth}/pickUpDates`;
     
         try {
-            // Update the times array
+            // Update the times array for the selected date
             await set(ref(database, timesPath), times);
     
             // Set the isPickUpDate flag based on whether any times are selected
             const isPickUpDate = times.length > 0;
             await set(ref(database, pickUpDateFlagPath), isPickUpDate);
     
+            // Retrieve the current pickUpDates array for the month
+            if (isPickUpDate) {
+                const pickUpDatesRef = ref(database, pickUpDatesPath);
+                const snapshot = await get(pickUpDatesRef);
+                let pickUpDates = snapshot.exists() ? snapshot.val() : {};
+    
+                // Determine the next index for the new entry
+                let nextIndex = Object.keys(pickUpDates).length;
+    
+                // Manually set the date at the next index
+                pickUpDates[nextIndex] = day; // Adding the day as a new entry
+    
+                // Update the entire pickUpDates at once
+                await set(pickUpDatesRef, pickUpDates);
+            }
+            
+        
             console.log(`Pickup times updated successfully with isPickUpDate set to ${isPickUpDate}.`);
         } catch (error) {
             console.error('Error updating pickup times:', error);
@@ -215,6 +238,34 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
         }
     };
 
+    const getPickupDatesForMonth = async (year, month, index) => {
+        setLoading(true);
+        setError(null);
+    
+        // Format the monthPath similar to how you're storing it in Firebase
+        const monthPath = `${year}/${index}${month}`;
+        const pickUpDatesPath = `validPickUpDates/${monthPath}/pickUpDates`;
+        console.log(pickUpDatesPath)
+    
+        try {
+            const pickUpDatesRef = ref(database, pickUpDatesPath);
+            const snapshot = await get(pickUpDatesRef);
+            if (snapshot.exists()) {
+                const pickUpDatesData = snapshot.val();
+ 
+                return pickUpDatesData; 
+            } else {
+                return []; // Returns an empty array if no pickup dates are found
+            }
+        } catch (error) {
+            console.error('Error fetching pickup dates:', error);
+            setError(error.message);
+            return []; // Returns an empty array in case of an error
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     return {
         orders,
@@ -225,6 +276,7 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
         retrieveOrdersByEmail,
         setValidPickupDatesAndTimes,
         updatePickupTimesForDate,
-        getPickupTimesForDate
+        getPickupTimesForDate,
+        getPickupDatesForMonth
     };
 };

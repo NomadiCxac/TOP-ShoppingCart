@@ -3,6 +3,7 @@ import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 import { useFirebase } from '../context/FirebaseContext'; // Import the useFirebase hook
 import OrderCard from './OrderCard';
 import Modal from './Modal';
+import TimeSelector from './TimeSelector';
 import countItems from '../functions/countItems';
 import formatName from '../functions/formatName';
 import resolveImageUrl from '../functions/resolveImageUrl';
@@ -127,6 +128,10 @@ const UserDashboard = () => {
                                 {orderItemsArray.map((item) => (
                                 <img className="orderCardIcon" key={item.id} src={resolveImageUrl(item.id)} alt={item.name} />
                                 ))}
+                                <TimeSelector
+                                    selectedOrder = {selectedOrder}
+                                />
+
                                 </div>
                                 </div>
                                 {/* You can add a summary of the order here, like order status or total price */}

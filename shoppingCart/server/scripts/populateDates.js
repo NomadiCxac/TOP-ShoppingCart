@@ -11,23 +11,24 @@ const db = admin.database();
 
 const populateDates = async () => {
   const year = 2024; // Example year
-  const months = [ '01_January', '02_February', '03_March', '04_April', '05_May', '06_June', 
-  '07_July', '08_August', '09_September', '10_October', '11_November', '12_December'
-];
+  const months = ['01_January', '02_February', '03_March', '04_April', '05_May', '06_June', 
+  '07_July', '08_August', '09_September', '10_October', '11_November', '12_December'];
 
   const datesRef = db.ref('validPickUpDates/' + year);
   months.forEach((month, index) => {
     const daysInMonth = new Date(year, index + 1, 0).getDate();
-    let monthData = {};
+    let monthData = {
+      pickUpDates: [] // Initialize pickUpDates as an empty array
+    };
     for (let day = 1; day <= daysInMonth; day++) {
-      // Prepare data for each date
-      monthData[month + '/' + day] = {
+      // Add day keys to the monthData object
+      monthData[`${day}`] = {
         isPickUpDate: false,
         times: []
       };
     }
     // Update the database in batches by month
-    datesRef.update(monthData, error => {
+    datesRef.child(month).update(monthData, error => {
       if (error) {
         console.error('Error populating dates for', month, ':', error);
       } else {
