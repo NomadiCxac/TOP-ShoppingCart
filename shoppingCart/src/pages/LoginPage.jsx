@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import 'firebaseui/dist/firebaseui.css';
 import { getFirebaseUIConfig, getFirebaseUIInstance } from '../functions/firebaseUIConfig';
@@ -9,6 +9,8 @@ import './LoginPage.css'
 
 const LoginPage = () => {
     const { user, auth } = useFirebase();
+    const [orderId, setOrderId] = useState('');
+    const [email, setEmail] = useState('');
 
     useEffect(() => {
         if (!auth) {
@@ -28,14 +30,51 @@ const LoginPage = () => {
         return;
     }, [user, auth]);
 
+    
+    const handleAnonymousAccessSubmit = (e) => {
+        e.preventDefault();
+        // Here you would handle the anonymous access logic
+        console.log("Order ID:", orderId, "Email:", email);
+        // Navigate or fetch data based on Order ID and Email
+    };
+
     return (
         <div className="login-page-container">
-            {!user ? (
-                <>
-                    <h1>Login Page</h1>
-                    <div id="firebaseui-auth-container"></div>
-                </>
-            ) : (
+                {!user ? (
+                <div className="login-options-container">
+
+                    <div className='accessContainer'>
+                    <div className="login-container">
+                    <h2>Access Your Orders Via: Login</h2>
+                        <h2>Login</h2>
+                        <div id="firebaseui-auth-container"></div>
+                    </div>
+
+                    <div className="or-divider">- OR -</div>
+                    
+                    <div className="anonymous-access-container">
+                    <h2>Access Your Orders Via: ID and Email</h2>
+                        <h2>Enter Order ID and Email</h2>
+                        <form onSubmit={handleAnonymousAccessSubmit}>
+                            <input 
+                                type="text" 
+                                placeholder="Order ID" 
+                                value={orderId} 
+                                onChange={(e) => setOrderId(e.target.value)} 
+                                required />
+                            <input 
+                                type="email" 
+                                placeholder="Email" 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
+                                required />
+                            <button type="submit">Access Order</button>
+                        </form>
+                    </div>
+                </div>
+                    </div>
+
+            )  : (
                 <div className='loggedIn-container'>
                     <div className='user-details-container'>
                         <div className="user-info-container">
@@ -44,14 +83,15 @@ const LoginPage = () => {
                         </div>
 
                         <div className="sign-out-container">
-                            <SignOutButton />
+                            {/* classname is signoutButton */}
+                            <SignOutButton /> 
                         </div>
                     </div>
 
 
                     <div className="orders-outlet-container">
                         <div className='order-list-title'>
-                            <h3>Your Outstanding Order(s)</h3>
+                            <h3>Your Outstanding Order(s) - If your orders are not appearing, please refersh this page</h3>
                         </div>
 
                         <Outlet /> {/* This will render nested routes such as UserDashboard */}

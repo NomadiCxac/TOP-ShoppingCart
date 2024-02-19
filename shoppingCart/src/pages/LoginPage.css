@@ -7,117 +7,156 @@
   }
   
   /* Responsive container */
-  .login-page-container {
+  .accessContainer {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 1200px; /* Max width of the container */
-    margin: 0 auto; /* Center the container */
+    flex-direction: row; /* Keeps items side by side */
+    justify-content: space-between; /* Spaces out the children evenly */
+    align-items: stretch; /* Ensures children stretch to match height */
+    width: 100%; /* Ensures the container takes the full width of its parent */
+    gap: 2%; /* Adjusts the gap between items */
+    padding: 0; /* Resets any padding */
+    margin-top: 6em;
   }
   
-  /* Logged in state layout */
-  .loggedIn-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
   
-  /* User details and sign out side by side */
+.login-container,
+.anonymous-access-container {
+  width: 45%; /* Each container takes up 45% of the accessContainer's width */
+  padding: 1.25em; /* 20px */
+  border: 0.0625em solid #ccc; /* 1px */
+  border-radius: 0.25em; /* 4px */
+  background-color: #fff;
+}
+.or-divider {
+  width: 10%; /* Divider takes up 10% of the accessContainer's width */
+  text-align: center; /* Centers the text within the divider */
+  align-self: center; /* Vertically centers itself within the flex container */
+  padding: 0.625em 0; /* Provides padding at the top and bottom */
+}
+
+/* Adjustments for input and button elements within the form */
+.login-page-container form {
+  width: 100%; /* Form takes the full width of its container */
+}
+
+.login-page-container input,
+.login-page-container button {
+  width: calc(100% - 1.25em); /* Adjusts width to account for padding */
+  padding: 0.625em;
+  margin-top: 0.3125em;
+  border: 0.0625em solid #ccc;
+  border-radius: 0.25em;
+}
+
+.login-page-container button {
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+
+.login-page-container button:hover {
+  background-color: #0056b3;
+}
+
+@media (min-width: 48em) {
+  /* Keeps the layout consistent for wider screens */
+  .accessContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+
+
+/* Logged in state layout */
+.loggedIn-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* User details and sign out side by side */
+.user-details-container {
+  display: flex;
+  border: 1px solid var(--border-color);
+  margin-top: 2em; /* Adjust top margin */
+  margin-bottom: 1em;
+}
+
+.order-list-title {
+  display: flex;
+  margin-left: 1em;
+}
+
+/* User info styles */
+.user-info-container {
+  flex: 0 0 70%; /* Fixed width but can't shrink or grow */
+  padding: 1.5em;
+  border-right: 1px solid var(--border-color);
+  background-color: var(--primary-color);
+  color: var(--background-color);
+}
+
+/* Sign out button container */
+.sign-out-container {
+  flex: 1; /* Take the remaining space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary-color);
+}
+
+.sign-out-button {
+  padding: 0.5em 1em;
+  border: none;
+  background-color: var(--text-color);
+  color: var(--background-color);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sign-out-button:hover,
+.sign-out-button:focus {
+  background-color: var(--primary-color);
+}
+
+/* Orders outlet container */
+.orders-outlet-container {
+  flex-grow: 1;
+  padding: 1em;
+  border: 1px solid var(--border-color);
+  margin-bottom: 2em; /* Space at the bottom */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .user-details-container {
-    display: flex;
-    border: 1px solid var(--border-color);
-    margin-top: 2em; /* Adjust top margin */
-    margin-bottom: 1em;
+    flex-direction: column;
   }
 
-  .order-list-title {
-    display: flex;
-    margin-left: 1em;
-  }
-  
-  /* User info styles */
-  .user-info-container {
-    flex: 0 0 70%; /* Fixed width but can't shrink or grow */
-    padding: 1.5em;
-    border-right: 1px solid var(--border-color);
-    background-color: var(--primary-color);
-    color: var(--background-color);
-  }
-  
-  /* Sign out button container */
+  .user-info-container,
   .sign-out-container {
-    flex: 1; /* Take the remaining space */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--secondary-color);
+    width: 100%;
+    border-right: none;
   }
-  
-  .sign-out-button {
-    padding: 0.5em 1em;
-    border: none;
-    background-color: var(--text-color);
-    color: var(--background-color);
-    cursor: pointer;
-    transition: background-color 0.3s;
+
+  .sign-out-container {
+    order: -1; /* Bring the sign-out container above the user info on mobile */
   }
-  
-  .sign-out-button:hover,
-  .sign-out-button:focus {
-    background-color: var(--primary-color);
+}
+/* Utilities */
+.animate {
+  animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.9);
   }
-  
-  /* Orders outlet container */
-  .orders-outlet-container {
-    flex-grow: 1;
-    padding: 1em;
-    border: 1px solid var(--border-color);
-    margin-bottom: 2em; /* Space at the bottom */
+  50% {
+    transform: scale(1.1);
   }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .user-details-container {
-      flex-direction: column;
-    }
-  
-    .user-info-container,
-    .sign-out-container {
-      width: 100%;
-      border-right: none;
-    }
-  
-    .sign-out-container {
-      order: -1; /* Bring the sign-out container above the user info on mobile */
-    }
+  100% {
+    transform: scale(1);
   }
-  
-  /* Typography */
-  h1, h2, h3 {
-    margin: 0.5em 0;
-  }
-  
-  h2 {
-    font-size: 1.5em;
-  }
-  
-  p {
-    font-size: 1em;
-  }
-  
-  /* Utilities */
-  .animate {
-    animation: pop 0.5s ease;
-  }
-  
-  @keyframes pop {
-    0% {
-      transform: scale(0.9);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+}

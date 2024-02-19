@@ -51,20 +51,26 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: If you want to add a shadow */
 }
 
-.priceContainer {
+.optionContainer {
     display: flex;
     width: 100%;
     align-items: flex-start;
 }
 
-.priceContainer > label {
+.optionContainer > label {
     margin-right: 1em;
 }
 
 
-.price {
+.option {
     font-weight: 600;
     margin-right: 2em;
+}
+
+.selectedOption {
+    background-color: orange;
+    color: white; /* Optional: change text color for better contrast */
+    /* Add any other styles to highlight the selected button */
 }
 
 
@@ -83,8 +89,12 @@
     min-width: 230px;
 }
 
-.validSelector:hover {
+.validSelector {
     background-color: orange;
+}
+
+.validSelector:hover {
+    background-color: rgb(61, 187, 50);
 }
 
 

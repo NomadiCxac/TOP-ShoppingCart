@@ -84,9 +84,20 @@ const FoodMenu = () => {
                         {item.batched ? (
                             <>
                                 {/* Item details */}
-                                <div className='priceContainer'>
-                                    <button onClick={() => handleSelectedOption('dozen', item)} className="price">One Dozen: ${item.dozenPrice.toFixed(2)} CAD</button>
-                                    <button onClick={() => handleSelectedOption('halfDozen', item)} className="price">Half a Dozen: ${item.halfDozenPrice.toFixed(2)} CAD</button>
+                                <div className='optionContainer'>
+                                    <button 
+                                        onClick={() => handleSelectedOption('dozen', item)} 
+                                        className={`option ${selectedItem === item && selectedOption === 'dozen' ? 'selectedOption' : ''}`}
+                                    >
+
+                                        One Dozen: ${item.dozenPrice.toFixed(2)} CAD
+                                    </button>
+                                    <button 
+                                        onClick={() => handleSelectedOption('halfDozen', item)} 
+                                        className={`option ${selectedItem === item && selectedOption === 'halfDozen' ? 'selectedOption' : ''}`}
+                                    >
+                                        Half a Dozen: ${item.halfDozenPrice.toFixed(2)} CAD
+                                    </button>
                                 </div>
                                 <div className='buttonContainer'>
 
@@ -104,8 +115,8 @@ const FoodMenu = () => {
                             </>
                         ) : (
                             <>
-                                <div className='priceContainer'>
-                                    <span className="price">${item.price.toFixed(2)} per {getItemBaseName(item.name)}</span>
+                                <div className='optionContainer'>
+                                    <span className="option">${item.price.toFixed(2)} per {getItemBaseName(item.name)}</span>
                                     <label htmlFor={`${item.name}amount`}>Quantity:</label>
                                     <select 
                                         id={`${item.name}amount`}

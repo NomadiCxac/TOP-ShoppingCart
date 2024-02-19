@@ -4,7 +4,7 @@ const SignOutButton = () => {
     const { userSignOut } = useFirebase();
 
     return (
-        <button onClick={userSignOut}>Sign Out</button>
+        <button className='signoutButton' onClick={userSignOut}>Sign Out</button>
     );
 };
 

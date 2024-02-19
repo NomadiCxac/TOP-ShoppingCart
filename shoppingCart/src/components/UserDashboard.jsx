@@ -28,6 +28,10 @@ const UserDashboard = () => {
     const [selectedDate, setSelectedDate] = useState(null); // Added for storing selected date
     const [selectedTime, setSelectedTime] = useState(null); // Added for storing selected time
 
+    useEffect(() => {
+        console.log("UserDashboard rendered");
+    }, []);
+
 
     function formatDate(inputDate) {
         // Parse the input string into a Date object
@@ -204,7 +208,7 @@ const UserDashboard = () => {
 
                              <div className="orderConfirmationStatuses">
                                  <h5> Order Status: {selectedOrder.clientPaid ? "Complete" : "Payment required"} </h5>
-                                 <h5> Action Required: Please send payment to ksr@gmail.com via email etransfer to confirm your order and await next steps. </h5>
+                                 <h5> Action Required: Please send payment to kitchenonselwynrd@gmail.com via email etransfer to confirm your order and await next steps. </h5>
                                 
                              </div>
                          </div>
@@ -277,6 +281,77 @@ const UserDashboard = () => {
                              <div className="orderConfirmationStatuses">
                                  <h5> Order Status: {selectedOrder.readyForClientPickUp ? "Your order is ready! " : "Your payment was received. Your order is in the kitchen!"}</h5>
                                  <h5> Action Required: {selectedOrder.readyForClientPickUp ? "Pick up your order at the designated date and time" : "Please wait for your yummy order to be ready"}</h5>
+                             </div>
+                         </div>
+                    
+
+                         <div className='orderItemsContainer' id='modal'>
+                             
+                         <div className="orderImages" id='modal'>
+
+                             <div className="orderReviewContainer" id='modal'>
+                                {orderItemsArray.map((item) => (
+                                <div className='orderItemContainer' id='modal' key={item.id + "-orderReview"}>
+
+                                    <div className='orderItemContents' id='left'>
+                                        <img className="orderIcon" key={item.id} src={resolveImageUrl(item.id)} alt={item.name} />
+                                    <div className='orderItemDescription' id='left'>
+
+                                    <div className='nameOfItem'>
+                                        {formatName(item.id)}
+                                    </div>
+
+                                    {item.dozenQuantity > 0 && (
+                                        <div className='itemBreakdown' id='dozen'>
+                                            {`Dozen ${formatName(item.id)} @ ${item.dozenQuantity} x ${item.dozenPrice.toFixed(2)} CAD`}
+                                        </div>
+                                    )}
+                                    {item.halfDozenQuantity > 0 && (
+                                        <div className='itemBreakdown' id='halfDozen'>
+                                            {`Half a Dozen ${formatName(item.id)} @ ${item.halfDozenQuantity} x ${item.halfDozenPrice.toFixed(2)} CAD`}
+                                        </div>
+                                    )}
+                                    {item.quantity > 0 && item.batched === false && (
+                                        <div className='itemBreakdown' id='singular'>
+                                            {`${formatName(item.id)} @ ${item.quantity} x ${item.price.toFixed(2)} CAD`}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                                <div className='orderItemContents' id='right'>
+                                    {checkoutItemTotal(item).toFixed(2) + " CAD"}
+                                </div>
+                            </div>
+                            ))}
+                            </div>
+
+                            <div className="orderSubtotal" id='modal'>
+                               {`Total: ${selectedOrder.subtotal.toFixed(2)} CAD`} 
+                            </div> 
+
+                             
+                                </div>
+                            </div> 
+                        </div>
+                        )}
+
+                        {orderPhase === 'step4' && (
+                        <div className='orderStepsContainer'>
+
+                             <StepTracker
+                                 orderPhase = {orderPhase}
+                             />
+
+                         <div className="orderSummary" id="modal">
+                             <div className="orderIdContainer"  id="modal"> 
+                                 {/* <h3>Order ID: {selectedOrder.id}</h3> */}
+                                 <h3>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</h3>
+                             </div>
+
+                             <div className="orderConfirmationStatuses">
+                                 <h5> Order Status: {selectedOrder.readyForClientPickUp && "Your order is ready for pickup!"}</h5>
+                                 <h5> Action Required: Pick up your order at the designated date and time </h5>
                              </div>
                          </div>
                     
