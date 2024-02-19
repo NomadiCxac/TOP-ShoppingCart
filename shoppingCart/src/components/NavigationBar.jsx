@@ -50,9 +50,9 @@ const NavigationBar = () => {
                     <Link to={{
                         pathname: "loginPage/userDashboard",
                         state: { user }
-                      }}>Order Status</Link>
+                      }}>Order Management</Link>
                     ) : (
-                    <Link to="/loginPage" className='clickableLink'>Login</Link>
+                    <Link to="/loginPage" className='clickableLink'>Order Management</Link>
                     )}
                 </div>
     

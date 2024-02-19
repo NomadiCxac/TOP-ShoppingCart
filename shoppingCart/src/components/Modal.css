@@ -29,6 +29,12 @@
     max-height: calc(100vh - 70px); /* Adjusted for navbar height and modal top margin */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
+
+/* Modal Content */
+.modal-content#orderReview {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: hidden; /* Scroll inside modal if content is long */
+}
   
   /* The Close Button */
   .modal-content button {

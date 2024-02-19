@@ -1,0 +1,13 @@
+.datepicker-wrapper {
+    /* Scale the entire DatePicker */
+    transform: scale(1.2); /* Adjust scale as needed */
+    transform-origin: top left; /* Adjust the origin of scaling */
+}
+
+/* Ensure the scaled DatePicker is positioned correctly */
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+    width: 100%;
+    max-width: 300px; /* Adjust based on the scale to fit the container */
+}

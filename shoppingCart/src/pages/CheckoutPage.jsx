@@ -61,7 +61,10 @@ console.log("Current userDetails state:", userDetails);
       }, {});
 
       const subtotal = calculateSubtotal(cartItems); // Use the calculateSubtotal function
+      const uniqueOrderId = `order_${Date.now()}`;
+
       const orderDetails = {
+        id: uniqueOrderId,
         items: formattedItems,
         subtotal: subtotal, // Use the calculated subtotal
         ...userDetails,

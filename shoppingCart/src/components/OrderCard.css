@@ -1,50 +1,64 @@
+/* OrderCard Styles */
 .orderCard {
-    display: block;
-    background-color: #f0f0f0; /* Default grey background */
-    border: 1px solid #ccc;
+    background-color: #333; /* Darker card background for contrast */
+    color: #fff;
+    border: 1px solid #666;
     border-radius: 8px;
-    margin-bottom: 10px;
-    padding: 10px;
+    margin: 0; /* Reset margins */
+    padding: 20px;
     cursor: pointer;
-    text-align: left; /* Ensure text alignment is consistent */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    transition: all 0.3s ease; /* Transition for all properties */
+    width: 90%; 
+    box-sizing: border-box; /* Include padding and border in the width */
+    flex-shrink: 0; /* Prevent cards from shrinking */
 }
 
 .orderCard:hover {
-    background-color: #ccffcc; /* Light green background on hover */
+    background-color: #444; /* Slightly lighter on hover */
 }
+
+.orderCardIdContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.orderCardIdContainer > h3,
+.orderCardIdContainer > h6 {
+    margin-top: 0; /* Remove top margin to align at the top */
+    margin-bottom: 1em; /* Add some bottom margin if needed */
+}
+
+.orderCardConfirmationStatuses {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 0.8em;
+    
+}
+
+.orderCardIconContainer {
+    display: flex;
+}
+
+.orderCardImages {
+    display: flex;
+    flex-direction: column;
+}
+
+.orderCardIconTitle {
+    display: flex;
+    align-items: flex-start;
+}
+
 
 .orderCardIcon {
-    width: 100px;
-    height: 100px;
+    width: 5em;
+    height: 5em;
+    margin-right: 1em;
 }
 
-.orderSummary {
-    /* Additional summary styling if needed */
-}
 
-.orderDetails {
-    display: none; /* Initially hide the details */
-    flex-wrap: wrap;
-    margin-top: 10px;
-}
 
-.orderCard.expanded .orderDetails {
-    display: flex; /* Show the details when the card is expanded */
-    flex-direction: row;
-}
-
-.orderItemDetail {
-    display: flex;
-    align-items: center;
-    margin-right: 20px; /* Adjust spacing as needed */
-}
-
-.itemImage {
-    width: 60px; /* Adjust size as needed */
-    height: 60px;
-    margin-right: 10px;
-    object-fit: cover;
-    border-radius: 4px;
-}
 

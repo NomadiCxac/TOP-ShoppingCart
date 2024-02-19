@@ -3,8 +3,8 @@
     "id": "ensaymada",
     "name": "Ensaymada",
     "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
-    "halfDozenPrice": 22,
-    "dozenPrice": 40,
+    "halfDozenPrice": 22.00,
+    "dozenPrice": 40.00,
     "price": null,
     "image": "ensaymada",
     "batched": true
@@ -14,8 +14,8 @@
     "id": "chocolateCrinkleCookies",
     "name": "Chocolate Crinkle Cookies",
     "description": "Savor the rich, chocolatey delight of our Chocolate Crinkle Cookies, dusted with powdered sugar for a perfect sweet and cocoa balance.",
-    "halfDozenPrice": 10,
-    "dozenPrice": 15,
+    "halfDozenPrice": 10.00,
+    "dozenPrice": 15.00,
     "price": null,
     "image": "chocolateCrinkleCookies",
     "batched": true
@@ -27,7 +27,7 @@
     "name": "Red Velvet Cupcakes",
     "description": "Indulge in our elegant Red Velvet Cupcakes, offering that unique 'Red Velvet' flavor paired with creamy cheese frosting for a luxurious treat.",
     "halfDozenPrice": 18.50,
-    "dozenPrice": 36,
+    "dozenPrice": 36.00,
     "price": null,
     "image": "redVelvetCupcakes",
     "batched": true
@@ -39,7 +39,7 @@
     "id": "chocolateCake",
     "name": "Chocolate Cake",
     "description": "Delight in our Chocolate Cake, a layered sensation of moist sponge and smooth ganache, offering a deeply satisfying chocolate experience.",
-    "price": 48,
+    "price": 48.00,
     "image": "chocolateCake",
     "batched": false
     },
@@ -49,7 +49,7 @@
     "id": "walnutAndChocolateChipBananaCake",
     "name": "Walnut & Chocolate Chip Banana Cake",
     "description": "Enjoy the comforting blend of our Walnut & Chocolate Chip Banana Cake, a perfect mix of nutty crunch and sweet chocolate in every slice.",
-    "price": 20,
+    "price": 20.00,
     "image": "walnutAndChocolateChipBananaCake",
     "batched": false
     }

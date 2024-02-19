@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
 import { useCart } from '../context/CartContext';
 import { calculateSubtotal } from "../functions/checkoutTotal"; 
+import TimeSelector from './TimeSelector';
 
 import './OrderForm.css';
 
@@ -12,7 +13,6 @@ const OrderForm = () => {
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
-    date: '',
     comments: '',
   });
 
@@ -43,15 +43,18 @@ const OrderForm = () => {
       const orderDetails = {
         items: formattedItems,
         subtotal: subtotal, // Use the calculated subtotal
-        ...userDetails,
+        ...userDetails, // 
         dateOrderGenerated: getCurrentDateTime(),
-        orderVerifiedStatus: "Pending",
+        orderVerifiedStatus: "Awaiting Pickup Date Confirmation",
         clientPaid: false, // Default value for the new parameter
         actualPickUpDate: null,
         readyForClientPickUp: false, // Default value for the new parameter
         orderComplete: false, // Default value for the new parameter
         dateOrderComplete: null,
-        orderPhase: "step1"
+        orderPhase: "step1",
+        pickUpDate: "",
+        pickUpTime: "",
+        phone: ""
       };
 
       try {
@@ -90,9 +93,9 @@ const OrderForm = () => {
   };
 
   // Handler for the date input
-  const handleDateChange = (event) => {
-    setUserDetails({ ...userDetails, date: event.target.value });
-  };
+  // const handleDateChange = (event) => {
+  //   setUserDetails({ ...userDetails, date: event.target.value });
+  // };
 
   // Handler for the comments textarea
   const handleCommentsChange = (event) => {
@@ -112,11 +115,11 @@ const OrderForm = () => {
       <input type="text" id="name" value={userDetails.name} onChange={handleNameChange} placeholder="Name" />
       <label htmlFor="email">Email</label>
       <input type="email" id="email" value={userDetails.email} onChange={handleEmailChange} placeholder="Email" />
-      <label htmlFor="date">Choose a Pickup-Date </label>
-      <input type="date" id="date" value={userDetails.date} onChange={handleDateChange} />
+      {/* <label htmlFor="date">Choose a Pickup-Date </label>
+      <input type="date" id="date" value={userDetails.date} onChange={handleDateChange} /> */}
       <label htmlFor="comments">Additional Comments</label>
       <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Additional Comments"></textarea>
-      <button type="submit">Submit Order</button>
+      <button type="submit">Submit Order Request</button>
     </form>
   );
 };

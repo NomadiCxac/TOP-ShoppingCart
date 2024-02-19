@@ -2,7 +2,7 @@
 import formatName from "../functions/formatName";
 import resolveImageUrl from "../functions/resolveImageUrl";
 import countItems from "../functions/countItems";
-import './UserDashboard.css'
+import './OrderCard.css'
 
 const OrderCard = ({ order, onClick }) => {
     // Convert the items object to an array of item objects with name included
@@ -17,18 +17,18 @@ const OrderCard = ({ order, onClick }) => {
 
     return (
         <div className="orderCard" onClick={() => onClick(order)}>
-            <div className="orderSummary">
-                <div className="orderIdContainer"> 
-                    <h3>Order Date: {order.dateOrderGenerated}</h3>
+            <div className="orderCardSummary">
+                <div className="orderCardIdContainer"> 
+                    <h3>Order ID: {order.id}</h3>
                     <h6>Click to View Order Details&gt;</h6>
                 </div>
-                <div className="orderConfirmationStatuses">
+                <div className="orderCardConfirmationStatuses">
                     <h5> Order Status: {order.orderVerifiedStatus}</h5>
-                    <h5> Order Date: {order.dateOrderGenerated}</h5>
+                    <h5> Pickup Date: {order.pickUpDate} @ {order.pickUpTime}</h5>
                 </div>
 
 
-                <div className="orderImages">
+                <div className="orderCardImages">
                     <div className="orderCardIconTitle">
                         <h6>{countItems(orderItemsArray)} item(s) - ${order.subtotal} CAD</h6>
                     </div>
