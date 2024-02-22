@@ -1,16 +1,48 @@
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import 'firebaseui/dist/firebaseui.css';
 import { getFirebaseUIConfig, getFirebaseUIInstance } from '../functions/firebaseUIConfig';
 import { useFirebase } from '../context/FirebaseContext';
-import SignOutButton from '../components/SignOutButton';
-import './LoginPage.css'
+import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
+import './OrderManagement.css'
 // import UserDashboard from '../components/UserDashboard';
 
-const LoginPage = () => {
-    const { user, auth } = useFirebase();
+const OrderManagement = () => {
+    const { user, auth, signInAnonymously, anonymousOrderId, setAnonymousOrder } = useFirebase();
+    const navigate = useNavigate();
     const [orderId, setOrderId] = useState('');
-    const [email, setEmail] = useState('');
+    const [orderExists, setOrderExists] = useState(false)
+    const { retrieveOrderById } = useFirebaseOrders()
+
+    useEffect(() => {
+        console.log(anonymousOrderId)
+    }, []);
+
+    const handleAnonymousAccessSubmit = async (e) => {
+        e.preventDefault();
+    
+        // Use retrieveOrdersFromDatabase to check if the order exists
+        let anonOrder = await retrieveOrderById(orderId); // Assuming false for isAdmin since this is anonymous access
+    
+        if (anonOrder) {
+            // Order exists
+            setOrderExists(true);
+            setAnonymousOrder(anonOrder); // Adjust based on your actual data structure
+
+    
+            // Only sign in anonymously if the user is not already signed in
+            if (!user) {
+                await signInAnonymously(orderId);
+                navigate('/userDashboard'); // Update this path based on your routing setup
+            }
+        } else {
+            // Handle the case where the order does not exist
+            console.error("Order does not exist.");
+            setOrderExists(false);
+        }
+    };
+
+ 
 
     useEffect(() => {
         if (!auth) {
@@ -24,23 +56,25 @@ const LoginPage = () => {
         if (!user) {
             ui.start('#firebaseui-auth-container', uiConfig);
         } else {
+            navigate('/userDashboard')
             console.log("User is already logged in");
         }
 
         return;
     }, [user, auth]);
 
+    // useEffect(() => {
+    //     if (user || user.isAnonymous) { // Check if the user is logged in and not anonymous
+    //         navigate('/userDashboard'); // Navigate to the dashboard
+    //     }
+    // }, [user, navigate]); // Depend on user and navigate to re-run the effect if either changes
+
     
-    const handleAnonymousAccessSubmit = (e) => {
-        e.preventDefault();
-        // Here you would handle the anonymous access logic
-        console.log("Order ID:", orderId, "Email:", email);
-        // Navigate or fetch data based on Order ID and Email
-    };
+
 
     return (
         <div className="login-page-container">
-                {!user ? (
+            {!user && (
                 <div className="login-options-container">
 
                     <div className='accessContainer'>
@@ -62,44 +96,14 @@ const LoginPage = () => {
                                 value={orderId} 
                                 onChange={(e) => setOrderId(e.target.value)} 
                                 required />
-                            <input 
-                                type="email" 
-                                placeholder="Email" 
-                                value={email} 
-                                onChange={(e) => setEmail(e.target.value)} 
-                                required />
                             <button type="submit">Access Order</button>
                         </form>
                     </div>
                 </div>
-                    </div>
-
-            )  : (
-                <div className='loggedIn-container'>
-                    <div className='user-details-container'>
-                        <div className="user-info-container">
-                            <h2>Hello, {user.displayName}!</h2>
-                            <h3> You are currently logged in as {user.email}</h3>
-                        </div>
-
-                        <div className="sign-out-container">
-                            {/* classname is signoutButton */}
-                            <SignOutButton /> 
-                        </div>
-                    </div>
-
-
-                    <div className="orders-outlet-container">
-                        <div className='order-list-title'>
-                            <h3>Your Outstanding Order(s) - If your orders are not appearing, please refersh this page</h3>
-                        </div>
-
-                        <Outlet /> {/* This will render nested routes such as UserDashboard */}
-                    </div>
-                </div>
-            )}
+            </div>
+            )}  
         </div>
     );
 };
 
-export default LoginPage;
+export default OrderManagement;

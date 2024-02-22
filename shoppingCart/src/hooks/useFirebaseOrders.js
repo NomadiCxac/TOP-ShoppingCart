@@ -118,9 +118,10 @@ export const useFirebaseOrders = () => {
         return true;
     }
 
-    const retrieveOrdersFromDatabase = async () => {
-        const ordersRef = ref(database, 'orders');
-    
+    const retrieveAllOrdersFromDatabase = async () => {
+
+        let ordersRef = ref(database, `orders`)
+
         try {
             const snapshot = await get(ordersRef);
             if (snapshot.exists()) {
@@ -130,7 +131,6 @@ export const useFirebaseOrders = () => {
                     return { ...orderSnapshot[key], id: key };
                 });
                 
-                // console.log("Orders retrieved:", ordersArray);
                 return ordersArray;
             } else {
                 console.log("No orders found.");
@@ -139,6 +139,28 @@ export const useFirebaseOrders = () => {
             console.error("Error retrieving orders:", error);
         }
     };
+
+    const retrieveOrderById = async (orderId) => {
+
+        console.log(orderId)
+
+        let ordersRef = ref(database, `orders/${orderId}`)
+
+        try {
+            const snapshot = await get(ordersRef);
+            if (snapshot.exists()) {
+                console.log("trie")
+                const orderData = snapshot.val();
+                    return { ...orderData};
+            } else {
+                console.log("No orders found.");
+            }
+        } catch (error) {
+            console.error("Error retrieving orders:", error);
+        }
+    };
+
+    
 
 const retrieveOrdersByEmail = async (email, status = 'all') => {
     setLoading(true);
@@ -302,7 +324,8 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
         pushOrderToDatabase,
         setDateAndTimeForOrder,
         updateOrderPhase,
-        retrieveOrdersFromDatabase,
+        retrieveAllOrdersFromDatabase,
+        retrieveOrderById,
         retrieveOrdersByEmail,
         updatePickupTimesForDate,
         getPickupTimesForDate,

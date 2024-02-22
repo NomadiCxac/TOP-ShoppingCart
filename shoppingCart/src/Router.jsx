@@ -4,7 +4,7 @@ import ShoppingCartPage from './pages/ShoppingCartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import ErrorPage from "./pages/ErrorPage";
 import FoodMenu from "./components/FoodMenu";
-import LoginPage from "./pages/LoginPage";
+import OrderManagement from "./pages/OrderManagement";
 import AdminPage from "./pages/AdminPage";
 import UserDashboard from "./components/UserDashboard";
 import { useFirebase } from "./context/FirebaseContext";
@@ -35,24 +35,17 @@ function AppRouter () {
           element: <CheckoutPage />,
         },
         {
-          path: "loginPage",
-          element: <LoginPage />,
-          children: [
-            {
-              path: "userDashboard", // Nested route for the UserDashboard
-              element: <UserDashboard />,
-            },
-          ],
+          path: "orderManagement",
+          element: <OrderManagement />,
+        },
+        {
+          // Define UserDashboard as a sibling to OrderManagement
+          path: "userDashboard",
+          element: <UserDashboard />,
         },
         {
           path: "adminPage",
           element: isAdmin ? <AdminPage /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
-          // children: [
-          //   {
-          //     path: "setPickUpDates", // Nested route for the UserDashboard
-          //     element: isAdmin ? <SetPickUpDates /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
-          //   },
-          // ],
         },
         {
           path: "setPickUpDates", // Nested route for the UserDashboard

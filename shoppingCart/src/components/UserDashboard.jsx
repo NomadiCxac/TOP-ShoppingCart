@@ -1,21 +1,26 @@
+// import hooks and context
 import { useEffect, useState } from 'react';
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 import { useFirebase } from '../context/FirebaseContext'; // Import the useFirebase hook
+
+// import components
 import OrderCard from './OrderCard';
 import Modal from './Modal';
 import StepTracker from './StepTracker';
 import TimeSelector from './TimeSelector';
-import countItems from '../functions/countItems';
+import SignOutButton from './SignOutButton';
+
+// import functions
 import formatName from '../functions/formatName';
 import resolveImageUrl from '../functions/resolveImageUrl';
 import { checkoutItemTotal } from '../functions/checkoutTotal';
+
 // import Carousel from './Carousel';
 import './Modal.css';
 import './UserDashboard.css';
-import { set } from 'firebase/database';
 
 const UserDashboard = () => {
-    const { user } = useFirebase(); // Use the useFirebase hook to access the current user
+    const { user, anonymousOrderId, anonymousOrder } = useFirebase(); // Use the useFirebase hook to access the current user
     const { retrieveOrdersByEmail, setDateAndTimeForOrder, updateOrderPhase} = useFirebaseOrders();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -28,30 +33,26 @@ const UserDashboard = () => {
     const [selectedDate, setSelectedDate] = useState(null); // Added for storing selected date
     const [selectedTime, setSelectedTime] = useState(null); // Added for storing selected time
 
+    const userGreeting = () => {
+        if (user) {
+            // Check if the user is anonymous
+            if (user.isAnonymous) {
+                return <h2>Hello, Guest!</h2>;
+            } else {
+                // User is signed in with an email, display their displayName or email
+                return <h2>Hello, {user.displayName || user.email}!</h2>;
+            }
+        }
+        return null; // Return null if there's no user object
+    };
+
     useEffect(() => {
         console.log("UserDashboard rendered");
+        console.log(anonymousOrderId)
     }, []);
 
 
-    function formatDate(inputDate) {
-        // Parse the input string into a Date object
-        const date = new Date(inputDate);
-      
-        // Use toLocaleDateString to format the date as required
-        // Specify the locale as 'en-US' and customize the format options
-        const formattedDate = date.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          timeZone: 'UTC' // Ensure consistent behavior across different time zones
-        });
-      
-        // Return the formatted date string
-        return formattedDate;
-      }
-
-
-      const transformOrderItems = (order) => {
+    const transformOrderItems = (order) => {
         if (!order || !order.items) return [];
 
         return Object.entries(order.items).map(([itemName, itemDetails]) => ({
@@ -64,12 +65,12 @@ const UserDashboard = () => {
     
 
     useEffect(() => {
-        if (user) {
-            const loadOrders = async (status = "incomplete") => {
+        if (user && !user.isAnonymous) {
+            let loadOrders = async (status = "incomplete") => {
                 setLoading(true);
                 try {
-                    const userEmail = user.email; // Directly use the user's email from the Firebase context
-                    const fetchedOrders = await retrieveOrdersByEmail(userEmail, status);
+                    let userEmail = user.email; // Directly use the user's email from the Firebase context
+                    let fetchedOrders = await retrieveOrdersByEmail(userEmail, status);
                     setOrders(fetchedOrders || []); // Ensure fetchedOrders is an array
                 } catch (error) {
                     console.error("Failed to fetch orders", error);
@@ -81,7 +82,18 @@ const UserDashboard = () => {
 
             loadOrders();
         }
-    }, [user]); // Depend on user to re-fetch orders if the user changes
+
+        if (user && user.isAnonymous) {
+            setOrders([anonymousOrder])
+        }
+
+    }, []); // Depend on user to re-fetch orders if the user changes
+
+    useEffect(() => {
+        console.log(typeof(orders))
+        console.log(orders)
+        console.log(orders.length)
+    }, [orders]); // Depend on user to re-fetch orders if the user changes
 
     const handleOpenModal = (order) => {
         setSelectedOrder(order);
@@ -132,8 +144,24 @@ const UserDashboard = () => {
     if (error) return <p>Error fetching orders: {error}</p>;
 
     return (
-        <div className="userDashboardContainer">
-            {orders.length > 0 ? (
+        <div className='userDashboardContainer'>
+            <div className='loggedIn-container'>
+                <div className='user-details-container'>
+                    <div className="user-info-container">
+                        {userGreeting()}
+                    </div>
+                    <div className="sign-out-container">
+                        <SignOutButton /> 
+                    </div>
+                </div>
+            </div>
+            <div className="orders-outlet-container">
+                        <div className='order-list-title'>
+                            <h3>Your Outstanding Order(s)</h3>
+                        </div>
+                    </div>
+        <div className="orderListContainer">
+        {user && orders.length > 0 ? (
                 <div className="ordersContainer">
                     {orders.map((order) => (
                         <OrderCard
@@ -416,6 +444,8 @@ const UserDashboard = () => {
             </Modal>
             )}
         </div>
+    </div>
+        
     );
 };
 

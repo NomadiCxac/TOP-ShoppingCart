@@ -8,7 +8,7 @@ import './OrderList.css'
 
 const OrderList = () => {
 
-    const { retrieveOrdersFromDatabase, retrieveOrdersByEmail } = useFirebaseOrders()
+    const { retrieveAllOrdersFromDatabase, retrieveOrdersByEmail } = useFirebaseOrders()
     const [email, setEmail] = useState("")
     const [ordersData, setOrdersData] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
@@ -48,7 +48,7 @@ const OrderList = () => {
     }
 
     const handleRetrieveOrders = async () => {
-        const orders = await retrieveOrdersFromDatabase();
+        const orders = await retrieveAllOrdersFromDatabase();
         setOrdersData(orders); // Update the state with the fetched orders
     };
 

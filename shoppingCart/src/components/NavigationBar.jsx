@@ -45,14 +45,14 @@ const NavigationBar = () => {
                     <Link to="/" className='clickableLink'>Home</Link>
                 </div>
 
-                <div className='loginPage'>
+                <div className='OrderManagement'>
                 {user ? (
                     <Link to={{
-                        pathname: "loginPage/userDashboard",
+                        pathname: "/userDashboard",
                         state: { user }
                       }}>Order Management</Link>
                     ) : (
-                    <Link to="/loginPage" className='clickableLink'>Order Management</Link>
+                    <Link to="/orderManagement" className='clickableLink'>Order Management</Link>
                     )}
                 </div>
     
