@@ -93,7 +93,12 @@ const useShoppingCart = () => {
         });
     };
 
-    return { cartItems, setCartItems, addToCart, removeFromCart };
+    const clearCart = () => {
+        setCartItems([]); // Set cartItems to an empty array to clear the cart
+        sessionStorage.setItem('shoppingCart', JSON.stringify([])); // Also clear the shopping cart in sessionStorage
+    };
+
+    return { cartItems, setCartItems, addToCart, removeFromCart, clearCart };
 }
 
 export default useShoppingCart

@@ -7,6 +7,10 @@ const SignOutButton = () => {
 
     const handleSignOut = async () => {
         await userSignOut(); // Wait for the sign-out process to complete
+        if (localStorage.getItem('anonymousOrderId')) {
+            localStorage.removeItem('anonymousOrderId');
+        }
+
         navigate('/orderManagement'); // Redirect to the login page
     };
 

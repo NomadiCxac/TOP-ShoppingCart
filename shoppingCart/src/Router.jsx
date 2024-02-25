@@ -1,15 +1,21 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useFirebase } from "./context/FirebaseContext";
+
+// import pages
 import LandingPage from "./pages/LandingPage";
 import ShoppingCartPage from './pages/ShoppingCartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import ErrorPage from "./pages/ErrorPage";
-import FoodMenu from "./components/FoodMenu";
 import OrderManagement from "./pages/OrderManagement";
 import AdminPage from "./pages/AdminPage";
-import UserDashboard from "./components/UserDashboard";
-import { useFirebase } from "./context/FirebaseContext";
 import SetPickUpDates from "./pages/SetPickUpDates";
-// ... other imports
+import OrderRequestSent from "./pages/OrderRequestSentPage";
+import FoodMenu from "./components/FoodMenu";
+import UserDashboard from "./components/UserDashboard";
+import EmptyShoppingCart from "./pages/emptyShoppingCartPage";
+
+// import components
+import ProtectedRoute from './components/ProtectedRoute'; // Import the ProtectedRoute component
 
 function AppRouter () {
 
@@ -41,7 +47,10 @@ function AppRouter () {
         {
           // Define UserDashboard as a sibling to OrderManagement
           path: "userDashboard",
-          element: <UserDashboard />,
+          element: 
+          <ProtectedRoute>
+              <UserDashboard />
+            </ProtectedRoute>,
         },
         {
           path: "adminPage",
@@ -50,6 +59,10 @@ function AppRouter () {
         {
           path: "setPickUpDates", // Nested route for the UserDashboard
           element: isAdmin ? <SetPickUpDates /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
+        },
+        {
+          path: "orderRequestSent",
+          element: <OrderRequestSent />,
         },
 
       ],

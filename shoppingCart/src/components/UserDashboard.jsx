@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 import { useFirebase } from '../context/FirebaseContext'; // Import the useFirebase hook
+import { useNavigate } from 'react-router-dom';
 
 // import components
 import OrderCard from './OrderCard';
@@ -21,7 +22,8 @@ import './UserDashboard.css';
 
 const UserDashboard = () => {
     const { user, anonymousOrderId, anonymousOrder } = useFirebase(); // Use the useFirebase hook to access the current user
-    const { retrieveOrdersByEmail, setDateAndTimeForOrder, updateOrderPhase} = useFirebaseOrders();
+    const { retrieveOrdersByEmail, retrieveOrderById, setDateAndTimeForOrder, updateOrderPhase} = useFirebaseOrders();
+    const navigate = useNavigate()
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -32,6 +34,13 @@ const UserDashboard = () => {
     const [orderPhase, setOrderPhase] = useState(null)
     const [selectedDate, setSelectedDate] = useState(null); // Added for storing selected date
     const [selectedTime, setSelectedTime] = useState(null); // Added for storing selected time
+
+    useEffect(() => {
+        console.log(user)
+        console.log(orders)
+        console.log(anonymousOrder)
+        console.log(anonymousOrderId)
+    })
 
     const userGreeting = () => {
         if (user) {
@@ -46,25 +55,19 @@ const UserDashboard = () => {
         return null; // Return null if there's no user object
     };
 
-    useEffect(() => {
-        console.log("UserDashboard rendered");
-        console.log(anonymousOrderId)
-    }, []);
-
-
     const transformOrderItems = (order) => {
-        if (!order || !order.items) return [];
-
         return Object.entries(order.items).map(([itemName, itemDetails]) => ({
             ...itemDetails,
-            name: formatName(itemName), // Assuming formatName is a function that formats item names
-            imageUrl: resolveImageUrl(itemDetails.id) // Assuming resolveImageUrl is a function that returns image URL
+            name: formatName(itemName),
+            imageUrl: resolveImageUrl(itemDetails.id)
         }));
     };
+
 
     
 
     useEffect(() => {
+        setOrders([]);
         if (user && !user.isAnonymous) {
             let loadOrders = async (status = "incomplete") => {
                 setLoading(true);
@@ -83,17 +86,23 @@ const UserDashboard = () => {
             loadOrders();
         }
 
-        if (user && user.isAnonymous) {
-            setOrders([anonymousOrder])
+        if (user && user.isAnonymous && anonymousOrder) {
+
+            let storedOrderId = localStorage.getItem('anonymousOrderId');
+            if (storedOrderId) {
+                const loadAnonymousOrder = async () => {
+                    const anonOrder = await retrieveOrderById(storedOrderId);
+                    if (anonOrder) {
+                        setOrders([anonOrder]); // Assuming setOrders expects an array
+                    }
+                };
+                loadAnonymousOrder();
+            }
         }
 
-    }, []); // Depend on user to re-fetch orders if the user changes
+    }, [user, anonymousOrderId]); // Depend on user to re-fetch orders if the user changes
 
-    useEffect(() => {
-        console.log(typeof(orders))
-        console.log(orders)
-        console.log(orders.length)
-    }, [orders]); // Depend on user to re-fetch orders if the user changes
+
 
     const handleOpenModal = (order) => {
         setSelectedOrder(order);
@@ -135,10 +144,6 @@ const UserDashboard = () => {
             setIsSubmitting(false); // Ensure this runs even if there's an error
         }
     }
-
-    useEffect(() => {
-        console.log(orderPhase)
-    }, [orderPhase])
 
     if (loading) return <p>Loading orders...</p>;
     if (error) return <p>Error fetching orders: {error}</p>;

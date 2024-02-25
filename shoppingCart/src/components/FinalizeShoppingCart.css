@@ -20,7 +20,8 @@
 
 .cartItemContainer#notEmpty {
     width: 95%;
-    max-height: 35em; /* Adjust this value based on your needs */
+    max-height: 35em;
+    /* height: 35em;  */
     overflow-y: auto; /* Allows vertical scrolling if content overflows */
     overflow-x: hidden; /* Hides horizontal scrollbar */
     padding-right: 1.5em; /* Adjust as needed */
@@ -60,7 +61,7 @@
     background: white;
     z-index: 10;
     height: 5em;
-   
+    margin-bottom: -0.75em;
 }
 
 /* CSS on CheckoutPage */
@@ -126,3 +127,15 @@ h4 {
 .cart-item-quantity {
     margin-left: 0.5em;
 }
+
+
+/* .priceTitle {
+    display: flex;
+    width: 80%;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0;
+    margin-top: 0.75em;
+    font-weight: 600;
+    font-size: 1em;
+} */

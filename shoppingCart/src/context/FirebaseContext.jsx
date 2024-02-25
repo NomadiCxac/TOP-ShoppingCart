@@ -14,6 +14,7 @@ export const FirebaseProvider = ({ children }) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [anonymousOrderId, setAnonymousOrderId] = useState(null); // Add anonymousOrderId state
     const [anonymousOrder, setAnonymousOrder] = useState([]); // Add anonymousOrderId state
+    const [referenceOrderId, setReferenceOrderId] = useState("");
 
     useEffect(() => {
 
@@ -63,10 +64,10 @@ export const FirebaseProvider = ({ children }) => {
             try {
                 const result = await firebaseSignInAnonymously(auth);
                 console.log("Signed in as an anonymous user:", result.user);
-                // Set anonymousOrderId if orderId is provided
+                console.log("Did not step into set Anonymous OrderId" + orderId)
                 if (orderId) {
+                    localStorage.setItem('anonymousOrderId', orderId); // Store orderId in localStorage
                     setAnonymousOrderId(orderId);
-                    console.log("Anonymous session linked to orderId:", orderId);
                 }
             } catch (error) {
                 console.error("Could not sign in anonymously:", error);
@@ -92,6 +93,8 @@ export const FirebaseProvider = ({ children }) => {
         database,
         anonymousOrderId,
         anonymousOrder,
+        referenceOrderId,
+        setReferenceOrderId,
         setAnonymousOrder,
         userSignOut,
         setUser,

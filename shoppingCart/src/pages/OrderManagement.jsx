@@ -8,37 +8,30 @@ import './OrderManagement.css'
 // import UserDashboard from '../components/UserDashboard';
 
 const OrderManagement = () => {
-    const { user, auth, signInAnonymously, anonymousOrderId, setAnonymousOrder } = useFirebase();
+    const { user, auth, signInAnonymously, anonymousOrderId, setAnonymousOrder, referenceOrderId } = useFirebase();
     const navigate = useNavigate();
     const [orderId, setOrderId] = useState('');
-    const [orderExists, setOrderExists] = useState(false)
     const { retrieveOrderById } = useFirebaseOrders()
 
     useEffect(() => {
         console.log(anonymousOrderId)
+        console.log(user)
     }, []);
+
 
     const handleAnonymousAccessSubmit = async (e) => {
         e.preventDefault();
-    
-        // Use retrieveOrdersFromDatabase to check if the order exists
-        let anonOrder = await retrieveOrderById(orderId); // Assuming false for isAdmin since this is anonymous access
-    
-        if (anonOrder) {
-            // Order exists
-            setOrderExists(true);
-            setAnonymousOrder(anonOrder); // Adjust based on your actual data structure
 
-    
-            // Only sign in anonymously if the user is not already signed in
+        const anonOrder = await retrieveOrderById(orderId);
+        if (anonOrder) {
+            // Assuming setAnonymousOrder stores the order for later use
             if (!user) {
                 await signInAnonymously(orderId);
-                navigate('/userDashboard'); // Update this path based on your routing setup
+                setAnonymousOrder([anonOrder]);
             }
+            // Assuming there's a way to navigate or access the order directly here
         } else {
-            // Handle the case where the order does not exist
             console.error("Order does not exist.");
-            setOrderExists(false);
         }
     };
 
@@ -63,15 +56,6 @@ const OrderManagement = () => {
         return;
     }, [user, auth]);
 
-    // useEffect(() => {
-    //     if (user || user.isAnonymous) { // Check if the user is logged in and not anonymous
-    //         navigate('/userDashboard'); // Navigate to the dashboard
-    //     }
-    // }, [user, navigate]); // Depend on user and navigate to re-run the effect if either changes
-
-    
-
-
     return (
         <div className="login-page-container">
             {!user && (
@@ -92,8 +76,8 @@ const OrderManagement = () => {
                         <form onSubmit={handleAnonymousAccessSubmit}>
                             <input 
                                 type="text" 
-                                placeholder="Order ID" 
-                                value={orderId} 
+                                placeholder={referenceOrderId ? referenceOrderId : 'Input Order ID Here'}
+                                value={referenceOrderId ? referenceOrderId : orderId} 
                                 onChange={(e) => setOrderId(e.target.value)} 
                                 required />
                             <button type="submit">Access Order</button>

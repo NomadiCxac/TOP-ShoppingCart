@@ -30,7 +30,7 @@ const FinalizeShoppingCart = () => {
             {cartItems.length > 0 ? (
                 <div className="cartHeader">
                     <h2>Your Shopping Cart:</h2>
-                    <h4>Price:</h4>
+                    <div className='priceTitle'>Price:</div>
                 </div>
             ) : (
                 <h2>Your Shopping Cart is Empty.</h2>
@@ -40,6 +40,7 @@ const FinalizeShoppingCart = () => {
                     <div id="emptyShoppingCart">
                         <p>Your shopping cart is hungry for delicious baked goods.</p>
                         <p>Continue shopping by going back to the <Link to="/">homepage.</Link></p>
+                        <p>Manage any outsanding orders <Link to="/orderManagement">here</Link></p>
                     </div>
                 )}
 

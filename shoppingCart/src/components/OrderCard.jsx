@@ -6,10 +6,11 @@ import './OrderCard.css'
 
 const OrderCard = ({ order, onClick }) => {
     // Convert the items object to an array of item objects with name included
-    const orderItemsArray = Object.entries(order.items).map(([itemName, itemDetails]) => ({
+    const orderItemsArray = order.items ? Object.entries(order.items).map(([itemName, itemDetails]) => ({
         ...itemDetails,
-        name: formatName(itemName), // Use your formatName function or adjust accordingly
-    }));
+        name: formatName(itemName),
+        imageUrl: resolveImageUrl(itemDetails.id)
+    })) : [];
 
 
 

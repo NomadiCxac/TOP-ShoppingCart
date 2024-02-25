@@ -1,20 +1,25 @@
 import { useState } from 'react';
 import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
 import { useCart } from '../context/CartContext';
+import { useFirebase } from '../context/FirebaseContext';
+import { useNavigate } from 'react-router-dom';
 import { calculateSubtotal } from "../functions/checkoutTotal"; 
-import TimeSelector from './TimeSelector';
 
 import './OrderForm.css';
 
 
+
 const OrderForm = () => {
+  const { setReferenceOrderId } = useFirebase();
   const { cartItems } = useCart()
   const { pushOrderToDatabase } = useFirebaseOrders();
+  const navigate = useNavigate(); 
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
     comments: '',
   });
+
 
   const pushOrderRequest = async () => {
     if (cartItems.length > 0) {
@@ -60,6 +65,12 @@ const OrderForm = () => {
       try {
         console.log("Attempting to push order", orderDetails);
         const orderId = await pushOrderToDatabase(orderDetails);
+        console.log("Order ID:", orderId); // Assuming pushOrderToDatabase returns the order ID
+
+        setReferenceOrderId(orderId); // Set the reference order ID in your Firebase context
+        console.log("Setting reference order ID:", orderId);
+
+        navigate('/orderRequestSent'); // Navigate to the orderRequestSent page
         return orderId;
       } catch (error) {
         console.error("Failed to push order to database:", error);
@@ -91,12 +102,7 @@ const OrderForm = () => {
   const handleEmailChange = (event) => {
     setUserDetails({ ...userDetails, email: event.target.value });
   };
-
-  // Handler for the date input
-  // const handleDateChange = (event) => {
-  //   setUserDetails({ ...userDetails, date: event.target.value });
-  // };
-
+  
   // Handler for the comments textarea
   const handleCommentsChange = (event) => {
     setUserDetails({ ...userDetails, comments: event.target.value });
@@ -120,6 +126,7 @@ const OrderForm = () => {
       <label htmlFor="comments">Additional Comments</label>
       <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Additional Comments"></textarea>
       <button type="submit">Submit Order Request</button>
+      
     </form>
   );
 };
