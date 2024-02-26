@@ -22,7 +22,7 @@ const useShoppingCart = () => {
             let updatedItems = [...previousItems];
     
             // Convert userQuantity to integer
-            let quantity = parseInt(userQuantity, 10);
+            let setQuantity = parseInt(userQuantity, 10);
     
             if (existingItemIndex !== -1) {
                 // If the item exists, update the quantity based on the flags
@@ -31,11 +31,11 @@ const useShoppingCart = () => {
                 if (isEdit) {
                     // In edit mode, set the specific quantity type
                     if (isDozen) {
-                        existingItem.dozenQuantity = quantity;
+                        existingItem.dozenQuantity = setQuantity;
                     } else if (isHalfDozen) {
-                        existingItem.halfDozenQuantity = quantity;
+                        existingItem.halfDozenQuantity = setQuantity;
                     } else {
-                        existingItem.quantity = quantity;
+                        existingItem.quantity = setQuantity;
                     }
                 } else {
                     // Not in edit mode, increment the specific quantity type
@@ -44,7 +44,7 @@ const useShoppingCart = () => {
                     } else if (isHalfDozen) {
                         existingItem.halfDozenQuantity += defaultQuantity;
                     } else {
-                        existingItem.quantity += quantity;
+                        existingItem.quantity += defaultQuantity;
                     }
                 }
     

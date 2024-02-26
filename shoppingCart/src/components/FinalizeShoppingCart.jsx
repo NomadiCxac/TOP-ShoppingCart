@@ -7,19 +7,19 @@ import "./FinalizeShoppingCart.css"
 const FinalizeShoppingCart = ({pageName}) => {
     const { addToCart, removeFromCart, cartItems } = useCart();
 
-    const maxQuantity = 30;
+    const maxQuantity = 10;
 
     const quantityOptions = [];
     for (let i = 1; i <= maxQuantity; i++) {
         quantityOptions.push(<option key={i} value={i}>{i}</option>);
     }
 
-    const handleQuantityChange = (e, item, isDozen) => {
+    const handleQuantityChange = (item, isDozen, isHalfDozen) => (e) => {
         const newQuantity = e.target.value;
         if (newQuantity === '0') {
             removeFromCart(item, isDozen);
         } else {
-            addToCart(item, newQuantity, isDozen, false, false);
+            addToCart(item, newQuantity, isDozen, isHalfDozen, true);
         }
     };
 
@@ -48,7 +48,7 @@ const FinalizeShoppingCart = ({pageName}) => {
                             <CartItemCard
                                 key={item.id + "-dozen"}
                                 item={item}
-                                handleQuantityChange={handleQuantityChange}
+                                handleQuantityChange={handleQuantityChange(item, true, false)}
                                 quantityOptions={quantityOptions}
                                 batched={true}
                                 dozenQuantity={item.dozenQuantity}
@@ -60,7 +60,7 @@ const FinalizeShoppingCart = ({pageName}) => {
                             <CartItemCard
                                 key={item.id + "-halfDozen"}
                                 item={item}
-                                handleQuantityChange={handleQuantityChange}
+                                handleQuantityChange={handleQuantityChange(item, false, true)}
                                 quantityOptions={quantityOptions}
                                 batched={true}
                                 dozenQuantity={0}
@@ -73,7 +73,7 @@ const FinalizeShoppingCart = ({pageName}) => {
                     <CartItemCard
                         key={item.id}
                         item={item}
-                        handleQuantityChange={handleQuantityChange}
+                        handleQuantityChange={handleQuantityChange(item, false, true)}
                         quantityOptions={quantityOptions}
                         batched={false}
                         dozenQuantity={0}
