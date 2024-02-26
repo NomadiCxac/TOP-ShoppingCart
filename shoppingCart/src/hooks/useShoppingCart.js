@@ -14,6 +14,8 @@ const useShoppingCart = () => {
 
     const addToCart = (item, userQuantity = 1, isDozen, isHalfDozen, isEdit = false) => {
 
+        const maxQuantity = 10;
+
         let defaultQuantity = 1;
 
         setCartItems(previousItems => {
@@ -40,11 +42,11 @@ const useShoppingCart = () => {
                 } else {
                     // Not in edit mode, increment the specific quantity type
                     if (isDozen) {
-                        existingItem.dozenQuantity += defaultQuantity;
+                        existingItem.dozenQuantity = Math.min(existingItem.dozenQuantity += defaultQuantity, maxQuantity);
                     } else if (isHalfDozen) {
-                        existingItem.halfDozenQuantity += defaultQuantity;
+                        existingItem.halfDozenQuantity = Math.min(existingItem.halfDozenQuantity + defaultQuantity, maxQuantity);
                     } else {
-                        existingItem.quantity += defaultQuantity;
+                        existingItem.quantity = Math.min(existingItem.quantity + defaultQuantity, maxQuantity);
                     }
                 }
     

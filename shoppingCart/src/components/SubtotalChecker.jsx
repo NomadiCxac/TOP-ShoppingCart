@@ -16,9 +16,9 @@ const SubtotalChecker = ({ navigateToCheckoutPage, isShoppingCartPage, pageName 
 
     return (
         <div className="subtotal-container" id={pageName}>
-            <div className="headerContainer">
-                <div className="subtotal-text">Subtotal ({totalItems} {itemCountLabel}):</div>
-                <div className="subtotal-amount">${subtotal.toFixed(2)}</div> {/* Use the calculated subtotal */}
+            <div className="headerContainer" id={pageName} >
+                <div className="subtotal-text" id={pageName}>Subtotal ({totalItems} {itemCountLabel}):</div>
+                <div className="subtotal-amount" id={pageName}>${subtotal.toFixed(2)}</div> {/* Use the calculated subtotal */}
             </div>
             {isShoppingCartPage && 
                 <div className="checkoutButtonContainer">

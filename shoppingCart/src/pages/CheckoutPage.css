@@ -40,24 +40,27 @@
     z-index: 10;
 }
 
-.subtotal-text {
-    font-size: 18px;
-    font-weight: bold;
-    margin-right: -2.5em;
-}
-
-.subtotal-amount {
-    font-size: 18px;
-    color: #B12704; /* Amazon's subtotal price color */
-    margin-left: -3em;
-}
-
-.headerContainer {
+.headerContainer#checkoutPage {
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     margin-bottom: 2em;
+}
+
+
+
+.subtotal-text#checkoutPage {
+    font-size: 18px;
+    font-weight: bold;
+    width: 45%;
+    /* margin-right: -2.5em; */
+}
+
+.subtotal-amount#checkoutPage {
+    font-size: 18px;
+    color: #B12704; /* Amazon's subtotal price color */
+    width: 20%;
 }
 
 .checkoutButton {
