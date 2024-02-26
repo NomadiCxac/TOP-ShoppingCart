@@ -2,10 +2,11 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useFirebase } from '../context/FirebaseContext';
 
 const SignOutButton = () => {
-    const { userSignOut } = useFirebase();
+    const { userSignOut, setReferenceOrderId } = useFirebase();
     const navigate = useNavigate(); // Initialize useNavigate hook
 
     const handleSignOut = async () => {
+        setReferenceOrderId(null)
         await userSignOut(); // Wait for the sign-out process to complete
         if (localStorage.getItem('anonymousOrderId')) {
             localStorage.removeItem('anonymousOrderId');

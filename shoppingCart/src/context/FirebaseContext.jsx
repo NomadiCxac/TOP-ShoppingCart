@@ -60,6 +60,7 @@ export const FirebaseProvider = ({ children }) => {
     }, [isAdmin]); // Only re-run the effect if isAdmin changes
 
     const signInAnonymously = async (orderId) => {
+        console.log(orderId)
         if (!user) { // Only sign in if there's no current user
             try {
                 const result = await firebaseSignInAnonymously(auth);
