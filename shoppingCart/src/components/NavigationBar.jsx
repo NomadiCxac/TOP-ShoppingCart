@@ -41,11 +41,11 @@ const NavigationBar = () => {
         return (
             <div className="navBar">
                 {/* Link to the home page */}
-                <div className='landingPage'>
+                <div className='landingPageNavTitle'>
                     <Link to="/" className='clickableLink'>Home</Link>
                 </div>
 
-                <div className='OrderManagement'>
+                <div className='orderManagementNavTitle'>
                 {user ? (
                     <Link to={{
                         pathname: "/userDashboard",
@@ -57,13 +57,13 @@ const NavigationBar = () => {
                 </div>
     
                 {/* If you have routes for these, wrap them in Link as well */}
-                <div className='shoppingCartPage'>
+                <div className='shoppingCartPageNavTitle'>
                     <Link to="/shoppingCartPage" className='clickableLink'>Shopping Cart</Link>
                     {itemCount > 0 && <span className="cartItemCount">{itemCount}</span>}
                 </div>
 
                 { isAdmin && 
-                    <div className='adminPage'>
+                    <div className='adminPageNavTitle'>
                     <Link to="/adminPage" className='clickableLink'>Admin</Link>
                 </div> 
                 }

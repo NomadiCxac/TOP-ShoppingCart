@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-// import "./EmptyShoppingCartPage.css"; // Assuming you have specific styles for this page
+import "./EmptyShoppingCartPage.css"; 
 
 const EmptyShoppingCart = () => {
     return (

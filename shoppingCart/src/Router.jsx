@@ -12,7 +12,6 @@ import SetPickUpDates from "./pages/SetPickUpDates";
 import OrderRequestSent from "./pages/OrderRequestSentPage";
 import FoodMenu from "./components/FoodMenu";
 import UserDashboard from "./components/UserDashboard";
-import EmptyShoppingCart from "./pages/emptyShoppingCartPage";
 
 // import components
 import ProtectedRoute from './components/ProtectedRoute'; // Import the ProtectedRoute component

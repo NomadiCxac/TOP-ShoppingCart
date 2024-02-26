@@ -5,8 +5,9 @@ import { useCart } from "../context/CartContext";
 import { useFirebase } from "../context/FirebaseContext";
 import FinalizeShoppingCart from "../components/FinalizeShoppingCart";
 import SubtotalChecker from "../components/SubtotalChecker";
-import EmptyShoppingCart from './emptyShoppingCartPage';
-import '../App.css';
+import EmptyShoppingCart from './EmptyShoppingCartPage';
+// import '../App.css';
+import './ShoppingCartPage.css'
 
 const ShoppingCartPage = () => {
   const navigate = useNavigate();
@@ -37,10 +38,13 @@ const ShoppingCartPage = () => {
     // Otherwise, render the shopping cart page with items
     return (
       <div id="shoppingCartPage">
-        <FinalizeShoppingCart />
+        <FinalizeShoppingCart 
+        pageName={"shoppingCartPage"}
+        />
         <SubtotalChecker 
           navigateToCheckoutPage={navigateToCheckoutPage}
           isShoppingCartPage={true}
+          pageName={"shoppingCartPage"}
         />
       </div>
     );

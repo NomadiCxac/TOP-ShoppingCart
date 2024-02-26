@@ -1,0 +1,124 @@
+.checkoutPage {
+    display: flex;
+    width: 100%;
+}
+
+.formContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55%;
+    height: 85vh;
+    margin-left: -2em;
+}
+
+.checkoutItemsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin-left: 2em;
+}
+
+.subtotal-container#checkoutPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    margin-top: 2.75em;
+
+    padding-top: 1em;
+
+    width: 100%;
+    position: sticky;
+    align-self: start; /* Align to the start of the flex container */
+    z-index: 10;
+}
+
+.subtotal-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: -2.5em;
+}
+
+.subtotal-amount {
+    font-size: 18px;
+    color: #B12704; /* Amazon's subtotal price color */
+    margin-left: -3em;
+}
+
+.headerContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 2em;
+}
+
+.checkoutButton {
+    background-color: rgb(231, 231, 30);
+    margin-bottom: 2em;
+}
+
+.checkoutShoppingCartContainer#checkoutPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 6.25em;
+}
+
+.cartHeader#checkoutPage {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    position: sticky;
+    top: 5.3em;
+    background: white;
+    z-index: 10;
+    height: 5em;
+    /* margin-bottom: -0.75em; */
+}
+
+
+.cartItemContainer#checkoutPage {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    width: 100%;
+    max-height: 22.5em;
+    height: 22.5em;
+    overflow-y: auto; /* Allows vertical scrolling if content overflows */
+    overflow-x: hidden; /* Hides horizontal scrollbar */
+    padding-right: 1.5em; /* Adjust as needed */
+    margin-top: 1em;
+
+    border: 1px solid black;
+}
+
+
+
+/* Styling the scrollbar track */
+.cartItemContainer::-webkit-scrollbar {
+    width: 10px; /* Adjust the width of the scrollbar */
+}
+
+/* Styling the scrollbar handle */
+.cartItemContainer::-webkit-scrollbar-thumb {
+    background-color: rgb(71, 52, 245); /* Color of the scrollbar */
+    border-radius: 5px; /* Rounded corners of the scrollbar */
+    border: 2px solid black;
+}
+
+/* Styling the scrollbar track */
+.cartItemContainer::-webkit-scrollbar-track {
+    background-color: white; /* Color of the scrollbar track */
+}
+

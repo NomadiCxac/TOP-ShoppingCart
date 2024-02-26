@@ -1,10 +1,8 @@
 import { useCart } from "../context/CartContext";
 import { calculateSubtotal, calculateTotalItems } from "../functions/checkoutTotal"
 import PropTypes from 'prop-types';
-import './SubtotalChecker.css'
-// import "./FinalizeShoppingCart.css"
 
-const SubtotalChecker = ({ navigateToCheckoutPage, isShoppingCartPage }) => {
+const SubtotalChecker = ({ navigateToCheckoutPage, isShoppingCartPage, pageName }) => {
     const { cartItems } = useCart();
 
     if (cartItems.length <= 0) {
@@ -17,7 +15,7 @@ const SubtotalChecker = ({ navigateToCheckoutPage, isShoppingCartPage }) => {
     const itemCountLabel = totalItems === 1 ? "item" : "items";
 
     return (
-        <div className="subtotal-container">
+        <div className="subtotal-container" id={pageName}>
             <div className="headerContainer">
                 <div className="subtotal-text">Subtotal ({totalItems} {itemCountLabel}):</div>
                 <div className="subtotal-amount">${subtotal.toFixed(2)}</div> {/* Use the calculated subtotal */}
@@ -36,6 +34,7 @@ const SubtotalChecker = ({ navigateToCheckoutPage, isShoppingCartPage }) => {
 SubtotalChecker.propTypes = {
     navigateToCheckoutPage: PropTypes.func,
     isShoppingCartPage: PropTypes.bool.isRequired,
+    pageName: PropTypes.string
 };
 
 export default SubtotalChecker;

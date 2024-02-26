@@ -6,7 +6,7 @@ import FinalizeShoppingCart from "../components/FinalizeShoppingCart";
 import SubtotalChecker from "../components/SubtotalChecker";
 import OrderForm from "../components/OrderForm";
 
-import './pageNavigation.css';
+import './CheckoutPage.css'
 
 const CheckoutPage = () => {
   const { cartItems } = useCart();
@@ -31,8 +31,13 @@ const CheckoutPage = () => {
             <OrderForm />
         </div>
         <div className="checkoutItemsContainer">
-            <SubtotalChecker isShoppingCartPage={false} />
-            <FinalizeShoppingCart />
+            <SubtotalChecker 
+            isShoppingCartPage={false} 
+            pageName={"checkoutPage"}
+            />
+            <FinalizeShoppingCart 
+            pageName={"checkoutPage"}
+            />
         </div>
     </div>
   );

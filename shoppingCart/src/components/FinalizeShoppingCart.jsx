@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CartItemCard from "./CartItemCard";
 import "./FinalizeShoppingCart.css"
 
-const FinalizeShoppingCart = () => {
+const FinalizeShoppingCart = ({pageName}) => {
     const { addToCart, removeFromCart, cartItems } = useCart();
 
     const maxQuantity = 30;
@@ -23,19 +23,17 @@ const FinalizeShoppingCart = () => {
         }
     };
 
-    const containerId = cartItems.length > 0 ? "notEmpty" : "empty";
-
     return (
-        <div className="checkoutShoppingCartContainer" id={containerId}>
+        <div className="checkoutShoppingCartContainer" id={pageName}>
             {cartItems.length > 0 ? (
-                <div className="cartHeader">
+                <div className="cartHeader" id={pageName}>
                     <h2>Your Shopping Cart:</h2>
                     <div className='priceTitle'>Price:</div>
                 </div>
             ) : (
                 <h2>Your Shopping Cart is Empty.</h2>
             )}
-            <div className="cartItemContainer" id={containerId}>
+            <div className="cartItemContainer" id={pageName}>
                 {cartItems.length === 0 && (
                     <div id="emptyShoppingCart">
                         <p>Your shopping cart is hungry for delicious baked goods.</p>
