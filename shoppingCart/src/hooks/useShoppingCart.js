@@ -55,7 +55,7 @@ const useShoppingCart = () => {
                 // If the item does not exist, add it with the specified quantity
                 let newItem = {
                     ...item,
-                    quantity: isDozen || isHalfDozen ? 0 : quantity,
+                    quantity: isDozen || isHalfDozen ? 0 : setQuantity,
                     halfDozenQuantity: isHalfDozen ? defaultQuantity : 0,
                     dozenQuantity: isDozen ? defaultQuantity : 0
                 };
