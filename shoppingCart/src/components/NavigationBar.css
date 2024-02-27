@@ -9,9 +9,14 @@
     display: flex; /* Enables flexbox */
     justify-content: space-around; /* Spaces items evenly with space around them */
     align-items: center; /* Vertically centers items in the navbar */
-    background-color: orange; /* Background color of the navbar */
+    background-color: rgb(255, 185, 54); /* Background color of the navbar */
     color: white; /* Text color */
     padding: 10px; /* Some padding around the navbar */
+    
+}
+
+.navBar > div > a {
+    font-size: 22px;
 }
 
 .navBar div {

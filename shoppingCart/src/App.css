@@ -1,4 +1,21 @@
+@font-face {
+  font-family: 'LexendDeca';
+  src: url('../fonts/LexendDeca/LexendDeca-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
+/* Bold weight */
+@font-face {
+  font-family: 'LexendDeca';
+  src: url('../fonts/LexendDeca/LexendDeca-Bold.ttf') format('truetype');
+  font-weight: 700; /* Bold weight */
+  font-style: normal;
+}
+
+body {
+  font-family: 'LexendDeca', Arial; /* Fallback to sans-serif if JA Jayagiri SANS is not available */
+}
 
 #root {
   /* max-width: 1280px; */
@@ -11,4 +28,6 @@
   --text-color: #333; /* Main text color */
   --background-color: #fff; /* Background color of the page */
   --border-color: #e0e0e0; /* Border color for containers */
+  font-family: 'LexendDeca', Arial; /* Fallback to sans-serif if JA Jayagiri SANS is not available */
+  color: rgb(89, 74, 71)
 }

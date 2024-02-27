@@ -23,6 +23,7 @@
 }
 
 .scrollable-table-container::-webkit-scrollbar {
+    
     display: none; /* Optional: Hide scrollbar for Webkit browsers */
 }
 

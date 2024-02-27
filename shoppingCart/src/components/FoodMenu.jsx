@@ -103,7 +103,7 @@ const FoodMenu = () => {
 
                                     {selectedItem === item && selectedOption ? (
                                         <button className="validSelector" onClick={() => addToCart(item, selectedOption === 'dozen' ? 12 : 6, selectedOption === 'dozen' ? true : false, selectedOption === 'dozen' ? false : true)}>
-                                            Add {selectedOption === 'dozen' ? 'a Dozen' : 'Half a Dozen'} to Cart
+                                            Add to Cart
                                         </button>
                                         ) : (
                                         <button className="invalidSelector" disabled={selectedItem && selectedItem !== item} onClick={() => console.log(`Please select an option first for ${item.name}`)}>

@@ -46,6 +46,8 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 2em;
+    margin-top: 1em;
+    
 }
 
 
@@ -63,18 +65,13 @@
     width: 20%;
 }
 
-.checkoutButton {
-    background-color: rgb(231, 231, 30);
-    margin-bottom: 2em;
-}
-
 .checkoutShoppingCartContainer#checkoutPage {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-top: 6.25em;
+    margin-top: 5.15em;
 }
 
 .cartHeader#checkoutPage {
@@ -104,27 +101,8 @@
     overflow-x: hidden; /* Hides horizontal scrollbar */
     padding-right: 1.5em; /* Adjust as needed */
     margin-top: 1em;
+
     
 
     border: 1px solid black;
 }
-
-
-
-/* Styling the scrollbar track */
-.cartItemContainer::-webkit-scrollbar {
-    width: 10px; /* Adjust the width of the scrollbar */
-}
-
-/* Styling the scrollbar handle */
-.cartItemContainer::-webkit-scrollbar-thumb {
-    background-color: rgb(71, 52, 245); /* Color of the scrollbar */
-    border-radius: 5px; /* Rounded corners of the scrollbar */
-    border: 2px solid black;
-}
-
-/* Styling the scrollbar track */
-.cartItemContainer::-webkit-scrollbar-track {
-    background-color: white; /* Color of the scrollbar track */
-}
-

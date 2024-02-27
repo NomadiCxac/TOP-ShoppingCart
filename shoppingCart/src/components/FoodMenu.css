@@ -14,6 +14,7 @@
     align-items: center;
     justify-content: space-evenly;
     height: 300px;
+    margin-right: -0.5em;
 }
 
 #food-menu {
@@ -38,9 +39,11 @@
 }
 
 .menuItemName {
+    font-size: 24px;
+    font-weight: 700;
     margin-top: 1em;
     margin-bottom: -0.5em;
-    color: red;
+    color: rgb(255, 185, 54)
 }
 
 .menuItemImage {
@@ -61,18 +64,33 @@
     margin-right: 1em;
 }
 
+span.option { 
+    padding: 0.5em;
+}
 
-.option {
+
+.option { 
+    color: rgb(89, 74, 71);
+    background-color: rgb(243, 235, 235);
     font-weight: 600;
     margin-right: 2em;
 }
 
 .selectedOption {
-    background-color: orange;
+    background-color: rgb(153, 196, 135);
     color: white; /* Optional: change text color for better contrast */
     /* Add any other styles to highlight the selected button */
 }
 
+.validSelector {
+    background-color: rgb(255, 185, 54);
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+}
+
+.validSelector:hover {
+    color:   rgb(89, 74, 71);
+}
 
 .buttonContainer {
     display: flex;
@@ -89,13 +107,6 @@
     min-width: 230px;
 }
 
-.validSelector {
-    background-color: orange;
-}
-
-.validSelector:hover {
-    background-color: rgb(61, 187, 50);
-}
 
 
 .invalidSelector:hover {
@@ -107,6 +118,10 @@
 }
 
 .itemDescription {
+    color: rgb(89, 74, 71);
+    display: flex;
+    align-items: flex-end;
+    font-size: 17px;
     max-width: 700px;
 }
 
