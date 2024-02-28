@@ -1,7 +1,6 @@
 // import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
-import { useLocation } from 'react-router-dom';
 import './pageNavigation.css'
 import { useFirebase } from '../context/FirebaseContext';
 // import FoodMenu from '../components/FoodMenu';
@@ -11,7 +10,8 @@ const LandingPage = () => {
 
     const location = useLocation(); // Get the current location
 
-    const pageId = location.pathname.substring(1) || 'landingPage';
+    const pathSegments = location.pathname.split('/');
+    const pageId = pathSegments.length > 1 ? pathSegments[1] : 'landingPage';
 
 
     return (

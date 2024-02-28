@@ -1,29 +1,32 @@
-// import React from 'react';
-import NavigationBar from '../components/NavigationBar';
-import { Link } from 'react-router-dom';
-import './pageNavigation.css'
+import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
+import './pageNavigation.css';
+import './AdminPage.css'; // Import the CSS file
 import { useFirebase } from '../context/FirebaseContext';
 import OrderList from '../components/OrderList';
-// import FoodMenu from '../components/FoodMenu';
-// import items from '../data/testData.js';
+import Sidebar from '../components/Sidebar';
 
 const AdminPage = () => {
-
-    const { isAdmin } = useFirebase()
+    const { isAdmin } = useFirebase();
 
     console.log(isAdmin);
 
+    useEffect(() => {
+        // Set overflow-y of the body to hidden when the component mounts
+        document.body.style.overflowY = 'hidden';
+        return () => {
+          document.body.style.overflowY = 'auto';
+        };
+      }, [])
 
     return (
-    
-    <>
-        <OrderList />
-        <button>
-            <Link to="/setPickUpDates" className='clickableLink'>Set Calendar</Link>
-        </button>
-    </>
-    
-    )
-}
+        <div className="adminPageContainer"> {/* Use the container class */}
+            <Sidebar />
+            <div className="mainContent"> {/* Class for the main content */}
+                <Outlet />
+            </div>
+        </div>
+    );
+};
 
-export default AdminPage
+export default AdminPage;

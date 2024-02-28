@@ -54,10 +54,13 @@ function AppRouter () {
         {
           path: "adminPage",
           element: isAdmin ? <AdminPage /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
-        },
-        {
-          path: "setPickUpDates", // Nested route for the UserDashboard
-          element: isAdmin ? <SetPickUpDates /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
+          children: [
+            {
+                path: "setPickUpDates", // Make this a nested route under adminPage
+                element: <SetPickUpDates />,
+            },
+            // Add other child routes as needed
+          ],
         },
         {
           path: "orderRequestSent",
