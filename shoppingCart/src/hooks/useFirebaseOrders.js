@@ -91,7 +91,7 @@ export const useFirebaseOrders = () => {
     }
 
     
-    const updateOrderPhase = async (selectedOrder, phase) => {
+    const updateOrderPhase = async (selectedOrder, phase, status) => {
         setLoading(true);
         setError(null);
 
@@ -109,6 +109,7 @@ export const useFirebaseOrders = () => {
 
             if (snapshot.exists()) {
                 await update(orderPhaseRef, { orderPhase: phase });
+                await update(orderPhaseRef, { orderVerifiedStatus: status });
             }
         } catch (error) {
             setError(error.message);

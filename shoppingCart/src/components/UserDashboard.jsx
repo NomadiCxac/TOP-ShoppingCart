@@ -23,24 +23,19 @@ import './UserDashboard.css';
 const UserDashboard = () => {
     const { user, anonymousOrderId, anonymousOrder } = useFirebase(); // Use the useFirebase hook to access the current user
     const { retrieveOrdersByEmail, retrieveOrderById, setDateAndTimeForOrder, updateOrderPhase} = useFirebaseOrders();
-    const navigate = useNavigate()
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [orderItemsArray, setOrderItemsArray] = useState([])
+    const [orderUpdated, setOrderUpdated] = useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
     const [orderPhase, setOrderPhase] = useState(null)
     const [selectedDate, setSelectedDate] = useState(null); // Added for storing selected date
     const [selectedTime, setSelectedTime] = useState(null); // Added for storing selected time
 
-    useEffect(() => {
-        console.log(user)
-        console.log(orders)
-        console.log(anonymousOrder)
-        console.log(anonymousOrderId)
-    })
+  
 
     const userGreeting = () => {
         if (user) {
@@ -67,40 +62,35 @@ const UserDashboard = () => {
     
 
     useEffect(() => {
-        setOrders([]);
-        if (user && !user.isAnonymous) {
-            let loadOrders = async (status = "incomplete") => {
-                setLoading(true);
-                try {
-                    let userEmail = user.email; // Directly use the user's email from the Firebase context
-                    let fetchedOrders = await retrieveOrdersByEmail(userEmail, status);
-                    setOrders(fetchedOrders || []); // Ensure fetchedOrders is an array
-                } catch (error) {
-                    console.error("Failed to fetch orders", error);
-                    setError(error.message);
-                } finally {
-                    setLoading(false);
+        async function loadOrders() {
+            setLoading(true);
+            setOrders([]); // Consider setting this at the beginning of loading to ensure UI consistency
+            try {
+                let fetchedOrders = [];
+                if (user && !user.isAnonymous) {
+                    fetchedOrders = await retrieveOrdersByEmail(user.email, "incomplete");
+                } else if (user && user.isAnonymous && anonymousOrderId) {
+                    // Assuming retrieveOrderById can handle anonymousOrderId directly
+                    const anonOrder = await retrieveOrderById(anonymousOrderId);
+                    fetchedOrders = anonOrder ? [anonOrder] : [];
                 }
-            };
-
-            loadOrders();
-        }
-
-        if (user && user.isAnonymous && anonymousOrder) {
-
-            let storedOrderId = localStorage.getItem('anonymousOrderId');
-            if (storedOrderId) {
-                const loadAnonymousOrder = async () => {
-                    const anonOrder = await retrieveOrderById(storedOrderId);
-                    if (anonOrder) {
-                        setOrders([anonOrder]); // Assuming setOrders expects an array
-                    }
-                };
-                loadAnonymousOrder();
+    
+                setOrders(fetchedOrders);
+            } catch (error) {
+                console.error("Failed to fetch orders", error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         }
-
-    }, [user, anonymousOrderId]); // Depend on user to re-fetch orders if the user changes
+    
+        // This conditional ensures we don't run the fetching logic unnecessarily
+        // It will run on mount, when user or anonymousOrderId changes, and when an order update is signaled
+        if (user || orderUpdated) {
+            loadOrders();
+            if (orderUpdated) setOrderUpdated(false); // Reset after fetching
+        }
+    }, [user, anonymousOrderId, orderUpdated]); // Depend on user, anonymousOrderId, and orderUpdated to re-fetch orders
 
 
 
@@ -115,6 +105,7 @@ const UserDashboard = () => {
 
     const handleCloseModal = () => {
         setModalOpen(false);
+        setSelectedOrder(null); // Reset selectedOrder
     };
 
         // Callback function to update selected date
@@ -134,7 +125,8 @@ const UserDashboard = () => {
         try {
             // Wait for setDateAndTimeForOrder to complete
             await setDateAndTimeForOrder(order, date, time);
-            await updateOrderPhase(order, "step2")
+            await updateOrderPhase(order, "step2", "Awaiting Payment & Payment Confirmation")
+            setOrderUpdated(true); // Indicate that an order has been updated
             setOrderPhase("step2");
             // After completion, handle success here if needed
         } catch (error) {
@@ -220,7 +212,7 @@ const UserDashboard = () => {
                                     className='confirmPickUpDateButton'
                                     disabled={!selectedDate || !selectedTime} // Button is disabled if either selectedDate or selectedTime is falsy
                                     >
-                                    {selectedDate && selectedTime ? "Confirm Pick Up Date" : "Choose a Valid Time" }</button>
+                                    {selectedDate && selectedTime ? "Confirm" : "Choose a Valid Time" }</button>
                                 </div>
                             </div>
                         </div>
@@ -236,7 +228,9 @@ const UserDashboard = () => {
                          <div className="orderSummary" id="modal">
                              <div className="orderIdContainer"  id="modal"> 
                                  {/* <h3>Order ID: {selectedOrder.id}</h3> */}
-                                 <div>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</div>
+                                 <div>Pickup Date Selected: 
+                                    {(selectedDate && selectedTime) ? ` ${selectedDate} @ ${selectedTime}` : ` ${selectedOrder.pickUpDate} @ ${selectedOrder.pickUpTime}`}
+                                </div>
                              </div>
 
                              <div className="orderConfirmationStatuses">

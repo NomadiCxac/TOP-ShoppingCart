@@ -172,7 +172,7 @@
     background-color:  rgb(243, 235, 235);
     padding: 0.5em;
     margin-bottom: 1em;
-    color:   rgb(89, 74, 71);
+    color: rgb(89, 74, 71);
 }
 
 .pickUpDateContainer {
@@ -186,6 +186,7 @@
     width: 100%;
     margin-top: 1em;
     margin-bottom: -1em;
+    margin-left: 1em;
     align-items: flex-start;
     justify-content: space-between;
     height: 18.75em;
@@ -209,32 +210,42 @@
     margin-left: 1em;
 }
 
+
 /* Adjustments for a fixed grid layout */
 .timeGridContainer {
     display: grid;
     /* Define a fixed number of columns. For example, 6 columns. Adjust as needed. */
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 8px; /* Adjust the gap between items */
     max-width: 37.5em; /* Your desired maximum width */
     margin: auto; /* Center the grid if the container is wider */
     margin-right: 13em;
-    margin-top: 0.5em;
-  }
+    margin-top: 0.9em;
+}
   
-  .timeGridContainer > .timeButton {
+.timeGridContainer > .timeButton {
     width: 8em;
-    padding: 4px; /* Make padding smaller to reduce button size */
+    padding: 0.6em; /* Make padding smaller to reduce button size */
+    padding-top: 0.5em;
     font-size: 1rem; /* Adjust font size for the smaller buttons */
-    background-color: #007bff; /* Example button color, adjust as needed */
+    background-color: rgb(252, 203, 112); /* Example button color, adjust as needed */
     color: white; /* Button text color */
     border: none; /* Remove default button border */
     cursor: pointer; /* Change cursor to pointer on hover */
     text-align: center; /* Center the text inside the button */
-  }
+}
   
-  .timeButton:hover {
-    background-color: #0056b3; /* Darker shade on hover, adjust as needed */
-  }
+.timeGridContainer > .timeButton:hover {
+    background-color: rgb(255, 185, 54); /* Darker shade on hover, adjust as needed */
+    color: rgb(89, 74, 71);
+}
+  
+.react-datepicker__month-container > .react-datepicker__month > .react-datepicker__week > .react-datepicker__day--selected {
+    background-color: rgb(255, 185, 54);
+}
+
+
+
 
   .confirmPickUpDateContainer {
     height: 3.125em;

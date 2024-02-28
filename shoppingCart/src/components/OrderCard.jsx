@@ -31,7 +31,7 @@ const OrderCard = ({ order, onClick }) => {
 
                 <div className="orderCardImages">
                     <div className="orderCardIconTitle">
-                        <div className="orderSubtotalContainer">{countItems(orderItemsArray)} item(s) - ${order.subtotal} CAD</div>
+                        <div className="orderSubtotalContainer">{countItems(orderItemsArray)} item(s) - ${order.subtotal.toFixed(2)} CAD</div>
                     </div>
                     <div className="orderCardIconContainer">
                         {orderItemsArray.map((item) => (
