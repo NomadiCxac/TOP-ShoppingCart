@@ -17,6 +17,7 @@ const OrderForm = () => {
   const [userDetails, setUserDetails] = useState({
     name: '',
     email: '',
+    phone: '',
     comments: '',
   });
 
@@ -59,7 +60,6 @@ const OrderForm = () => {
         orderPhase: "step1",
         pickUpDate: "",
         pickUpTime: "",
-        phone: ""
       };
 
       try {
@@ -102,6 +102,10 @@ const OrderForm = () => {
   const handleEmailChange = (event) => {
     setUserDetails({ ...userDetails, email: event.target.value });
   };
+
+  const handlePhoneChange = (event) => {
+    setUserDetails({ ...userDetails, phone: event.target.value });
+  };
   
   // Handler for the comments textarea
   const handleCommentsChange = (event) => {
@@ -121,8 +125,16 @@ const OrderForm = () => {
       <input type="text" id="name" value={userDetails.name} onChange={handleNameChange} placeholder="Name" />
       <label htmlFor="email">Email</label>
       <input type="email" id="email" value={userDetails.email} onChange={handleEmailChange} placeholder="Email" />
-      {/* <label htmlFor="date">Choose a Pickup-Date </label>
-      <input type="date" id="date" value={userDetails.date} onChange={handleDateChange} /> */}
+      <label htmlFor="phone">Phone</label>
+      <input 
+      type="tel" 
+      id="phone" 
+      value={userDetails.phone} 
+      onChange={handlePhoneChange} 
+      placeholder="123-456-7890"
+      pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+      title="Phone number should be in the format: 123-456-7890"
+      />
       <label htmlFor="comments">Additional Comments</label>
       <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Additional Comments"></textarea>
       <button type="submit">Submit Order Request</button>

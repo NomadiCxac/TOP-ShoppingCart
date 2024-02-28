@@ -81,6 +81,7 @@
   border: 1px solid var(--border-color);
   margin-top: 2em; /* Adjust top margin */
   margin-bottom: 1em;
+
 }
 
 .order-list-title {
@@ -91,7 +92,7 @@
 /* User info styles */
 .user-info-container {
   flex: 0 0 70%; /* Fixed width but can't shrink or grow */
-  padding: 1.5em;
+  padding: 0.5em;
   border-right: 1px solid var(--border-color);
   background-color: var(--primary-color);
   color: var(--background-color);

@@ -69,8 +69,7 @@ const OrderManagement = () => {
                         <div className="or-divider">- OR -</div>
                         
                         <div className="anonymous-access-container">
-                            <h2>Access Your Orders Via: ID and Email</h2>
-                            <h2>Enter Order ID and Email</h2>
+                            <h2>Please Enter Your Order Code Below to Set Pick Up Date</h2>
                             <form onSubmit={handleAnonymousAccessSubmit}>
                                 <input 
                                     type="text" 

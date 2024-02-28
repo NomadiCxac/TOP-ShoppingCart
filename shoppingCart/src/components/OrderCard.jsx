@@ -20,18 +20,18 @@ const OrderCard = ({ order, onClick }) => {
         <div className="orderCard" onClick={() => onClick(order)}>
             <div className="orderCardSummary">
                 <div className="orderCardIdContainer"> 
-                    <h3>Order ID: {order.id}</h3>
-                    <h6>Click to View Order Details&gt;</h6>
+                    <div className="orderIdContainerTitle">Order ID: {order.id}</div>
+                    <div className="orderDetailsTitleContainer">Click to View Order Details&gt;</div>
                 </div>
                 <div className="orderCardConfirmationStatuses">
-                    <h5> Order Status: {order.orderVerifiedStatus}</h5>
-                    <h5> Pickup Date: {order.pickUpDate} @ {order.pickUpTime}</h5>
+                    <div className="orderStatusContainer"> Order Status: {order.orderVerifiedStatus}</div>
+                    <div className="orderPickupDateContainer"> Pickup Date: {order.pickUpDate} @ {order.pickUpTime}</div>
                 </div>
 
 
                 <div className="orderCardImages">
                     <div className="orderCardIconTitle">
-                        <h6>{countItems(orderItemsArray)} item(s) - ${order.subtotal} CAD</h6>
+                        <div className="orderSubtotalContainer">{countItems(orderItemsArray)} item(s) - ${order.subtotal} CAD</div>
                     </div>
                     <div className="orderCardIconContainer">
                         {orderItemsArray.map((item) => (

@@ -23,7 +23,7 @@ const SubtotalChecker = ({ navigateToCheckoutPage, isShoppingCartPage, pageName 
             {isShoppingCartPage && 
                 <div className="checkoutButtonContainer">
                     <button className="checkoutButton" onClick={navigateToCheckoutPage} disabled={cartItems.length <= 0}>
-                        Check Out
+                        Proceed to Next Step
                     </button>
                 </div>
             }

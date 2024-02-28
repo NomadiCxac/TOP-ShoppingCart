@@ -1,3 +1,5 @@
+
+
 .StepTracker {
   display: flex;
   width: 90%;
@@ -8,6 +10,7 @@
   padding-bottom: 1em;
   border-bottom: 1px solid black;
   position: relative; /* Ensure the relative positioning for line placement */
+  color:   rgb(89, 74, 71);
 }
 
 .stepContainer {
@@ -15,6 +18,7 @@
   flex-direction: column;
   align-items: center;
   position: relative; /* Adjust for line positioning */
+  color:   rgb(89, 74, 71);
 }
 
 .circle {
@@ -30,12 +34,12 @@
 }
 
 .circle.active {
-  background-color: #007bff; /* Active step color */
+  background-color: rgb(255, 185, 54); /* Active step color */
   color: white;
 }
 
 .circle.completed {
-  background-color: #28a745; /* Completed step color */
+  background-color: rgb(248, 221, 171); /* Completed step color */
   color: white;
 }
 

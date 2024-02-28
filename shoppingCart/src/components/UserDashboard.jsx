@@ -194,7 +194,7 @@ const UserDashboard = () => {
                             <div className="orderSummary" id="modal">
                                 <div className="orderIdContainer" id='modal'> 
                                     {/* <h3>Order ID: {selectedOrder.id}</h3> */}
-                                    <h3>Pickup Date Selected: {selectedDate} @ {selectedTime ? selectedTime : "Please Choose a Valid Time"}</h3>
+                                    <div>Pickup Date Selected: {selectedDate} @ {selectedTime ? selectedTime : "Please Choose a Valid Time"}</div>
 
                                 </div>
 
@@ -236,7 +236,7 @@ const UserDashboard = () => {
                          <div className="orderSummary" id="modal">
                              <div className="orderIdContainer"  id="modal"> 
                                  {/* <h3>Order ID: {selectedOrder.id}</h3> */}
-                                 <h3>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</h3>
+                                 <div>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</div>
                              </div>
 
                              <div className="orderConfirmationStatuses">
@@ -308,7 +308,7 @@ const UserDashboard = () => {
                          <div className="orderSummary" id="modal">
                              <div className="orderIdContainer"  id="modal"> 
                                  {/* <h3>Order ID: {selectedOrder.id}</h3> */}
-                                 <h3>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</h3>
+                                 <div>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</div>
                              </div>
 
                              <div className="orderConfirmationStatuses">
@@ -379,7 +379,7 @@ const UserDashboard = () => {
                          <div className="orderSummary" id="modal">
                              <div className="orderIdContainer"  id="modal"> 
                                  {/* <h3>Order ID: {selectedOrder.id}</h3> */}
-                                 <h3>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</h3>
+                                 <div>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</div>
                              </div>
 
                              <div className="orderConfirmationStatuses">

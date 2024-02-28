@@ -40,9 +40,9 @@ function OrderRequestSent() {
         <div>
             <div className="orderNumberContainer">
 
-                <h3>This is Your Order Reference Number:</h3>
-                <h1>{referenceOrderId}</h1>
-                <h2>Please go to the <span className="orderManagementLink" onClick={handleOrderManagementClick}>Order Management</span> with your Order Reference Number and follow the next steps there.</h2>
+                <div className="orderCodeTitleContainer">This is Your Order Reference Code:</div>
+                <div className="orderCodeContainer">{referenceOrderId}</div>
+                
             </div>
             <div className="orderItemsContainer" id="orderRequestSent">
                 <div className="orderReviewContainer" id='modal'>
@@ -79,6 +79,12 @@ function OrderRequestSent() {
                 </div>
                 <div className="orderSubtotal" id='modal'>
                     {`Total: ${subtotal.toFixed(2)} CAD`} 
+                </div>
+
+                <div className="orderCodeNextStepsContainer">
+                    <button className="orderManagementLink" onClick={handleOrderManagementClick}>
+                        Set Pick Up Date Here
+                    </button>
                 </div>
             </div>
         </div>
