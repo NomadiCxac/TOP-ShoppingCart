@@ -6,9 +6,9 @@ import Modal from "./Modal";
 import './OrderList.css'
 
 
-const OrderList = () => {
+const OrderList = ({phase}) => {
 
-    const { retrieveAllOrdersFromDatabase, retrieveOrdersByEmail } = useFirebaseOrders()
+    const { retrieveAllOrdersFromDatabase, retrieveOrdersByEmail, retrieveOrdersByPhase } = useFirebaseOrders()
     const [email, setEmail] = useState("")
     const [ordersData, setOrdersData] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
@@ -58,12 +58,19 @@ const OrderList = () => {
     };
 
 
+    const handleRetrieveOrdersByPhase = async () => {
+      const orders = await retrieveOrdersByPhase(phase);
+      setOrdersData(orders); // Update the state with the fetched orders
+  };
+
+
   return (
         <div className="order-list">
         <div className="filters">
             <input type="text" value={email} onChange={emailQueryHandler} placeholder="Filter by email..." />
             <button onClick={handleRetrieveOrdersByEmail}>Retrieve Orders By Email</button>
             <button onClick={handleRetrieveOrders}>Retrieve All Orders</button>
+            <button onClick={handleRetrieveOrdersByPhase}>Retrieve Order By Phase</button>
         </div>
         <div className="scrollable-table-container"> 
         <table className="orders-table">

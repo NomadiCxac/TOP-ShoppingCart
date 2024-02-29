@@ -1,7 +1,7 @@
 // useFirebaseOrders.js
 import { useState } from 'react';
 import { useFirebase } from '../context/FirebaseContext';
-import { ref, push, set, get, update } from 'firebase/database';
+import { ref, push, set, get, update, query, orderByChild, equalTo, } from 'firebase/database';
 
 export const useFirebaseOrders = () => {
     // Access database from context
@@ -143,6 +143,7 @@ export const useFirebaseOrders = () => {
         }
     };
 
+
     const retrieveOrderById = async (orderId) => {
 
         console.log(orderId)
@@ -162,6 +163,28 @@ export const useFirebaseOrders = () => {
         }
     };
 
+
+    const retrieveOrdersByPhase = async (phase) => {
+        const ordersRef = ref(database, 'orders');
+        const phaseQuery = query(ordersRef, orderByChild('orderPhase'), equalTo(phase));
+    
+        try {
+            const snapshot = await get(phaseQuery);
+            if (snapshot.exists()) {
+                const orders = [];
+                snapshot.forEach(orderSnapshot => {
+                    orders.push({ id: orderSnapshot.key, ...orderSnapshot.val() });
+                });
+                return orders;
+            } else {
+                console.log("No orders found for phase:", phase);
+                return [];
+            }
+        } catch (error) {
+            console.error("Error retrieving orders by phase:", error);
+            return [];
+        }
+    };
     
 
 const retrieveOrdersByEmail = async (email, status = 'all') => {
@@ -332,6 +355,7 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
         setDateAndTimeForOrder,
         updateOrderPhase,
         retrieveAllOrdersFromDatabase,
+        retrieveOrdersByPhase,
         retrieveOrderById,
         retrieveOrdersByEmail,
         updatePickupTimesForDate,

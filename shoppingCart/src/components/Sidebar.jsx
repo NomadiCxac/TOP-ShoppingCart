@@ -6,11 +6,11 @@ const Sidebar = () => {
     // Define a list of menu items for easier management and extension
     // Replace 'iconName' with the appropriate Material Symbol name for each item
     const menuItems = [
-        { id: 'dashboard', label: 'Dashboard', iconName: 'space_dashboard', path: '/dashboard' },
+        { id: 'dashboard', label: 'Dashboard', iconName: 'space_dashboard', path: '' },
         { id: 'set-pickup-dates', label: 'Set Pickup Dates', iconName: 'calendar_month', path: '/setPickUpDates' },
-        { id: 'order-searcher', label: 'Order Searcher', iconName: 'quick_reference_all', path: '/order-searcher' },
-        { id: 'payments-pending', label: 'Payments Pending', iconName: 'credit_card_gear', path: '/payments-pending' },
-        { id: 'set-order-ready', label: 'Set Order Ready', iconName: 'order_approve', path: '/set-order-ready' },
+        { id: 'order-searcher', label: 'Order Searcher', iconName: 'quick_reference_all', path: '/orderSearcher' },
+        { id: 'payments-pending', label: 'Payments Pending', iconName: 'credit_card_gear', path: '/paymentsPending' },
+        { id: 'set-order-ready', label: 'Set Order Ready', iconName: 'order_approve', path: '/setOrderReady' },
         { id: 'logout', label: 'Logout', iconName: 'logout', path: '/' }
     ];
 

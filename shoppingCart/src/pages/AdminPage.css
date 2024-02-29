@@ -29,10 +29,9 @@
     display: flex;
     flex-direction: column;
     align-items: center; /* Center content horizontally in the flex container */
-    justify-content: center; /* Center content vertically in the flex container */
+    justify-content: flex-start; /* Center content vertically in the flex container */
     padding: 2em;
     overflow-y: hidden; /* Allows content to scroll if it overflows vertically */
     box-sizing: border-box; /* Ensures padding is included in the width calculation */
     margin-right: 15em;
-    margin-bottom: 5em;
 }

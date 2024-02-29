@@ -10,11 +10,17 @@ import OrderManagement from "./pages/OrderManagement";
 import AdminPage from "./pages/AdminPage";
 import SetPickUpDates from "./pages/SetPickUpDates";
 import OrderRequestSent from "./pages/OrderRequestSentPage";
-import FoodMenu from "./components/FoodMenu";
-import UserDashboard from "./components/UserDashboard";
+import OrderSearcher from "./pages/OrderSearcher";
+import PaymentsPending from "./pages/PaymentsPending";
+import SetOrderReady from "./pages/SetOrderReady";
+
 
 // import components
 import ProtectedRoute from './components/ProtectedRoute'; // Import the ProtectedRoute component
+import FoodMenu from "./components/FoodMenu";
+import UserDashboard from "./components/UserDashboard";
+
+
 
 function AppRouter () {
 
@@ -59,6 +65,19 @@ function AppRouter () {
                 path: "setPickUpDates", // Make this a nested route under adminPage
                 element: <SetPickUpDates />,
             },
+            {
+              path: "orderSearcher", // Make this a nested route under adminPage
+              element: <OrderSearcher />,
+            },
+            {
+              path: "paymentsPending", // Make this a nested route under adminPage
+              element: <PaymentsPending />,
+            },
+            {
+              path: "setOrderReady", // Make this a nested route under adminPage
+              element: <SetOrderReady />,
+            },
+
             // Add other child routes as needed
           ],
         },

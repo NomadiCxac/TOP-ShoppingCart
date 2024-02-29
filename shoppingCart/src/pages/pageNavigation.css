@@ -6,15 +6,6 @@
 }
 
 
-.pageContent#adminPage {
-    width: 100%; /* Use percentage instead of viewport width */
-    display: flex;
-    height: 90vh;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow-y: hidden;
-}
 
 #shoppingCartPage,
 #checkoutPage {
