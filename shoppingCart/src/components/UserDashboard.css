@@ -228,8 +228,8 @@
     padding: 0.6em; /* Make padding smaller to reduce button size */
     padding-top: 0.5em;
     font-size: 1rem; /* Adjust font size for the smaller buttons */
-    background-color: rgb(252, 203, 112); /* Example button color, adjust as needed */
-    color: white; /* Button text color */
+    background-color: rgb(255, 185, 54); /* Example button color, adjust as needed */
+    color: #222222; /* Button text color */
     border: none; /* Remove default button border */
     cursor: pointer; /* Change cursor to pointer on hover */
     text-align: center; /* Center the text inside the button */
@@ -237,7 +237,7 @@
   
 .timeGridContainer > .timeButton:hover {
     background-color: rgb(255, 185, 54); /* Darker shade on hover, adjust as needed */
-    color: rgb(89, 74, 71);
+    color: rgb(255, 255, 255);
 }
   
 .react-datepicker__month-container > .react-datepicker__month > .react-datepicker__week > .react-datepicker__day--selected {
