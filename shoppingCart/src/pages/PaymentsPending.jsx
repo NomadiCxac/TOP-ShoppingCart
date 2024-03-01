@@ -1,4 +1,5 @@
 import OrderList from "../components/OrderList";
+import SetPaymentStatus from "../components/SetPaymentStatus";
 
 
 const PaymentsPending = () => {
@@ -9,7 +10,7 @@ const PaymentsPending = () => {
     return (
         <div>
             <h1>Payments Pending</h1>
-            <OrderList
+            <SetPaymentStatus
                 phase={phase}
             />
                 

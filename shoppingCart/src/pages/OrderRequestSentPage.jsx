@@ -83,7 +83,7 @@ function OrderRequestSent() {
 
                 <div className="orderCodeNextStepsContainer">
                     <button className="orderManagementLink" onClick={handleOrderManagementClick}>
-                        Set Pick Up Date Here
+                        I Understand
                     </button>
                 </div>
             </div>

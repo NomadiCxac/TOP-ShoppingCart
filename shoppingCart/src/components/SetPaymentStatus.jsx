@@ -6,7 +6,7 @@ import Modal from "./Modal";
 import './OrderList.css'
 
 
-const OrderList = ({ phase }) => {
+const SetPaymentStatus = ({ phase }) => {
 
     const { retrieveAllOrdersFromDatabase, retrieveOrdersByEmail, retrieveOrdersByPhase } = useFirebaseOrders()
     const [email, setEmail] = useState("")
@@ -47,18 +47,6 @@ const OrderList = ({ phase }) => {
         setEmail(e.target.value);
     }
 
-    const handleRetrieveOrders = async () => {
-        const orders = await retrieveAllOrdersFromDatabase();
-        setOrdersData(orders); // Update the state with the fetched orders
-    };
-
-    const handleRetrieveOrdersByEmail = async () => {
-        const orders = await retrieveOrdersByEmail(email);
-        console.log(orders)
-        setOrdersData(orders); // Update the state with the fetched orders
-    };
-
-
     const handleRetrieveOrdersByPhase = async () => {
       const orders = await retrieveOrdersByPhase(phase);
       setOrdersData(orders); // Update the state with the fetched orders
@@ -72,10 +60,7 @@ const OrderList = ({ phase }) => {
   return (
         <div className="order-list">
         <div className="filters">
-            <input type="text" value={email} onChange={emailQueryHandler} placeholder="Filter by email..." />
-            <button onClick={handleRetrieveOrdersByEmail}>Retrieve Orders By Email</button>
-            <button onClick={handleRetrieveOrders}>Retrieve All Orders</button>
-            <button onClick={handleRetrieveOrdersByPhase}>Retrieve Order By Phase</button>
+            <button onClick={handleRetrieveOrdersByPhase}>Load Orders</button>
         </div>
         <div className="scrollable-table-container"> 
         <table className="orders-table">
@@ -86,16 +71,9 @@ const OrderList = ({ phase }) => {
 
                 <th>Customer Name</th>
                 <th>Customer Email</th>
+                <th>Order Subtotal</th>
 
-                {/* Payment Related  */}
-                {/* <th>Order Subtotal</th> */}
-
-                <th>Order Status</th>
-
-                {/* Color Code */}
-                <th>Client Set Pick Up Date?</th>
                 <th>Payment Made?</th>
-                <th>Production Ready?</th>
 
                 {/* Production Related  */}
                 {/* <th>Ready for Pick Up</th> */}
@@ -149,4 +127,4 @@ const OrderList = ({ phase }) => {
   );
 };
 
-export default OrderList;
+export default SetPaymentStatus;

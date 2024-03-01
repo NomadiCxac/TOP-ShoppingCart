@@ -160,6 +160,7 @@ export const useFirebaseOrders = () => {
             }
         } catch (error) {
             console.error("Error retrieving orders:", error);
+            return [];
         }
     };
 
@@ -191,6 +192,10 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
     setLoading(true);
     setError(null);
 
+    if (email === null || email === "") {
+        return [];
+    }
+
     try {
         const safeEmail = validEmail(email);
 
@@ -209,7 +214,6 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
             let ordersByEmail = orderSnapshots.map((snap) => snap.val());
 
             ordersByEmail = ordersByEmail.filter(order => {
-                console.log(order)
                 switch (status) {
                     case 'complete':
                         return order.orderComplete === true;
@@ -225,10 +229,12 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
             return ordersByEmail; // You might want to update state or return the value
         } else {
             console.log("No orders found for this email.");
+            return []; // Explicitly return an empty array when no orders are found
         }
     } catch (error) {
         setError(error.message);
         console.error("Error retrieving orders by email:", error);
+        return []; // Explicitly return an empty array when no orders are found
     } finally {
         setLoading(false);
     }

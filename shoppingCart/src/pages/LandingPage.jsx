@@ -13,19 +13,19 @@ const LandingPage = () => {
     const pathSegments = location.pathname.split('/');
     const pageId = pathSegments.length > 1 ? pathSegments[1] : 'landingPage';
 
+    const hideNavigationBar = location.pathname.includes('/adminPage');
+
 
     return (
-    
-    <>
-        <NavigationBar/>
-        <div className='pageContent' id={pageId}>
-            <Outlet />
-        </div>
-      {/* This will render child routes */}
-        {/* <FoodMenu /> */}
-    </>
-    
-    )
+        <>
+            {/* Conditionally render NavigationBar */}
+            {!hideNavigationBar && <NavigationBar />}
+            <div className='pageContent' id={pageId}>
+                <Outlet />
+            </div>
+            {/* This will render child routes */}
+        </>
+    );
 }
 
 export default LandingPage

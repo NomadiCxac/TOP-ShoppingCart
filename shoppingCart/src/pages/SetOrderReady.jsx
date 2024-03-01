@@ -1,4 +1,5 @@
 import OrderList from "../components/OrderList";
+import SetProductionStatus from "../components/SetProductionStatus";
 
 
 const SetOrderReady = () => {
@@ -9,7 +10,7 @@ const SetOrderReady = () => {
     return (
         <div>
             <h1>Set Order Ready</h1>
-            <OrderList
+            <SetProductionStatus
                 phase={phase}
             />
                 

@@ -6,7 +6,7 @@ import Modal from "./Modal";
 import './OrderList.css'
 
 
-const OrderList = ({ phase }) => {
+const SetProductionStatus = ({ phase }) => {
 
     const { retrieveAllOrdersFromDatabase, retrieveOrdersByEmail, retrieveOrdersByPhase } = useFirebaseOrders()
     const [email, setEmail] = useState("")
@@ -82,7 +82,6 @@ const OrderList = ({ phase }) => {
             <thead>
             <tr>
                 <th>Order ID</th>
-                <th>Date Order Generated</th>
 
                 <th>Customer Name</th>
                 <th>Customer Email</th>
@@ -90,11 +89,7 @@ const OrderList = ({ phase }) => {
                 {/* Payment Related  */}
                 {/* <th>Order Subtotal</th> */}
 
-                <th>Order Status</th>
-
                 {/* Color Code */}
-                <th>Client Set Pick Up Date?</th>
-                <th>Payment Made?</th>
                 <th>Production Ready?</th>
 
                 {/* Production Related  */}
@@ -112,12 +107,8 @@ const OrderList = ({ phase }) => {
           <td>{order.dateOrderGenerated}</td>
           <td>{order.name}</td>
           <td>{order.email}</td>
-          {/* <td>${order.subtotal.toFixed(2)}</td> */}
-          {/* <td>{order.clientPaid ? 'Paid' : 'Unpaid'}</td> */}
-          {/* <td>{order.itemsFulfilled ? 'Fulfilled' : 'Unfulfilled'}</td> */}
-          {/* Additional fields */}
           <td>
-            {order.orderVerifiedStatus}
+            Set Production Ready
             {/* <button onClick={() => toggleModal(order)}>Details</button> */}
           </td>
         </tr>
@@ -149,4 +140,4 @@ const OrderList = ({ phase }) => {
   );
 };
 
-export default OrderList;
+export default SetProductionStatus;

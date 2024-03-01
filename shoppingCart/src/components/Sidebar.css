@@ -9,7 +9,7 @@
 
 
 .sidebarContainer {
-    width: 20vw;
+    width: 22vw;
     height: 100vh;
     background-color: rgb(255, 184, 52);
 }
@@ -32,7 +32,7 @@
     display: flex;
     align-items: center;
     width: 90%;
-    font-size: 18px;
+    font-size: 17px;
     margin-top: 1em;
     color: white;
     background-color: rgb(221, 144, 0);
