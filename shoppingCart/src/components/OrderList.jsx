@@ -81,9 +81,10 @@ const OrderList = ({phase}) => {
 
                 <th>Customer Name</th>
                 <th>Customer Email</th>
+                <th>Order Subtotal</th>
                 <th>Payment Status</th>
-                <th>Order Verification Status</th>
-                <th>Order Ready for Pick Up</th>
+                <th>Order Status</th>
+                <th>Ready for Pick Up</th>
                 <th>Order Complete</th>
                 {/* Add more headers if needed */}
             </tr>
