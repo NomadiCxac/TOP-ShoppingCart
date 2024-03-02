@@ -16,22 +16,18 @@
     min-height: 100vh; /* Ensures it takes up at least the full height of the viewport */
 }
 
-/* Sidebar styles */
-.sidebarContainer {
-    flex: 0 0 15%; /* Locks the sidebar width but makes it flexible for layout adjustments */
-    height: 100vh; /* Ensures sidebar height matches the viewport */
-    /* Add your existing styles for the sidebar here */
-}
 
 /* Main content area */
 .mainContent {
-    flex-grow: 1; /* Allows main content to take up the rest of the space */
+    flex-grow: 1;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center; /* Center content horizontally in the flex container */
     justify-content: flex-start; /* Center content vertically in the flex container */
-    padding: 2em;
     overflow-y: hidden; /* Allows content to scroll if it overflows vertically */
     box-sizing: border-box; /* Ensures padding is included in the width calculation */
-    margin-right: 15em;
+    margin-right: 2em;
+    margin-left: 1em;
+
 }

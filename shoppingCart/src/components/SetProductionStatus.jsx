@@ -90,7 +90,7 @@ const SetProductionStatus = ({ phase }) => {
                 {/* <th>Order Subtotal</th> */}
 
                 {/* Color Code */}
-                <th>Production Ready?</th>
+                <th>Set Production Status</th>
 
                 {/* Production Related  */}
                 {/* <th>Ready for Pick Up</th> */}

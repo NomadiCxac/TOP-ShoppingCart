@@ -9,7 +9,6 @@ const PaymentsPending = () => {
 
     return (
         <div>
-            <h1>Payments Pending</h1>
             <SetPaymentStatus
                 phase={phase}
             />

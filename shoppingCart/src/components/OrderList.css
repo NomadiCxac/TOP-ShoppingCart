@@ -132,3 +132,14 @@
     font-weight: 700;
     font-style: italic;
 }
+
+.loadOrdersButton {
+    background-color: rgb(245, 167, 22);
+    color: white;
+}
+
+.loadOrdersButton:hover {
+    background-color: rgb(245, 167, 22);
+    color: rgb(89, 74, 71);
+    font-weight: 700;
+}

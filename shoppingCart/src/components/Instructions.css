@@ -1,0 +1,22 @@
+.instructions-container {
+    max-height: 5%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .instructions-container div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .instructions-container h2 {
+    margin-right: 5px;
+    font-size: 1em; /* Adjust based on your preference */
+  }
+  
+  .instructions-container p {
+    margin: 0;
+    font-size: 1em; /* Adjust based on your preference */
+  }

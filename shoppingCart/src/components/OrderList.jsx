@@ -87,19 +87,13 @@ const OrderList = ({ phase }) => {
                 <th>Customer Name</th>
                 <th>Customer Email</th>
 
-                {/* Payment Related  */}
-                {/* <th>Order Subtotal</th> */}
-
                 <th>Order Status</th>
+                <th>Order Subtotal</th>
 
                 {/* Color Code */}
-                <th>Client Set Pick Up Date?</th>
-                <th>Payment Made?</th>
-                <th>Production Ready?</th>
-
-                {/* Production Related  */}
-                {/* <th>Ready for Pick Up</th> */}
-
+                <th>Pick Up Date</th>
+                <th>Payment Status</th>
+                <th>Prod. Status</th>
 
             </tr>
             </thead>
@@ -108,7 +102,7 @@ const OrderList = ({ phase }) => {
     ordersData.map(order => order && (
       <React.Fragment key={order.id}>
         <tr>
-          <td>{order.id}</td>
+          <td onClick={() => toggleModal(order)}>{order.id}</td>
           <td>{order.dateOrderGenerated}</td>
           <td>{order.name}</td>
           <td>{order.email}</td>

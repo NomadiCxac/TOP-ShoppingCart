@@ -1,0 +1,178 @@
+.order-list {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 1.25em;
+}
+
+.filters {
+    margin-bottom: 1.25em;
+    text-align: center;
+}
+
+.filters input, .filters button {
+    padding: 0.625em;
+    margin: 0 0.3125em;
+}
+
+.scrollable-table-container {
+    overflow-x: auto;
+    width: 100%;
+    margin: auto;
+}
+
+.scrollable-table-container::-webkit-scrollbar {
+    display: none;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.25em;
+    table-layout: fixed; /* Add this line */
+}
+
+.orders-table th, .orders-table td {
+    border: 1px solid #ddd;
+    padding: 0.5em;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.orders-table th {
+    background-color: #f2f2f2;
+}
+
+/* Percentage widths for table headers */
+.order-id { width: 16%; }
+.date-order-generated { width: 15%; }
+.customer-name { width: 15%; }
+.customer-email { width: 25%; }
+.order-subtotal { width: 10%; }
+.payment-status { width: 12.5%; }
+
+.orders-table td button {
+    width: 100%;
+    height: 100%;
+    padding: 0.3125em 0.625em;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.orders-table td button:hover {
+    background-color: #5cb33a;
+    color: #ffffff;
+}
+
+#orderId { font-size: 0.75em; }
+
+.paid, .status.fulfilled { color: green; }
+.unpaid, .status.unfulfilled { color: red; }
+
+@media (max-width: 768px) {
+    .orders-table, .orders-table thead, .orders-table tbody, .orders-table th, .orders-table td, .orders-table tr {
+        display: block;
+    }
+
+    .orders-table th { display: none; }
+
+    .orders-table td {
+        border: none;
+        position: relative;
+        text-align: right;
+        width: auto;
+        height: auto;
+        padding: 0;
+    }
+
+    .orders-table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 1em;
+}
+
+.modalText {
+    font-size: small;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.loadOrdersButton {
+    background-color: rgb(245, 167, 22);
+    color: white;
+}
+
+.loadOrdersButton:hover {
+    background-color: rgb(245, 167, 22);
+    color: rgb(89, 74, 71);
+    font-weight: 700;
+}
+
+.modal-backdrop > .modal-content#payments-pending {
+    display: flex;
+    flex-direction: row;
+}
+
+.leftHalf,
+.rightHalf {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.leftHalf{
+    margin-right: 1em;
+}
+
+.informationContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1em;
+    background-color: rgb(243, 235, 235);
+}
+
+.switchContainer {
+    height: 100%;
+    background-color: rgb(233, 204, 204);
+    display: flex;
+    flex-direction: column;
+}
+
+.orderContentsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.orderContentsContainer > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1em;
+}
+
+.modalText#subtotal {
+    font-weight: 700;
+    color: re;
+}
+
+.confirmPaymentButton {
+    width: 80%;
+}
