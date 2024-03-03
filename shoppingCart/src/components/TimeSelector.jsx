@@ -1,75 +1,65 @@
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
-import './UserDashboard.css'
-import './TimeSelector.css'
+import './UserDashboard.css';
+import './TimeSelector.css';
 
-
-const TimeSelector = ({ onDateChange, onTimeChange }) => {
-
-  const date = new Date()
+const TimeSelector = ({ onDateChange, onTimeChange, currentDate }) => {
+  const date = new Date();
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  let initalMonthIndex = date.getMonth()
+  let initialMonthIndex = date.getMonth();
   const monthName = monthNames[date.getMonth()];
   const year = date.getFullYear();
 
-
   function createDateFromMonthDayYear(monthName, year, day) {
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const monthIndex = monthNames.indexOf(monthName); // Find the index of the monthName in the array
-    
+    const monthIndex = monthNames.indexOf(monthName);
     if (monthIndex === -1) {
       throw new Error("Invalid month name");
     }
-  
-    // Create a Date object using the year, monthIndex, and day
-    // Note: The monthIndex is zero-based in the Date constructor
-    const date = new Date(year, monthIndex, day);
-    return date;
+    return new Date(year, monthIndex, day);
   }
 
-  const [selectedMonth, setSelectedMonth] = useState(monthName)
-  const [selectedDate, setSelectedDate] = useState(null); // Initialized as null before fetching dates
+  const [selectedMonth, setSelectedMonth] = useState(monthName);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [pickupDates, setPickUpDates] = useState([]);
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState(null);
-  const { getPickupTimesForDate, getPickupDatesForMonth} = useFirebaseOrders(); // Assuming getPickupDates exists
+  const { getPickupTimesForDate, getPickupDatesForMonth } = useFirebaseOrders();
 
   async function fetchPickupDates(monthIndex, monthName) {
     setPickUpDates([]);
-    setSelectedDate(null); // Reset selected date when fetching new dates
-    setSelectedMonth(monthNames[monthIndex])
-    
-    // addition for proper data retrieval in Firebase DB
-    monthIndex = monthIndex + 1;
+    setSelectedDate(null);
+    setSelectedMonth(monthNames[monthIndex]);
 
-    if (monthIndex < 10) {
-      monthIndex = `0${monthIndex}_`
-    } else {
-      monthIndex = `${monthIndex}_`
-    }
-  
+    monthIndex += 1; // Adjust for Firebase DB retrieval
+    if (monthIndex < 10) monthIndex = `0${monthIndex}_`;
+    else monthIndex = `${monthIndex}_`;
+
     try {
-      
       const pickupDates = await getPickupDatesForMonth(year, monthName, monthIndex);
-      pickupDates.sort((a, b) => a - b)
-      let firstDate = createDateFromMonthDayYear(monthName, year, pickupDates[0])
-      
-      if (pickupDates.length > 0) {
-        setPickUpDates(pickupDates);
-        handleDateSelection(firstDate); 
-        fetchTimes(firstDate); // Use firstDate directly
-      }
+      pickupDates.sort((a, b) => a - b);
 
-      // Process pickupDates as needed here
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Normalize today's date for comparison
+
+      const firstValidDateIndex = pickupDates.findIndex(date => {
+        const candidateDate = createDateFromMonthDayYear(monthName, year, date);
+        return candidateDate > today;
+      });
+
+      if (firstValidDateIndex !== -1) {
+        const validDate = createDateFromMonthDayYear(monthName, year, pickupDates[firstValidDateIndex]);
+        setPickUpDates(pickupDates);
+        handleDateSelection(validDate);
+        fetchTimes(validDate);
+      }
     } catch (error) {
       console.error('Failed to fetch pickup dates:', error);
     }
   }
 
-  
-  async function fetchTimes (selectedDate) {
-    setSelectedDate(selectedDate); // Reset selected date when fetching new dates
+  async function fetchTimes(selectedDate) {
+    setSelectedDate(selectedDate);
     try {
       const fetchedTimes = await getPickupTimesForDate(selectedDate);
       fetchedTimes.sort((a, b) => {
@@ -78,7 +68,6 @@ const TimeSelector = ({ onDateChange, onTimeChange }) => {
         return hoursA * 60 + minutesA - (hoursB * 60 + minutesB);
       });
       setAvailableTimes(fetchedTimes);
-      console.log(availableTimes)
     } catch (error) {
       console.error('Failed to fetch times:', error);
     }
@@ -86,26 +75,16 @@ const TimeSelector = ({ onDateChange, onTimeChange }) => {
 
   const handleDateSelection = (date) => {
     setSelectedDate(date);
-    const dateString = date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    onDateChange(dateString); // Pass the formatted string instead of the Date object
-    console.log(dateString); // Confirm the conversion in the console
+    onDateChange(date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
   };
 
-  // Method to handle time selection
   const handleTimeSelection = (time) => {
     setSelectedTime(time);
-    onTimeChange(time); // Notify the parent component of the new time
-    console.log(time)
+    onTimeChange(time);
   };
 
-
-  // Initial Fetch for orders in the month
   useEffect(() => {
-    fetchPickupDates(initalMonthIndex, selectedMonth);
+    fetchPickupDates(initialMonthIndex, selectedMonth);
   }, []);
 
   useEffect(() => {
@@ -113,56 +92,41 @@ const TimeSelector = ({ onDateChange, onTimeChange }) => {
       if (selectedDate) {
         fetchTimes(selectedDate);
       }
-    }); // Adjust the delay based on user experience needs
-  
-    return () => clearTimeout(handler); // Cleanup timeout if the effect runs again before the timeout completes
+    }, 500); // You may adjust the delay as needed
+    return () => clearTimeout(handler);
   }, [selectedDate]);
-
 
   return (
     <div className='choosePickUpDateContainer'>
-
-
       <div className='calendarContainer'>
-          <DatePicker
-            selected={selectedDate} // Assuming you have a state variable `selectedDate` to manage the selected date
-            onChange={handleDateSelection}
-            onMonthChange={(month) => {
-              let monthIndex = month.getMonth()
-              setAvailableTimes([]);
-              fetchPickupDates(monthIndex, monthNames[monthIndex]);
-            }}
-            filterDate={date => {
-              const isInCurrentMonth = date.getMonth() === new Date(selectedDate).getMonth();
-              const isInCurrentYear = date.getFullYear() === new Date(selectedDate).getFullYear();
-              const dayString = date.getDate().toString();
-            
-              // Ensure the date is included in the pickupDates array and is in the current month
-              return pickupDates.includes(dayString) && isInCurrentMonth && isInCurrentYear;
-            }}
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateSelection}
+          onMonthChange={(month) => {
+            const monthIndex = month.getMonth();
+            setAvailableTimes([]);
+            fetchPickupDates(monthIndex, monthNames[monthIndex]);
+          }}
+          filterDate={date => {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const dateString = date.getDate().toString();
+            return date > today && pickupDates.includes(dateString);
+          }}
           inline
-          />
-        </div>
-
+        />
+      </div>
       <div className='timeContainer'>
         <div className="timeGridContainer">
-          {availableTimes.map((timeString, index) => {
-          // Assuming availableTimes format is like "6:00", "7:00"...
-          const [hours, minutes] = timeString.split(':').map(Number); // Convert hours and minutes to numbers
-          const nextHour = hours + 1; // Increment the hour
-          const endTime = `${nextHour}:${minutes < 10 ? '00' : minutes}`; // Format the end time string
-          const timeRange = `${timeString} - ${endTime}`; // Create the time range string
-
-            return (
-              <button className="timeButton" key={index} onClick={() => handleTimeSelection(timeRange)}>
-                {timeRange}
-              </button>
-            );
-          })}
+          {availableTimes.map((timeString, index) => (
+            <button className="timeButton" key={index} onClick={() => handleTimeSelection(`${timeString} - ${timeString}`)}>
+              {`${timeString} - ${timeString}`}
+            </button>
+          ))}
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default TimeSelector;

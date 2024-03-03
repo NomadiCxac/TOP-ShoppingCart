@@ -24,7 +24,7 @@ const OrderCard = ({ order, onClick }) => {
                     <div className="orderDetailsTitleContainer">Click to View Order Details&gt;</div>
                 </div>
                 <div className="orderCardConfirmationStatuses">
-                    <div className="orderStatusContainer"> Order Status: {order.orderVerifiedStatus}</div>
+                    <div className="orderStatusContainer"> Order Status: {order.orderStatus}</div>
                     <div className="orderPickupDateContainer"> Pickup Date: {order.pickUpDate} @ {order.pickUpTime}</div>
                 </div>
 
@@ -50,26 +50,3 @@ const OrderCard = ({ order, onClick }) => {
 
 export default OrderCard;
 
-
-    // return (
-    //     <div className={`orderCard ${isExpanded ? 'expanded' : ''}`} onClick={handleClick}>
-    //         <div className="orderSummary">
-    //             <h3>Order Date: {order.dateOrderGenerated}</h3>
-    //         </div>
-    //         {isExpanded && (
-    //             <div className="orderDetails">
-    //                 {/* This will render the details of the order when the card is expanded */}
-    //                 {orderItemsArray.map((item, index) => (
-    //                     <div key={index} className="orderItemDetail">
-    //                         <img src={item.imageURL || '/images/defaultFood.jpeg'} alt={item.name} className="itemImage" />
-    //                         <div>
-    //                             <h4>{item.name}</h4>
-    //                             <p>Quantity: {item.quantity}</p>
-    //                             {/* You can add more item details here */}
-    //                         </div>
-    //                     </div>
-    //                 ))}
-    //             </div>
-    //         )}
-    //     </div>
-    // );

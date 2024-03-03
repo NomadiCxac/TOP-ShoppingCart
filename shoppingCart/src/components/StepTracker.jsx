@@ -4,8 +4,8 @@ import './StepTracker.css'; // Make sure to create a corresponding CSS file
 function StepTracker({ orderPhase }) {
   // Define the information for each step
   const stepsInfo = [
-    'Confirm Pickup Date',
-    'Submit Order Payment',
+    'Payment Required',
+    'Select Pickup Date',
     'Preparing Order',
     'Ready for Pickup'
   ];

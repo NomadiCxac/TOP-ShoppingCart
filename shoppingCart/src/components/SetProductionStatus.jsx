@@ -3,101 +3,99 @@ import { useEffect, useState } from "react";
 import OrderItemView from "./OrderItemView";
 import React from "react";
 import Modal from "./Modal";
-import './OrderList.css'
+import Instructions from "./Instructions";
+import formatName from "../functions/formatName";
+import './SetProductionStatus.css'
 
 
 const SetProductionStatus = ({ phase }) => {
 
-    const { retrieveAllOrdersFromDatabase, retrieveOrdersByEmail, retrieveOrdersByPhase } = useFirebaseOrders()
+    const { retrieveOrdersByPhase, updateOrderPhase } = useFirebaseOrders()
     const [email, setEmail] = useState("")
     const [ordersData, setOrdersData] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentOrder, setCurrentOrder] = useState(null);
-    const [orderItemsPrepared, setOrderItemsPrepared] = useState({});
-
-        // Function to handle the prepared toggle
-        const handleItemPreparedToggle = (order, itemName) => {
-          setOrderItemsPrepared(prevState => {
-            const orderPrepared = prevState[order] || {};
-            const isPrepared = orderPrepared[itemName] || false;
-        
-            return {
-              ...prevState,
-              [order]: {
-                ...orderPrepared,
-                [itemName]: !isPrepared
-              }
-            };
-          });
-        };
-  
-      // Function to calculate the number of prepared items
-      const countPreparedItems = (orderId) => {
-          const orderPrepared = orderItemsPrepared[orderId];
-          return orderPrepared ? Object.values(orderPrepared).filter(isPrepared => isPrepared).length : 0;
-      };
 
     const toggleModal = (order) => {
       setCurrentOrder(order);
       setModalOpen(!isModalOpen);
     };
 
+    
+    const handleCloseModal = () => {
+      setModalOpen(false);
+      setCurrentOrder(null);
+  };
+
+  const handleSetProductionStatus = () => {
+      let updatePhase = "step4";
+      let status = "Your Order is Ready for Pickup";
+      updateOrderPhase(currentOrder, updatePhase, status);
+      handleCloseModal();
+  }
+
 
     function emailQueryHandler (e) {
         setEmail(e.target.value);
     }
-
-    const handleRetrieveOrders = async () => {
-        const orders = await retrieveAllOrdersFromDatabase();
-        setOrdersData(orders); // Update the state with the fetched orders
-    };
-
-    const handleRetrieveOrdersByEmail = async () => {
-        const orders = await retrieveOrdersByEmail(email);
-        console.log(orders)
-        setOrdersData(orders); // Update the state with the fetched orders
-    };
-
 
     const handleRetrieveOrdersByPhase = async () => {
       const orders = await retrieveOrdersByPhase(phase);
       setOrdersData(orders); // Update the state with the fetched orders
   };
 
-  useEffect (() => {
-    console.log(ordersData.length > 0)
-  })
-
+  const renderItemsDetails = () => {
+    const itemsArray = currentOrder ? Object.values(currentOrder.items) : [];
+  
+    return (
+      <div className="orderContentsContainer" id="adminProductionStatusModal">
+        {itemsArray.map((item, index) => {
+          let name = formatName(item.id);
+          if (item.batched) {
+            // Item is batched, show separate line items for half dozen and dozen
+            return (
+              <div key={index}>
+                {item.halfDozenQuantity > 0 && (
+                  <div>Half a Dozen {name} - {item.halfDozenQuantity} x ${item.halfDozenPrice.toFixed(2)}</div>
+                )}
+                {item.dozenQuantity > 0 && (
+                  <div>Dozen {name} - {item.dozenQuantity} x ${item.dozenPrice.toFixed(2)}</div>
+                )}
+              </div>
+            );
+          } else {
+            // Item is not batched, show total quantity and price
+            // Assuming there is a 'price' field for non-batched items to fix the .toFixed application
+            return (
+              <div key={index}>
+                <div>{name} - {item.quantity} x ${item.price.toFixed(2)}</div>
+              </div>
+            );
+          }
+        })}
+      </div>
+    );
+  };
 
   return (
         <div className="order-list">
+          {/* <Instructions 
+          instructions={instructionsArray}
+          /> */}
         <div className="filters">
-            <input type="text" value={email} onChange={emailQueryHandler} placeholder="Filter by email..." />
-            <button onClick={handleRetrieveOrdersByEmail}>Retrieve Orders By Email</button>
-            <button onClick={handleRetrieveOrders}>Retrieve All Orders</button>
-            <button onClick={handleRetrieveOrdersByPhase}>Retrieve Order By Phase</button>
+            <button onClick={handleRetrieveOrdersByPhase} className="loadOrdersButton">Load Orders</button>
         </div>
         <div className="scrollable-table-container"> 
         <table className="orders-table">
-            <thead>
-            <tr>
-                <th>Order ID</th>
-
-                <th>Customer Name</th>
-                <th>Customer Email</th>
-
-                {/* Payment Related  */}
-                {/* <th>Order Subtotal</th> */}
-
-                {/* Color Code */}
-                <th>Set Production Status</th>
-
-                {/* Production Related  */}
-                {/* <th>Ready for Pick Up</th> */}
-
-
-            </tr>
-            </thead>
+        <thead>
+          <tr>
+            <th className="order-id">Order ID</th>
+            <th className="date-order-generated">Date Order Generated</th>
+            <th className="customer-name">Customer Name</th>
+            <th className="customer-email">Customer Email</th>
+            <th className="production-status">Set Production Status</th>
+          </tr>
+        </thead>
             <tbody>
   {ordersData.length > 0 ? (
     ordersData.map(order => order && (
@@ -108,33 +106,49 @@ const SetProductionStatus = ({ phase }) => {
           <td>{order.name}</td>
           <td>{order.email}</td>
           <td>
-            Set Production Ready
-            {/* <button onClick={() => toggleModal(order)}>Details</button> */}
+            <button onClick={() => toggleModal(order)}>Details</button>
           </td>
         </tr>
       </React.Fragment>
     ))
   ) : (
     <tr>
-      <td colSpan="9" style={{ textAlign: 'center' }}>No orders found.</td>
+      <td colSpan="5" style={{ textAlign: 'center' }}>No orders found.</td>
     </tr>
   )}
 </tbody>
       </table>
   </div>
   {currentOrder && 
-    <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} orientation={'close-button-default'}>
-      <div className="modalHeader">
-        <p className="modalText">Order ID: {currentOrder.id}</p>
-        <p className="modalText">Customer Email: {currentOrder.email}</p>
-        <p className="modalText">Customer Name: {currentOrder.name}</p>
-        <p className="modalText">Order Subtotal: ${currentOrder.subtotal}.00 </p>
+    <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} orientation={'close-button-default'} id={"production-status"}>
+      <div className="leftHalf">
+        <div className="informationContainer">
+          <p className="modalText">Order ID: {currentOrder.id}</p>
+          <p className="modalText">Customer Email: {currentOrder.email}</p>
+          <p className="modalText">Customer Name: {currentOrder.name}</p>
+          <p className="modalText" id="subtotal">Order Subtotal: ${currentOrder.subtotal.toFixed(2)} - Paid </p>
+        </div>
+        <div className="switchContainer">
+          <div className="confirmPaymentInstructionsContainer">
+            <div id="confirmTitle">Please consider the following:</div>
+            <div>i. This order will have a production status set to: TRUE </div>
+            <div>ii. This order will be removed from the SET PRODUCTION STATUS search section</div>
+          </div>
+
+          <button className="confirmPaymentButton" onClick={handleSetProductionStatus}>Confirm Order Production</button>
+        </div>
       </div>
-        <OrderItemView 
-          items={currentOrder.items} 
-          preparedStatus={orderItemsPrepared[currentOrder.id] || {}} 
-          onItemPreparedToggle={(itemName) => handleItemPreparedToggle(currentOrder.id, itemName)} 
-        />
+      <div className="rightHalf">
+      <div className='closeButtonContainer'>
+        <p onClick={handleCloseModal} className="close-button" aria-label="Close modal">
+            &times;
+        </p>
+      </div>
+        <div className="orderItemsTitle">Order Items</div>
+        {renderItemsDetails()}
+      </div>
+
+    
      </Modal>}
     </div>
   );

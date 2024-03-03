@@ -11,6 +11,9 @@ function OrderRequestSent() {
     const { referenceOrderId } = useFirebase();
     const navigate = useNavigate(); 
 
+    let link = "LINK GOES HERE"
+    let adminEmail = "kitchenonselwynrd@gmail.com"
+
     // Helper function to calculate the total price of an item
     const checkoutItemTotal = (item) => {
         let total = 0;
@@ -40,8 +43,21 @@ function OrderRequestSent() {
         <div>
             <div className="orderNumberContainer">
 
-                <div className="orderCodeTitleContainer">This is Your Order Reference Code:</div>
-                <div className="orderCodeContainer">{referenceOrderId}</div>
+                <div className="orderCodeTitleContainer">IMPORTANT - This is Your Order Reference Code:</div>
+                <div className="orderCodeContainer">
+                    {referenceOrderId}
+                    <button>Send Me My Code Via Email</button>
+                    <button>Send Me My Code Via Tel.</button>
+                    </div>
+
+                <div>
+                    
+(i) - THIS IS A SUMMARY OF YOUR ORDER REQUEST. PLEASE COMPLETE PAYMENT SO THAT A PICKUP DATE CAN BE SET AND YOUR ORDER WILL BE PREPARED. 
+- YOU WILL RECEIVE ORDER REF CODE VIA (EMAIL, TEL., THIS PAGE)
+- PLEASE GO TO THE ORDER MANAGEMENT PAGE BY CLICKING THIS {link} AND LOGIN WITH YOUR CODE OR EMAIL TO VIEW YOUR ORDER.
+- IF THERE ARE ANY QUESTIONS PLEASE CONTACT {adminEmail} 
+- NOTE: PICKUP DATE AVAILABILITIES WILL VARY AND ARE SUBJECT TO THE VOLUME OF ORDERS
+                </div>
                 
             </div>
             <div className="orderItemsContainer" id="orderRequestSent">

@@ -9,7 +9,6 @@ const SetOrderReady = () => {
 
     return (
         <div>
-            <h1>Set Order Ready</h1>
             <SetProductionStatus
                 phase={phase}
             />

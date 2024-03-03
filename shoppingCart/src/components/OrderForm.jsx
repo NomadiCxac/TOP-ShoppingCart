@@ -47,19 +47,25 @@ const OrderForm = () => {
 
       const subtotal = calculateSubtotal(cartItems); // Use the calculateSubtotal function
       const orderDetails = {
+        
         items: formattedItems,
-        subtotal: subtotal, // Use the calculated subtotal
-        ...userDetails, // 
+        subtotal: subtotal, 
+        ...userDetails, 
+       
         dateOrderGenerated: getCurrentDateTime(),
-        orderVerifiedStatus: "Awaiting Pickup Date Confirmation",
-        clientPaid: false, // Default value for the new parameter
-        actualPickUpDate: null,
-        readyForClientPickUp: false, // Default value for the new parameter
-        orderComplete: false, // Default value for the new parameter
-        dateOrderComplete: null,
-        orderPhase: "step1",
+        orderStatus: "Payment Pending",
+
         pickUpDate: "",
         pickUpTime: "",
+        clientPaid: false,
+        productionReady: false, 
+        readyForClientPickUp: false,
+
+        orderComplete: false, 
+        dateOrderComplete: null,
+
+        orderPhase: "step1",
+
       };
 
       try {

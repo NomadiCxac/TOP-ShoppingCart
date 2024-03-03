@@ -111,7 +111,7 @@ const OrderList = ({ phase }) => {
           {/* <td>{order.itemsFulfilled ? 'Fulfilled' : 'Unfulfilled'}</td> */}
           {/* Additional fields */}
           <td>
-            {order.orderVerifiedStatus}
+            {order.orderStatus}
             {/* <button onClick={() => toggleModal(order)}>Details</button> */}
           </td>
         </tr>

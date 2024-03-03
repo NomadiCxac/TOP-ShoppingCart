@@ -4,7 +4,7 @@ import SetPaymentStatus from "../components/SetPaymentStatus";
 
 const PaymentsPending = () => {
     
-    const phase = "step2"
+    const phase = "step1"
 
 
     return (

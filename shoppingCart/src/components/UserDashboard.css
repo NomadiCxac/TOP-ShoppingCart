@@ -37,6 +37,22 @@
     padding-top: 0;
 }
 
+.orderIdContainer#modal > .paymentActionRequired {
+    text-align: left;
+    font-size: 20px;
+    margin-bottom: 0.5em;
+}
+
+.adminEmail {
+    color: rgb(62, 101, 207);
+}
+
+
+.orderIdContainer#modal > .paymentActionNote {
+    text-align: left;
+    font-size: 14px;
+}
+
 .orderConfirmationStatuses {
     display: flex;
     font-size: 12px;

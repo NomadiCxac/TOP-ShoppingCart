@@ -10,7 +10,7 @@ import './SetPaymentStatus.css'
 
 const SetPaymentStatus = ({ phase }) => {
 
-    const { retrieveOrdersByPhase } = useFirebaseOrders()
+    const { retrieveOrdersByPhase, updateOrderPhase } = useFirebaseOrders()
     const [email, setEmail] = useState("")
     const [ordersData, setOrdersData] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
@@ -26,6 +26,12 @@ const SetPaymentStatus = ({ phase }) => {
       setModalOpen(false);
       setCurrentOrder(null);
   };
+
+  const handleSetPaymentStatus = () => {
+      let updatePhase = "step2";
+      let status = "Please select a pickup date";
+      updateOrderPhase(currentOrder, updatePhase, status);
+  }
 
 
     function emailQueryHandler (e) {
@@ -127,19 +133,26 @@ const SetPaymentStatus = ({ phase }) => {
           <p className="modalText" id="subtotal">Order Subtotal: ${currentOrder.subtotal.toFixed(2)} </p>
         </div>
         <div className="switchContainer">
-          <div>Is this order correct?</div>
-          <button className="confirmPaymentButton">Confirm Order Payment</button>
+          <div className="confirmPaymentInstructionsContainer">
+            <div id="confirmTitle">Please consider the following:</div>
+            <div>i. This order will have a paid status set to: TRUE </div>
+            <div>ii. This order will be removed from the SET PAYMENT STATUS search section</div>
+          </div>
+
+          <button className="confirmPaymentButton" onClick={handleSetPaymentStatus}>Confirm Order Payment</button>
         </div>
       </div>
       <div className="rightHalf">
-        {renderItemsDetails()}
-      </div>
-
       <div className='closeButtonContainer'>
         <p onClick={handleCloseModal} className="close-button" aria-label="Close modal">
             &times;
         </p>
       </div>
+        <div className="orderItemsTitle">Order Items</div>
+        {renderItemsDetails()}
+      </div>
+
+    
      </Modal>}
     </div>
   );

@@ -35,6 +35,8 @@ const UserDashboard = () => {
     const [selectedDate, setSelectedDate] = useState(null); // Added for storing selected date
     const [selectedTime, setSelectedTime] = useState(null); // Added for storing selected time
 
+    const currentDate = new Date()
+
   
 
     const userGreeting = () => {
@@ -125,9 +127,9 @@ const UserDashboard = () => {
         try {
             // Wait for setDateAndTimeForOrder to complete
             await setDateAndTimeForOrder(order, date, time);
-            await updateOrderPhase(order, "step2", "Awaiting Payment & Payment Confirmation")
+            await updateOrderPhase(order, "step3", "Preparing Order")
             setOrderUpdated(true); // Indicate that an order has been updated
-            setOrderPhase("step2");
+            setOrderPhase("step3");
             // After completion, handle success here if needed
         } catch (error) {
             // Handle any errors that might have been thrown in setDateAndTimeForOrder
@@ -176,49 +178,8 @@ const UserDashboard = () => {
                 <Modal isOpen={isModalOpen} onClose={handleCloseModal} orientation={'top-right'} id="orderReview">
 
                     <div className='modalContentContainer'>
-                        {orderPhase === 'step1' && (
-                            <div className='orderStepsContainer'>
 
-                                <StepTracker
-                                    orderPhase = {orderPhase}
-                                />
-
-                            <div className="orderSummary" id="modal">
-                                <div className="orderIdContainer" id='modal'> 
-                                    {/* <h3>Order ID: {selectedOrder.id}</h3> */}
-                                    <div>Pickup Date Selected: {selectedDate} @ {selectedTime ? selectedTime : "Please Choose a Valid Time"}</div>
-
-                                </div>
-
-                                <div className="orderConfirmationStatuses">
-                                    <h5> Order Status: {selectedOrder.orderVerifiedStatus}</h5>
-                                    <h5> Action Required: Select a pickup date and pickup time </h5>
-                                </div>
-                            </div>
-
-                            <div className='pickUpDateContainer'> 
-                                <div id='pickUpDateContainerTitle'>
-                                    Please Select from the Available Pickup Dates:
-                                </div>
-                                <TimeSelector
-                                    selectedOrder = {selectedOrder}
-                                    onDateChange = {handleDateChange}
-                                    onTimeChange = {handleTimeChange}
-                                />
-
-                                <div className='confirmPickUpDateContainer'>
-                                    <button 
-                                    onClick={() => handleSetPickupDate(selectedOrder, selectedDate, selectedTime)}
-                                    className='confirmPickUpDateButton'
-                                    disabled={!selectedDate || !selectedTime} // Button is disabled if either selectedDate or selectedTime is falsy
-                                    >
-                                    {selectedDate && selectedTime ? "Confirm" : "Choose a Valid Time" }</button>
-                                </div>
-                            </div>
-                        </div>
-                        )}
-
-                        {orderPhase === 'step2' && (
+                    {orderPhase === 'step1' && (
                         <div className='orderStepsContainer'>
 
                              <StepTracker
@@ -227,17 +188,17 @@ const UserDashboard = () => {
 
                          <div className="orderSummary" id="modal">
                              <div className="orderIdContainer"  id="modal"> 
-                                 {/* <h3>Order ID: {selectedOrder.id}</h3> */}
-                                 <div>Pickup Date Selected: 
-                                    {(selectedDate && selectedTime) ? ` ${selectedDate} @ ${selectedTime}` : ` ${selectedOrder.pickUpDate} @ ${selectedOrder.pickUpTime}`}
+                                <div className='paymentActionRequired'> 
+                                ACTION REQUIRED: Please e-Transfer payment to <span className='adminEmail'>kitchenonselwynrd@gmail.com</span> to confirm your order. 
+                                </div>
+                                <div className='paymentActionNote'> Note: Please give 1 to 2 business day(s) to review your order payment. 
+                                For further inquiries contact: <span className='adminEmail'>kitchenonselwynrd@gmail.com</span>.
                                 </div>
                              </div>
 
-                             <div className="orderConfirmationStatuses">
-                                 <h5> Order Status: {selectedOrder.clientPaid ? "Complete" : "Payment required"} </h5>
-                                 <h5> Action Required: Please send payment to kitchenonselwynrd@gmail.com via email etransfer to confirm your order and await next steps. </h5>
-                                
-                             </div>
+                             {/* <div className="orderConfirmationStatuses">
+                                 <h5> Order Status: {selectedOrder.orderStatus} </h5>
+                             </div> */}
                          </div>
                     
 
@@ -292,6 +253,47 @@ const UserDashboard = () => {
                         </div>
                         )}
 
+
+                        {orderPhase === 'step2' && (
+                            <div className='orderStepsContainer'>
+
+                                <StepTracker
+                                    orderPhase = {orderPhase}
+                                />
+
+                            <div className="orderSummary" id="modal">
+                                <div className="orderIdContainer" id='modal'> 
+                                    {/* <h3>Order ID: {selectedOrder.id}</h3> */}
+                                    <div>Your Pickup Date: {selectedDate} @ {selectedTime ? selectedTime : "Please Choose a Valid Time"}</div>
+
+                                </div>
+                            </div>
+
+                            <div className='pickUpDateContainer'> 
+                                <div id='pickUpDateContainerTitle'>
+                                    Please Select from the Available Pickup Dates:
+                                </div>
+                                <TimeSelector
+                                    selectedOrder = {selectedOrder}
+                                    onDateChange = {handleDateChange}
+                                    onTimeChange = {handleTimeChange}
+                                    currentDate = {currentDate}
+                                />
+
+                                <div className='confirmPickUpDateContainer'>
+                                    <button 
+                                    onClick={() => handleSetPickupDate(selectedOrder, selectedDate, selectedTime)}
+                                    className='confirmPickUpDateButton'
+                                    disabled={!selectedDate || !selectedTime} // Button is disabled if either selectedDate or selectedTime is falsy
+                                    >
+                                    {selectedDate && selectedTime ? "Confirm" : "Choose a Valid Time" }</button>
+                                </div>
+                            </div>
+                        </div>
+                        )}
+
+
+
                         {orderPhase === 'step3' && (
                         <div className='orderStepsContainer'>
 
@@ -301,13 +303,13 @@ const UserDashboard = () => {
 
                          <div className="orderSummary" id="modal">
                              <div className="orderIdContainer"  id="modal"> 
-                                 {/* <h3>Order ID: {selectedOrder.id}</h3> */}
-                                 <div>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</div>
+                                <div>
+                                    Your Pickup Date: {selectedOrder.pickUpDate || selectedDate} @ {selectedOrder.pickUpTime || selectedTime}
+                                </div>
                              </div>
 
                              <div className="orderConfirmationStatuses">
-                                 <h5> Order Status: {selectedOrder.readyForClientPickUp ? "Your order is ready! " : "Your payment was received. Your order is in the kitchen!"}</h5>
-                                 <h5> Action Required: {selectedOrder.readyForClientPickUp ? "Pick up your order at the designated date and time" : "Please wait for your yummy order to be ready"}</h5>
+                                 <h5> Order Status: Your order is in the kitchen!</h5>
                              </div>
                          </div>
                     
@@ -373,11 +375,11 @@ const UserDashboard = () => {
                          <div className="orderSummary" id="modal">
                              <div className="orderIdContainer"  id="modal"> 
                                  {/* <h3>Order ID: {selectedOrder.id}</h3> */}
-                                 <div>Pickup Date Selected: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</div>
+                                 <div>Your Pickup Date: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</div>
                              </div>
 
                              <div className="orderConfirmationStatuses">
-                                 <h5> Order Status: {selectedOrder.readyForClientPickUp && "Your order is ready for pickup!"}</h5>
+                                 <h5> Order Status: {selectedOrder.orderStatus}!</h5>
                                  <h5> Action Required: Pick up your order at the designated date and time </h5>
                              </div>
                          </div>
