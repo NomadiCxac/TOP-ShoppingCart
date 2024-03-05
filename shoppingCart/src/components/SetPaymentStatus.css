@@ -123,7 +123,8 @@
     font-weight: 700;
 }
 
-.modal-backdrop > .modal-content#payments-pending {
+.modal-backdrop > .modal-content#payments-pending,
+.modal-backdrop > .modal-content#production-status {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -187,6 +188,17 @@
     border: 1px solid black;
 }
 
+.logisticsContainer {
+    height: 50%;
+    background-color: #8b8888;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid black;
+}
+
 .confirmPaymentInstructionsContainer {
     display: flex;
     flex-direction: column;
@@ -233,9 +245,10 @@
     justify-content: flex-start;
     padding: 1.5em;
     padding-top: 0;
-    background-color: rgb(243, 235, 235);
+    background-color: rgb(248, 195, 115);
     margin-bottom: 1em;
     border: 1px solid black;
+    color: black;
 }
 
 .adminCommentsContainer {
@@ -243,12 +256,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: rgb(243, 235, 235);
+    background-color: rgb(247, 223, 179);
     border: 1px solid black;
     padding: 1em;
     padding-left: 2em;
     padding-right: 2em;
     margin-bottom: 0.5em;
+    color: black;
 }
 
 .order-items-summary-container > .closeButtonContainer {

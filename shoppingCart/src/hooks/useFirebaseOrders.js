@@ -115,7 +115,7 @@ export const useFirebaseOrders = () => {
                     await update(orderPhaseRef, { clientPaid: true });
                 }
 
-                if (phase == "step3") {
+                if (phase == "step4") {
                     await update(orderPhaseRef, { productionReady: true });
                 }
 

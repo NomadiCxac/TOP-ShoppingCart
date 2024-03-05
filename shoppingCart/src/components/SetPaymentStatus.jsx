@@ -42,7 +42,6 @@ const SetPaymentStatus = ({ phase }) => {
       setCurrentOrder(order);
       setModalOpen(!isModalOpen);
       setEditComment(order ? order.adminComments : '');
-      console.log(order)
     };
 
      
@@ -57,10 +56,8 @@ const SetPaymentStatus = ({ phase }) => {
       updateOrderPhase(currentOrder, updatePhase, status);
   }
 
-  useEffect (() => {
-    console.log(editComment)
-  })
-    const handleRetrieveOrdersByPhase = async () => {
+  
+  const handleRetrieveOrdersByPhase = async () => {
       const orders = await retrieveOrdersByPhase(phase);
       setOrdersData(orders); // Update the state with the fetched orders
   };
@@ -86,7 +83,6 @@ const SetPaymentStatus = ({ phase }) => {
             );
           } else {
             // Item is not batched, show total quantity and price
-            // Assuming there is a 'price' field for non-batched items to fix the .toFixed application
             return (
               <div key={index}>
                 <div>{name} - {item.quantity} x ${item.price.toFixed(2)}</div>
@@ -100,9 +96,6 @@ const SetPaymentStatus = ({ phase }) => {
 
   return (
         <div className="order-list">
-          {/* <Instructions 
-          instructions={instructionsArray}
-          /> */}
         <div className="filters">
             <button onClick={handleRetrieveOrdersByPhase} className="loadOrdersButton">Load Orders</button>
         </div>
@@ -128,9 +121,6 @@ const SetPaymentStatus = ({ phase }) => {
           <td>{order.name}</td>
           <td>{order.email}</td>
           <td>${order.subtotal.toFixed(2)}</td>
-          {/* <td>{order.clientPaid ? 'Paid' : 'Unpaid'}</td> */}
-          {/* <td>{order.itemsFulfilled ? 'Fulfilled' : 'Unfulfilled'}</td> */}
-          {/* Additional fields */}
           <td>
             <button onClick={() => toggleModal(order)}>Details</button>
           </td>
@@ -146,7 +136,7 @@ const SetPaymentStatus = ({ phase }) => {
       </table>
   </div>
   {currentOrder && 
-    <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} orientation={'close-button-default'} id={"payments-pending"}>
+    <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} id={"payments-pending"}>
       <div className="leftHalf">
         <div className="informationContainer">
           <p className="modalText">Order ID: {currentOrder.id}</p>
