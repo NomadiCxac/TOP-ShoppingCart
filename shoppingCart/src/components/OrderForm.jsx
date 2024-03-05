@@ -57,6 +57,8 @@ const OrderForm = () => {
 
         pickUpDate: "",
         pickUpTime: "",
+        pickUpMonth: "",
+        
         clientPaid: false,
         productionReady: false, 
         readyForClientPickUp: false,

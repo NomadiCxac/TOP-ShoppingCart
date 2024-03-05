@@ -1,0 +1,38 @@
+.searchBarContainer {
+    position: relative; /* This allows absolute positioning relative to this container */
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc; /* Example border, adjust as needed */
+    border-radius: 20px; /* Rounded corners for the search bar */
+    overflow: hidden; /* Ensures content does not overflow the rounded borders */
+    width: 50%;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none; /* Removes the default border */
+    border-radius: 20px; /* Rounded corners for the input */
+}
+
+.searchButton {
+    position: absolute;
+    right: 0;
+    padding: 10px 15px; /* Adjust to align the icon properly within the bar */
+    border: none; /* Removes the default button border */
+    background-color: transparent; /* Makes the button background transparent */
+    cursor: pointer; /* Changes the cursor to a pointer on hover */
+}
+
+.searchButton .material-symbols-outlined {
+    font-size: 24px; /* Adjust the size of the icon as needed */
+}
+
+.searchInput:focus, .searchButton:focus {
+    outline: none; /* Removes the outline on focus for a clean look */
+}
+
+/* Optionally, style the input to expand its width on focus */
+.searchInput:focus {
+    width: 80%; /* Example, adjust as needed */
+}

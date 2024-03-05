@@ -116,15 +116,21 @@ const TimeSelector = ({ onDateChange, onTimeChange, currentDate }) => {
           inline
         />
       </div>
-      <div className='timeContainer'>
-        <div className="timeGridContainer">
-          {availableTimes.map((timeString, index) => (
-            <button className="timeButton" key={index} onClick={() => handleTimeSelection(`${timeString} - ${timeString}`)}>
-              {`${timeString} - ${timeString}`}
-            </button>
-          ))}
+        <div className='timeContainer'>
+          <div className="timeGridContainer">
+            {availableTimes.map((timeString, index) => {
+            let [hours, minutes] = timeString.split(":");
+              hours = (parseInt(hours, 10) + 1) % 24;
+              const endHourString = hours.toString().padStart(2, '0');
+              const timeRange = `${timeString} - ${endHourString}:${minutes}`;
+              return (
+                <button className="timeButton" key={index} onClick={() => handleTimeSelection(timeRange)}>
+                {timeRange}
+                </button>
+              );
+              })}
+          </div>
         </div>
-      </div>
     </div>
   );
 };

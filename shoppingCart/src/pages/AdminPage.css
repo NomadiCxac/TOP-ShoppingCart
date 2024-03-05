@@ -23,11 +23,129 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally in the flex container */
     justify-content: flex-start; /* Center content vertically in the flex container */
+    overflow-x: hidden; /* Allows content to scroll if it overflows vertically */
     overflow-y: hidden; /* Allows content to scroll if it overflows vertically */
     box-sizing: border-box; /* Ensures padding is included in the width calculation */
     margin-right: 2em;
     margin-left: 1em;
 
+}
+
+.adminDashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    margin-left: 1em;
+}
+
+/* Main Containers CSS */
+
+.topNav {
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+.topNavRight {
+    margin-top: 0.25em;
+    display: flex;
+    width: 40%;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 3em;
+}
+
+.pickupsOverviewContainer {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    width: 98.5%;
+    margin-bottom: 1em;
+}
+
+.statisticsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 30%;
+    width: 100%;
+}
+
+/* topNav elements */
+
+.topNavTitle {
+    font-size: 30px
+}
+
+.profileDisplay {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profilePicture {
+    height: 2em;
+    border-radius: 8em;
+    margin-right: 0.5em;
+}
+
+.notificationButton {
+    background-color: transparent;
+    border: none; 
+    cursor: pointer; 
+    padding: 0; 
+}
+
+.notificationButton:focus {
+    outline: none; 
+}
+
+/* pickupsOverviewContainer elements */ 
+
+.pickupsOverviewTitle {
+    font-size: 18px;
+    height: 10%;
+    display: flex;
+}
+
+.pickupsTodayContainer {
+    height: 90%;
+    width: 100%;
+    border: 1px solid black;
+    overflow-y: auto;
+}
+
+/* statisticsContainer elements */ 
+
+.statCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 48.63%;
+    height: 100%;
+    border: 1px solid black;
+    margin-right: 1em;
+}
+
+.dataTitle {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+
+.dataTitle > span {
+    margin-left: 0.3em;
+    font-size: 40px;
+}
+
+
+.dataValue {
+    font-size: 50px;
 }

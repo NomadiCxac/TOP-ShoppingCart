@@ -6,7 +6,7 @@ const Sidebar = () => {
     const location = useLocation(); 
 
     const adminActions = [
-        { id: 'dashboard', label: 'Dashboard', iconName: 'space_dashboard', path: '/adminPage/' },
+        { id: 'dashboard', label: 'Dashboard', iconName: 'space_dashboard', path: '/adminPage' },
         { id: 'set-pickup-dates', label: 'Set Pickup Dates', iconName: 'calendar_month', path: '/adminPage/setPickUpDates' },
         { id: 'order-searcher', label: 'Order Summary', iconName: 'quick_reference_all', path: '/adminPage/orderSearcher' },
         { id: 'payments-pending', label: 'Set Payment Status', iconName: 'credit_card_gear', path: '/adminPage/paymentsPending' },

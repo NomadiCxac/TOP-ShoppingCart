@@ -15,6 +15,7 @@ import SignOutButton from './SignOutButton';
 import formatName from '../functions/formatName';
 import resolveImageUrl from '../functions/resolveImageUrl';
 import { checkoutItemTotal } from '../functions/checkoutTotal';
+import { format } from 'date-fns';
 
 // import Carousel from './Carousel';
 import './Modal.css';
@@ -124,9 +125,12 @@ const UserDashboard = () => {
 
     const handleSetPickupDate = async (order, date, time) => {
         setIsSubmitting(true); // Begin the submission process
+
+        const pickUpMonth = format(date, 'yyyy-MM');
+
         try {
             // Wait for setDateAndTimeForOrder to complete
-            await setDateAndTimeForOrder(order, date, time);
+            await setDateAndTimeForOrder(order, date, time, pickUpMonth);
             await updateOrderPhase(order, "step3", "Preparing Order")
             setOrderUpdated(true); // Indicate that an order has been updated
             setOrderPhase("step3");

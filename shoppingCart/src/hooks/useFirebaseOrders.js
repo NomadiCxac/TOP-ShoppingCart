@@ -1,7 +1,8 @@
 // useFirebaseOrders.js
 import { useState } from 'react';
 import { useFirebase } from '../context/FirebaseContext';
-import { ref, push, set, get, update, query, orderByChild, equalTo, } from 'firebase/database';
+import { ref, push, set, get, update, query, orderByChild, equalTo, startAt, endAt } from 'firebase/database';
+import { format, startOfMonth, endOfMonth } from 'date-fns';
 
 export const useFirebaseOrders = () => {
     // Access database from context
@@ -61,7 +62,7 @@ export const useFirebaseOrders = () => {
         }
     };
 
-    const setDateAndTimeForOrder = async (selectedOrder, pickUpDate, pickUpTime) => {
+    const setDateAndTimeForOrder = async (selectedOrder, pickUpDate, pickUpTime, pickUpMonth) => {
         setLoading(true);
         setError(null);
 
@@ -79,6 +80,7 @@ export const useFirebaseOrders = () => {
             if (snapshot.exists()) {
                 await update(orderRef, { pickUpDate: pickUpDate });
                 await update(orderRef, { pickUpTime: pickUpTime });
+                await update(orderRef, { pickUpMonth: pickUpMonth });
             }
         } catch (error) {
             setError(error.message);
@@ -228,6 +230,65 @@ export const useFirebaseOrders = () => {
             return [];
         }
     };
+
+    const retrieveOrderDataByMonth = async (pickUpMonth) => {
+        // Assuming 'database' is accessible in this scope
+        const ordersRef = ref(database, 'orders');
+        // Query directly using the pickUpMonth field for efficient filtering
+        const monthQuery = query(ordersRef, orderByChild('pickUpMonth'), equalTo(pickUpMonth));
+        
+        try {
+            const snapshot = await get(monthQuery);
+            let orderCount = 0;
+            let subtotalSum = 0;
+        
+            if (snapshot.exists()) {
+                snapshot.forEach(orderSnapshot => {
+                    orderCount += 1; // Increment the order count
+                    subtotalSum += orderSnapshot.val().subtotal || 0; // Add to the subtotal sum
+                });
+            } else {
+                console.log("No orders found for the month:", pickUpMonth);
+            }
+        
+            return {
+                orderCount,
+                subtotalSum
+            };
+        } catch (error) {
+            console.error("Error retrieving orders by month:", error);
+            return {
+                orderCount: 0,
+                subtotalSum: 0
+            };
+        }
+    };
+
+    const retrieveOrdersByCurrentDate = async () => {
+        const ordersRef = ref(database, 'orders');
+        // Update the date format to match the one used in your database
+        const currentDate = format(new Date(), 'MMMM d, yyyy');
+        const dateQuery = query(ordersRef, orderByChild('pickUpDate'), equalTo(currentDate));
+      
+        try {
+          const snapshot = await get(dateQuery);
+          const orders = [];
+      
+          if (snapshot.exists()) {
+            snapshot.forEach(orderSnapshot => {
+              orders.push({ id: orderSnapshot.key, ...orderSnapshot.val() });
+            });
+          } else {
+            console.log("No orders found for the current date:", currentDate);
+          }
+      
+          return orders;
+        } catch (error) {
+          console.error("Error retrieving orders by current date:", error);
+          return [];
+        }
+      };
+    
     
 
 const retrieveOrdersByEmail = async (email, status = 'all') => {
@@ -301,6 +362,7 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
         const timesPath = `validPickUpDates/${formattedDate}/times`;
         const pickUpDateFlagPath = `validPickUpDates/${formattedDate}/isPickUpDate`;
         const pickUpDatesPath = `validPickUpDates/${yearMonth}/pickUpDates`;
+        
     
         try {
             // Update the times array for the selected date
@@ -403,6 +465,8 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
         setDateAndTimeForOrder,
         updateOrderPhase,
         updateAdminComments,
+        retrieveOrderDataByMonth,
+        retrieveOrdersByCurrentDate,
         retrieveAllOrdersFromDatabase,
         retrieveOrdersByPhase,
         retrieveOrderById,
