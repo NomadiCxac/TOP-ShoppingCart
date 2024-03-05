@@ -3,7 +3,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import './pageNavigation.css';
 import './AdminPage.css'; // Import the CSS file
 import { useFirebase } from '../context/FirebaseContext';
-import OrderList from '../components/OrderList';
 import Sidebar from '../components/Sidebar';
 
 const AdminPage = () => {
@@ -13,7 +12,6 @@ const AdminPage = () => {
     console.log(isAdmin);
 
     useEffect(() => {
-        // Set overflow-y of the body to hidden when the component mounts
         document.body.style.overflowY = 'hidden';
         return () => {
           document.body.style.overflowY = 'auto';
