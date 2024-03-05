@@ -71,9 +71,14 @@
     overflow: hidden; /* Hide overflowed content */
 }
 
-#orderId {
-    font-size: 12px;
-}
+/* Percentage widths for table headers */
+#order-id { width: 16%; }
+#date-order-generated { width: 12%; }
+#customer-name { width: 15%; }
+#customer-email { width: 25%; }
+#order-subtotal { width: 10%; }
+#order-status { width: 12.5%; }
+
 
 .paid {
     color: green;

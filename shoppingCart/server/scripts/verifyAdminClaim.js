@@ -18,4 +18,4 @@ const verifyAdminClaim = async (email) => {
 };
 
 // Replace with the email of the user you want to check
-verifyAdminClaim('christianxavier.cordero@gmail.com');
+verifyAdminClaim('kitchenonselwynrd@gmail.com');

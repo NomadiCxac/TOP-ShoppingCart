@@ -81,19 +81,15 @@ const OrderList = ({ phase }) => {
         <table className="orders-table">
             <thead>
             <tr>
-                <th>Order ID</th>
-                <th>Date Order Generated</th>
 
-                <th>Customer Name</th>
-                <th>Customer Email</th>
-
-                <th>Order Status</th>
-                <th>Order Subtotal</th>
-
-                {/* Color Code */}
-                <th>Pick Up Date</th>
-                <th>Payment Status</th>
-                <th>Prod. Status</th>
+            <th id="order-id">Order ID</th>
+            <th id="date-order-generated">Order Req. Start</th>
+            <th id="customer-name">Customer Name</th>
+            <th id="order-subtotal">Order Subtotal</th>
+            <th id="order-status">Order Status</th>
+            <th className="booleanField" id="pickup-date">Pick Up Date</th>
+            <th className="booleanField" id="payment-status">Paid Status</th>
+            <th className="booleanField" id="production-status">Prod. Status</th>
 
             </tr>
             </thead>
@@ -105,15 +101,17 @@ const OrderList = ({ phase }) => {
           <td onClick={() => toggleModal(order)}>{order.id}</td>
           <td>{order.dateOrderGenerated}</td>
           <td>{order.name}</td>
-          <td>{order.email}</td>
-          {/* <td>${order.subtotal.toFixed(2)}</td> */}
-          {/* <td>{order.clientPaid ? 'Paid' : 'Unpaid'}</td> */}
+          <td>${order.subtotal.toFixed(2)}</td>
+
           {/* <td>{order.itemsFulfilled ? 'Fulfilled' : 'Unfulfilled'}</td> */}
           {/* Additional fields */}
           <td>
             {order.orderStatus}
             {/* <button onClick={() => toggleModal(order)}>Details</button> */}
           </td>
+          <td>{order.pickUpDate ? order.pickUpDate : "Not Set"}</td>
+          <td>{order.clientPaid ? 'Paid' : 'Unpaid'}</td>
+          <td>{order.productionReady ? 'Yes' : 'No'}</td>
         </tr>
       </React.Fragment>
     ))

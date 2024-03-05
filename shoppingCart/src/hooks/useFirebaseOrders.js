@@ -102,14 +102,56 @@ export const useFirebaseOrders = () => {
         }
 
         const orderPhaseRef = ref(database, `orders/${selectedOrder.id}`);
+
+        console.log(phase)
         
         try {
             console.log("this is being called")
             const snapshot = await get(orderPhaseRef)
 
             if (snapshot.exists()) {
+
+                if (phase == "step2") {
+                    await update(orderPhaseRef, { clientPaid: true });
+                }
+
+                if (phase == "step3") {
+                    await update(orderPhaseRef, { productionReady: true });
+                }
+
                 await update(orderPhaseRef, { orderPhase: phase });
                 await update(orderPhaseRef, { orderStatus: status });
+
+            }
+        } catch (error) {
+            setError(error.message);
+            console.error("Error updating order", error);
+        } finally {
+            setLoading(false);
+        }
+
+        return true;
+    }
+
+    const updateAdminComments = async (selectedOrder, comment) => {
+        setLoading(true);
+        setError(null);
+
+        if (!selectedOrder) {
+            setError('Invalid Order Selection');
+            setLoading(false);
+            return; // Exit the function early
+        }
+
+        const orderPhaseRef = ref(database, `orders/${selectedOrder.id}`);
+        
+        try {
+            console.log("this is being called")
+            const snapshot = await get(orderPhaseRef)
+
+            if (snapshot.exists()) {
+                await update(orderPhaseRef, { adminComments: comment });
+
             }
         } catch (error) {
             setError(error.message);
@@ -360,6 +402,7 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
         pushOrderToDatabase,
         setDateAndTimeForOrder,
         updateOrderPhase,
+        updateAdminComments,
         retrieveAllOrdersFromDatabase,
         retrieveOrdersByPhase,
         retrieveOrderById,

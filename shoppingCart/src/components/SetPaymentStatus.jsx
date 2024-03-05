@@ -10,18 +10,42 @@ import './SetPaymentStatus.css'
 
 const SetPaymentStatus = ({ phase }) => {
 
-    const { retrieveOrdersByPhase, updateOrderPhase } = useFirebaseOrders()
-    const [email, setEmail] = useState("")
+    const { retrieveOrdersByPhase, updateOrderPhase, updateAdminComments } = useFirebaseOrders()
     const [ordersData, setOrdersData] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentOrder, setCurrentOrder] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [editComment, setEditComment] = useState(""); // To hold the comment being edited
+
+
+    const enterEditMode = () => {
+      setIsEditMode(true); // Switch to edit mode
+    };
+
+    const handleSaveComment = async () => {
+      try {        
+        
+        await updateAdminComments(currentOrder, editComment);
+  
+        setIsEditMode(false); // Exit edit mode
+         
+        // Optional: If your local state needs to be updated to reflect changes (depends on your state management)
+        setCurrentOrder({ ...currentOrder, adminComments: editComment });
+    
+      } catch (error) {
+        console.error("Failed to update comment:", error);
+        // Optionally handle the error, e.g., show an error message to the user
+      }
+    };
 
     const toggleModal = (order) => {
       setCurrentOrder(order);
       setModalOpen(!isModalOpen);
+      setEditComment(order ? order.adminComments : '');
+      console.log(order)
     };
 
-    
+     
     const handleCloseModal = () => {
       setModalOpen(false);
       setCurrentOrder(null);
@@ -33,11 +57,9 @@ const SetPaymentStatus = ({ phase }) => {
       updateOrderPhase(currentOrder, updatePhase, status);
   }
 
-
-    function emailQueryHandler (e) {
-        setEmail(e.target.value);
-    }
-
+  useEffect (() => {
+    console.log(editComment)
+  })
     const handleRetrieveOrdersByPhase = async () => {
       const orders = await retrieveOrdersByPhase(phase);
       setOrdersData(orders); // Update the state with the fetched orders
@@ -143,14 +165,52 @@ const SetPaymentStatus = ({ phase }) => {
         </div>
       </div>
       <div className="rightHalf">
-      <div className='closeButtonContainer'>
-        <p onClick={handleCloseModal} className="close-button" aria-label="Close modal">
-            &times;
-        </p>
-      </div>
-        <div className="orderItemsTitle">Order Items</div>
-        {renderItemsDetails()}
-      </div>
+        <div className="order-items-summary-container">
+
+        <div className='closeButtonContainer'>
+          <p onClick={handleCloseModal} className="close-button" aria-label="Close modal">
+              &times;
+          </p>
+        </div>
+          <div className="orderItemsTitle">
+            Order Items
+          </div>
+            {renderItemsDetails()}
+
+
+        </div>
+        
+            <div className="adminCommentsContainer">
+              <div className="adminCommentsTitle">Admin Comments</div>
+              {
+                isEditMode ? (
+                  <div className="editMode">
+                    <textarea value={editComment} onChange={(e) => setEditComment(e.target.value)}></textarea>
+                  </div>
+              ) : (
+
+              <div className="commentDisplay">
+                <div className="adminTextWrapper">
+                  <div className="adminText">{currentOrder.adminComments}</div>
+                </div>
+              </div>
+
+              )}
+               <div className="editCommentButtonContainer">
+                  {isEditMode ?  
+                  <button  className="saveCommentButton" onClick={handleSaveComment}>
+                    Save Comment
+                  </button>
+                  :                
+                  <button className="editCommentButton" onClick={() => enterEditMode(currentOrder.adminComments)}>
+                      Edit Comment
+                    </button> 
+                  }
+                </div>
+              </div>
+               
+            </div>
+
 
     
      </Modal>}

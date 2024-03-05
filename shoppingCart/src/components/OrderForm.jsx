@@ -66,6 +66,8 @@ const OrderForm = () => {
 
         orderPhase: "step1",
 
+        adminComments: ""
+
       };
 
       try {
