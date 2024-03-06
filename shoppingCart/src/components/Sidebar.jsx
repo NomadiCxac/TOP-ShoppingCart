@@ -8,7 +8,7 @@ const Sidebar = () => {
     const adminActions = [
         { id: 'dashboard', label: 'Dashboard', iconName: 'space_dashboard', path: '/adminPage' },
         { id: 'set-pickup-dates', label: 'Set Pickup Dates', iconName: 'calendar_month', path: '/adminPage/setPickUpDates' },
-        { id: 'order-searcher', label: 'Order Summary', iconName: 'quick_reference_all', path: '/adminPage/orderSearcher' },
+        { id: 'order-searcher', label: 'Order Searcher', iconName: 'quick_reference_all', path: '/adminPage/orderSearcher' },
         { id: 'payments-pending', label: 'Set Payment Status', iconName: 'credit_card_gear', path: '/adminPage/paymentsPending' },
         { id: 'set-order-ready', label: 'Set Production Status', iconName: 'order_approve', path: '/adminPage/setOrderReady' },
         { id: 'logout', label: 'Logout', iconName: 'logout', path: '/' },

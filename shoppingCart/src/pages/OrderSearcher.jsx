@@ -1,4 +1,5 @@
 import OrderList from "../components/OrderList";
+import TopNavBar from "../components/TopNavBar";
 
 
 const OrderSearcher = () => {
@@ -6,7 +7,11 @@ const OrderSearcher = () => {
 
 
     return (
-        <div>
+        <div className='adminPageContent'>
+            <TopNavBar 
+                pageName={"Search Order"}
+                searchBarOn={true}
+            />
             <OrderList></OrderList>
         </div>
     )

@@ -1,5 +1,6 @@
-import OrderList from "../components/OrderList";
+
 import SetProductionStatus from "../components/SetProductionStatus";
+import TopNavBar from "../components/TopNavBar";
 
 
 const SetOrderReady = () => {
@@ -8,7 +9,10 @@ const SetOrderReady = () => {
 
 
     return (
-        <div>
+        <div className='adminPageContent'>
+            <TopNavBar 
+                pageName={"Set Production Status"}
+            />
             <SetProductionStatus
                 phase={phase}
             />

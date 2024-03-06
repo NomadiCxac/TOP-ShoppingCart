@@ -9,7 +9,7 @@ import './OrderList.css'
 
 const OrderList = () => {
 
-    const { retrieveAllOrdersFromDatabase, retrieveOrdersByEmail, retrieveOrdersByPhase, updateAdminComments } = useFirebaseOrders()
+    const { retrieveOrderById, retrieveAllOrdersFromDatabase, retrieveOrdersByEmail, retrieveOrdersByPhase, updateAdminComments } = useFirebaseOrders()
     const [email, setEmail] = useState("")
     const [ordersData, setOrdersData] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
@@ -52,6 +52,12 @@ const handleCloseModal = () => {
 
 function emailQueryHandler (e) {
       setEmail(e.target.value);
+}
+
+const handleRetrieveOrderById = async (e) => {
+    let orderId = e.target.value
+    const orders = await retrieveOrderById(orderId);
+    setOrdersData(orders)
 }
 
 const handleRetrieveOrders = async () => {
@@ -122,6 +128,7 @@ const handleRetrieveOrdersByPhase = async () => {
         <div className="order-list">
         <div className="filters">
             <input type="text" value={email} onChange={emailQueryHandler} placeholder="Filter by email..." />
+            <button onClick={handleRetrieveOrderById}>Retrieve Orders By Id</button>
             <button onClick={handleRetrieveOrdersByEmail}>Retrieve Orders By Email</button>
             <button onClick={handleRetrieveOrders}>Retrieve All Orders</button>
             <button onClick={handleRetrieveOrdersByPhase}>Retrieve Order By Phase</button>

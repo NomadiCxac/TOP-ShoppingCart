@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
 import 'react-datepicker/dist/react-datepicker.css';
+import './AdminCalendar.css'
 
 const AdminCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -44,7 +45,7 @@ const AdminCalendar = () => {
   };
 
   return (
-    <div>
+    <div className='adminCalendarContainer'>
       <h2>Select a Valid Date</h2>
       <DatePicker
         selected={selectedDate}
@@ -56,7 +57,7 @@ const AdminCalendar = () => {
         inline
       />
       <h3>Select Available Times</h3>
-      <div style={{ display: 'flex', flexWrap: 'wrap', maxWidth: '600px' }}>
+      <div className="timeSlotPickerContainer">
         {[...Array(24).keys()].map(hour => {
           const time = `${hour}:00`;
           return (
@@ -70,7 +71,7 @@ const AdminCalendar = () => {
           );
         })}
       </div>
-      <button onClick={saveTimes}>Save Times</button>
+      <button className='saveTimesButton' onClick={saveTimes}>Save Times</button>
     </div>
   );
 };

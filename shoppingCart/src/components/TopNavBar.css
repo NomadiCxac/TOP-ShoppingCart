@@ -1,0 +1,61 @@
+.topNav {
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+.topNavLeft {
+    width: 50%;
+    display: flex;
+    align-items: flex-start;
+}
+
+
+.topNavRight {
+    margin-top: 0.25em;
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 3em;
+}
+
+
+.topNavTitle {
+    font-size: 30px
+}
+
+.profileAndNotifications {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profileDisplay {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 1em;
+}
+
+.profilePicture {
+    height: 2em;
+    border-radius: 8em;
+    margin-right: 0.5em;
+}
+
+.notificationButton {
+    background-color: transparent;
+    border: none; 
+    cursor: pointer; 
+    padding: 0; 
+    margin-top: 0.3em;
+    margin-left: 2em;
+}
+
+.notificationButton:focus {
+    outline: none; 
+}

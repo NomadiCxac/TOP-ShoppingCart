@@ -8,6 +8,7 @@ import Sidebar from '../components/Sidebar';
 import { parse, format } from 'date-fns';
 import SearchBar from '../components/SearchBar';
 import AdminCurrentDateOrders from '../components/AdminCurrentDateOrders';
+import TopNavBar from '../components/TopNavBar';
 
 const AdminPage = () => {
 
@@ -40,10 +41,7 @@ const AdminPage = () => {
     }, []); // Run on mount
 
 
-    const handleSearch = (searchTerm) => {
-        console.log(`Searching for: ${searchTerm}`);
-        // Implement your search logic here
-    };
+
 
     useEffect(() => {
         document.body.style.overflowY = 'hidden';
@@ -52,20 +50,6 @@ const AdminPage = () => {
         };
       }, [])
 
-          // Notification Button Component
-    const NotificationButton = () => (
-        <button className="notificationButton">
-            <span className="material-symbols-outlined">notifications</span>
-        </button>
-    );
-
-    // Profile Display Component
-    const ProfileDisplay = () => (
-        <div className="profileDisplay">
-            <img src={user.photoURL}className="profilePicture" />
-            <span>{user.displayName}</span>
-        </div>
-    );
 
     const convertStartTimeToComparableValue = (pickUpTime) => {
         const startTime = pickUpTime.split(' - ')[0]; // Extracts "HH:mm" before the dash
@@ -88,33 +72,21 @@ const AdminPage = () => {
                 {location.pathname === '/adminPage'
 
                 // Display admin dashboard default content
-                    ? <div className='adminDashboard'>
-                          <div className='topNav'>
-
-                            <div className='topNavLeft'>
-                                <div className='topNavTitle'>Overview</div>
-                            </div>
-
-                            <div className='topNavRight'>
-
-                                <SearchBar onSearch={handleSearch} />
-
-                                <div className='notificationContainer'>
-                                    <NotificationButton />
-                                </div>
-
-                                <div className='adminProfile'>
-                                    <ProfileDisplay />
-                                </div>
-                            </div>
-  
-                          </div>
+                    ? <div className='adminPageContent'>
+                          <TopNavBar 
+                            pageName = {"Overview"}
+                            searchBarOn={true}
+                          />
                           <div className='pickupsOverviewContainer'>
                             <div className='pickupsOverviewTitle'>Orders for Pickup Today - {currentDateReadable}</div>
                             <div className='pickupsTodayContainer'>
-                                <AdminCurrentDateOrders 
+                                {orderData.length > 0 ?                                 <AdminCurrentDateOrders 
                                     ordersArray={orderData}
                                 />
+                                : <div>No Orders Today</div>
+                            
+                            }
+
                             </div>
                           </div>
                           <div className='statisticsContainer'>

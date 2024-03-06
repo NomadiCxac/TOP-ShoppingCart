@@ -1,9 +1,12 @@
 import AdminCalendar from '../components/AdminCalendar'; // Adjust the path based on your file structure
+import TopNavBar from '../components/TopNavBar';
 
 const SetPickUpDates = () => {
   return (
-    <div>
-      <h1>Admin Page</h1>
+    <div className='adminPageContent'>
+      <TopNavBar 
+        pageName={"Set Pick Up Dates"}
+      />
       <AdminCalendar />
     </div>
   );

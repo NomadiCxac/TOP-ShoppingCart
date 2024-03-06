@@ -32,7 +32,7 @@
 
 }
 
-.adminDashboard {
+.adminPageContent {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -42,24 +42,6 @@
 }
 
 /* Main Containers CSS */
-
-.topNav {
-    height: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 2em;
-}
-
-.topNavRight {
-    margin-top: 0.25em;
-    display: flex;
-    width: 40%;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 3em;
-}
 
 .pickupsOverviewContainer {
     display: flex;
@@ -77,34 +59,6 @@
     width: 100%;
 }
 
-/* topNav elements */
-
-.topNavTitle {
-    font-size: 30px
-}
-
-.profileDisplay {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.profilePicture {
-    height: 2em;
-    border-radius: 8em;
-    margin-right: 0.5em;
-}
-
-.notificationButton {
-    background-color: transparent;
-    border: none; 
-    cursor: pointer; 
-    padding: 0; 
-}
-
-.notificationButton:focus {
-    outline: none; 
-}
 
 /* pickupsOverviewContainer elements */ 
 
@@ -117,12 +71,9 @@
 .pickupsTodayContainer {
     height: 90%;
     width: 100%;
-    border: 1px solid black;
     overflow-y: auto;
-}
-
-.orderCurrent {
-    display: flex;
+    scrollbar-color: #4e2323 transparent; /* thumb and track */
+    scrollbar-width: thin; /* can be 'auto', 'thin', or 'none' */
 }
 
 /* statisticsContainer elements */ 

@@ -1,5 +1,5 @@
-import OrderList from "../components/OrderList";
 import SetPaymentStatus from "../components/SetPaymentStatus";
+import TopNavBar from "../components/TopNavBar";
 
 
 const PaymentsPending = () => {
@@ -8,7 +8,10 @@ const PaymentsPending = () => {
 
 
     return (
-        <div>
+        <div className='adminPageContent'>
+            <TopNavBar 
+                pageName={"Set Payments Status"}
+            />
             <SetPaymentStatus
                 phase={phase}
             />
