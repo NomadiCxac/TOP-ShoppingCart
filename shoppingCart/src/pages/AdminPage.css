@@ -121,6 +121,10 @@
     overflow-y: auto;
 }
 
+.orderCurrent {
+    display: flex;
+}
+
 /* statisticsContainer elements */ 
 
 .statCard {

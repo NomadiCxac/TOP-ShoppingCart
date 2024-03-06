@@ -3,7 +3,7 @@ const AdminCurrentDateOrders = ({ ordersArray }) => {
     return (
       <div>
         {ordersArray.map((order) => (
-          <div key={order.id} style={{ marginBottom: '20px' }}>
+          <div className="orderCurrent" key={order.id} style={{ marginBottom: '20px' }}>
             <div>Order ID: {order.id}</div>
             <div>Customer Name: {order.name}</div>
             <div>Customer Email: {order.email}</div>
