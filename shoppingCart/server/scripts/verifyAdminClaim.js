@@ -1,6 +1,5 @@
 import admin from 'firebase-admin';
 import serviceAccount from '../data/serviceAccount.js'
-console.log(serviceAccount)
 
 // Initialize Firebase Admin
 admin.initializeApp({
