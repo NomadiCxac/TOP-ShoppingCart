@@ -17,14 +17,18 @@
 }
 
 .checkout-form label {
-    display: block;
+    display: flex;
     margin-bottom: 8px;
     font-weight: bold;
     color: #333;
+    align-items: flex-end;
+    justify-content: space-between;
 }
+
 
 .checkout-form input[type="text"],
 .checkout-form input[type="email"],
+.checkout-form input[type="tel"],
 .checkout-form input[type="date"],
 .checkout-form textarea {
     width: 100%;
@@ -51,4 +55,20 @@
 
 .checkout-form button:hover {
     background-color: #e68a00;
+}
+
+.requiredStar {
+    vertical-align: super;
+    color: red;
+    font-style: italic;
+    font-size: 9px;
+    margin-right: 0.6em;
+}
+
+.requiredText {
+    vertical-align: bottom;
+    color: red;
+    font-style: italic;
+    font-size: 9px;
+    margin-left: 0.5em;
 }

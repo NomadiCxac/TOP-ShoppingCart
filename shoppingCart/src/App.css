@@ -13,6 +13,14 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'LexendDeca';
+  src: url('../fonts/LexendDeca/LexendDeca-RegularItalic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+
 body {
   font-family: 'LexendDeca', Arial; /* Fallback to sans-serif if JA Jayagiri SANS is not available */
 }
@@ -23,8 +31,8 @@ body {
   /* padding: 2rem; */
   text-align: center;
   height: 100vh;
-  --primary-color: rgb(153, 196, 135); /* Primary color for your theme */
-  --secondary-color: rgb(132, 173, 114); /* Secondary color for highlights */
+  --primary-color:  rgb(255, 185, 54);
+  --secondary-color:rgb(89, 74, 71);
   --text-color: #333; /* Main text color */
   --background-color: #fff; /* Background color of the page */
   --border-color: #e0e0e0; /* Border color for containers */

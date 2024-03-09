@@ -131,22 +131,56 @@ const OrderForm = () => {
   return (
     <form onSubmit={handleSubmit} className="checkout-form">
       <h2>Checkout Information</h2>
-      <label htmlFor="name">Name</label>
-      <input type="text" id="name" value={userDetails.name} onChange={handleNameChange} placeholder="Name" />
-      <label htmlFor="email">Email</label>
-      <input type="email" id="email" value={userDetails.email} onChange={handleEmailChange} placeholder="Email" />
-      <label htmlFor="phone">Phone</label>
+      <label htmlFor="name">
+        <div>
+            <span className='requiredStar'>*</span>Name 
+        </div>
+
+        <span className='requiredText'> Required</span>
+      </label>
+      
       <input 
-      type="tel" 
-      id="phone" 
-      value={userDetails.phone} 
-      onChange={handlePhoneChange} 
-      placeholder="123-456-7890"
-      pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-      title="Phone number should be in the format: 123-456-7890"
+        type="text" 
+        id="name" 
+        value={userDetails.name} 
+        onChange={handleNameChange} 
+        placeholder="Name" 
+        required
+      />
+      <label htmlFor="email">
+        <div>
+          <span className='requiredStar'>*</span>Email 
+        </div>
+
+        <span className='requiredText'> Required</span>
+      </label>
+      <input 
+        type="email" 
+        id="email" 
+        value={userDetails.email} 
+        onChange={handleEmailChange} 
+        placeholder="Email" 
+        required
+      />
+       <label htmlFor="phone">        
+          <div>
+            <span className='requiredStar'>*</span>Phone
+          </div>
+
+          <span className='requiredText'> Required</span>
+      </label>
+      <input 
+        type="tel" 
+        id="phone" 
+        value={userDetails.phone} 
+        onChange={handlePhoneChange} 
+        placeholder="416-456-7890"
+        pattern="([2-9]\d{2}-\d{3}-\d{4})|([2-9]\d{9})"
+        title="Phone number should be in the format: 416-456-7890 or 4164567890"
+        required
       />
       <label htmlFor="comments">Additional Comments</label>
-      <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Additional Comments"></textarea>
+      <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Please enter any specifications..."></textarea>
       <button type="submit">Submit Order Request</button>
       
     </form>
