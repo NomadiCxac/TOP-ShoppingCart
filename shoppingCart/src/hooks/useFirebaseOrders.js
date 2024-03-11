@@ -1,8 +1,8 @@
 // useFirebaseOrders.js
 import { useState } from 'react';
 import { useFirebase } from '../context/FirebaseContext';
-import { ref, push, set, get, update, query, orderByChild, equalTo, startAt, endAt } from 'firebase/database';
-import { format, startOfMonth, endOfMonth } from 'date-fns';
+import { ref, push, set, get, update, query, orderByChild, equalTo } from 'firebase/database';
+import { format } from 'date-fns';
 
 export const useFirebaseOrders = () => {
     // Access database from context

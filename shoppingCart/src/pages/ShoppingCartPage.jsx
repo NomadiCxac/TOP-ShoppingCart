@@ -25,8 +25,6 @@ const ShoppingCartPage = () => {
 
   const navigateToCheckoutPage = () => {
     if (cartItems.length > 0) {
-      console.log(cartItems);
-      console.log(user);
       navigate("/checkoutPage"); // Navigate to the checkout page
     }
   };

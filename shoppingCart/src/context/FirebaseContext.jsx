@@ -8,6 +8,7 @@ const FirebaseContext = createContext();
 export const useFirebase = () => useContext(FirebaseContext);
 
 export const FirebaseProvider = ({ children }) => {
+    const [isFirebaseReady, setIsFirebaseReady] = useState(false);
     const [auth, setAuth] = useState(null);
     const [database, setDatabase] = useState(null);
     const [user, setUser] = useState(null);
@@ -15,9 +16,10 @@ export const FirebaseProvider = ({ children }) => {
     const [anonymousOrderId, setAnonymousOrderId] = useState(null); // Add anonymousOrderId state
     const [anonymousOrder, setAnonymousOrder] = useState([]); // Add anonymousOrderId state
     const [referenceOrderId, setReferenceOrderId] = useState("");
+    
 
     useEffect(() => {
-
+        console.log("Database initialized", database);
         
         try {
             let app;
@@ -26,10 +28,13 @@ export const FirebaseProvider = ({ children }) => {
             } else {
                 app = getApps()[0]; // Use the existing app if already initialized
             }
+
+           
     
             const authInstance = getAuth(app);
-            setAuth(authInstance);
             const databaseInstance = getDatabase(app);
+
+            setAuth(authInstance);
             setDatabase(databaseInstance);
     
             const unsubscribe = onAuthStateChanged(authInstance, async (currentUser) => {
@@ -46,8 +51,12 @@ export const FirebaseProvider = ({ children }) => {
                     setIsAdmin(false); // No user signed in, not an admin
                     setAnonymousOrderId(null); // Reset anonymousOrderId when there is no user
                 }
+
+                setIsFirebaseReady(true); // Set to true once everything is initialized
+
             });
-    
+
+           
             return () => unsubscribe(); // Cleanup listener
         } catch (error) {
             console.error("Firebase initialization error: ", error);
@@ -92,6 +101,7 @@ export const FirebaseProvider = ({ children }) => {
         user,
         auth,
         database,
+        isFirebaseReady,
         anonymousOrderId,
         anonymousOrder,
         referenceOrderId,

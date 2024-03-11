@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import 'firebaseui/dist/firebaseui.css';
 import { getFirebaseUIConfig, getFirebaseUIInstance } from '../functions/firebaseUIConfig';
 import { useFirebase } from '../context/FirebaseContext';
@@ -9,8 +9,9 @@ import './OrderManagement.css';
 const OrderManagement = () => {
     const { user, auth, signInAnonymously, anonymousOrderId, setAnonymousOrder, referenceOrderId } = useFirebase();
     const navigate = useNavigate();
+    const { orderId } = useParams();
     // Set orderId to referenceOrderId if it exists, otherwise initialize it as null.
-    const [orderId, setOrderId] = useState(referenceOrderId || '');
+    const [orderIdLink, setOrderIdLink] = useState(referenceOrderId || '');
 
     const { retrieveOrderById } = useFirebaseOrders();
 
@@ -74,8 +75,8 @@ const OrderManagement = () => {
                                 <input 
                                     type="text" 
                                     placeholder='Input Order ID Here'
-                                    value={orderId} 
-                                    onChange={(e) => setOrderId(e.target.value)} 
+                                    value={ orderId } 
+                                    onChange={(e) => setOrderIdLink(e.target.value)} 
                                     required />
                                 <button type="submit">Access Order</button>
                             </form>

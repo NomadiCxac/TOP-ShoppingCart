@@ -8,9 +8,6 @@ const FinalizeShoppingCart = ({pageName}) => {
     const { addToCart, removeFromCart, cartItems } = useCart();
 
     const maxQuantity = 10;
-    useEffect(() => {
-        console.log(cartItems)
-    })
 
     const quantityOptions = [];
     for (let i = 1; i <= maxQuantity; i++) {
