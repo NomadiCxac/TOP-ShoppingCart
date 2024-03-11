@@ -48,27 +48,38 @@ const OrderForm = () => {
       const subtotal = calculateSubtotal(cartItems); // Use the calculateSubtotal function
       const orderDetails = {
         
+        // Order Payload
         items: formattedItems,
         subtotal: subtotal, 
         ...userDetails, 
        
+        // Track order creation date
         dateOrderGenerated: getCurrentDateTime(),
         orderStatus: "Payment Pending",
 
+        // Pickup details for order
         pickUpDate: "",
         pickUpTime: "",
         pickUpMonth: "",
         
+        // Production details for order
         clientPaid: false,
         productionReady: false, 
         readyForClientPickUp: false,
 
+        // Data archiving details for order
         orderComplete: false, 
         dateOrderComplete: null,
 
+        // Order phase
         orderPhase: "step1",
 
-        adminComments: ""
+        // Admin comments on orders
+        adminComments: "",
+
+        // Order code details for order
+        orderCodeSentByEmail: false,
+        orderCodeSentByPhone: false,
 
       };
 
@@ -80,7 +91,7 @@ const OrderForm = () => {
         setReferenceOrderId(orderId); // Set the reference order ID in your Firebase context
         console.log("Setting reference order ID:", orderId);
 
-        navigate('/orderRequestSent'); // Navigate to the orderRequestSent page
+        navigate(`/orderRequestSent/${orderId}`); // Navigate to the orderRequestSent page
         return orderId;
       } catch (error) {
         console.error("Failed to push order to database:", error);

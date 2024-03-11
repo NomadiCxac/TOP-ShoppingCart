@@ -205,12 +205,19 @@
     margin-left: 1em;
     align-items: flex-start;
     justify-content: space-between;
-    height: 18.75em;
+    height: 20em;
 
 }
 
-#pickUpDateContainerTitle {
+.pickUpDateContainerInfo {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 1em;
+}
+
+.pickUpDateContainerInfo > #select-prompt {
+    font-style: italic;
 }
 
 .selectionContainer {

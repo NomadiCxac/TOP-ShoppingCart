@@ -106,11 +106,11 @@
     margin-bottom: 1em;
 }
 
-.modalText {
+/* .modalText#payments-pending {
     font-size: small;
     font-weight: 700;
     font-style: italic;
-}
+} */
 
 .loadOrdersButton {
     background-color: rgb(245, 167, 22);

@@ -1,0 +1,19 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+    align-items: center;
+    bottom: 0; /* Align the element to the bottom of its nearest scrolling ancestor */
+    left: 50%;
+
+    background-color: rgb(255, 185, 54);
+    color: var(--secondary-color); /* Text color */
+    padding: 20px 10px;
+
+    font-style: italic;
+
+    width: 60%; /* Ensure it spans the full width */
+    z-index: 1000; /* Optional: ensure it sits above other content */
+    transform: translateX(-50%);
+}

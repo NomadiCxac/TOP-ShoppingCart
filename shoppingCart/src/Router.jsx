@@ -45,9 +45,17 @@ function AppRouter () {
           path: "checkoutPage", // New route for the checkout page
           element: <CheckoutPage />,
         },
+
+        // Dynamic routing to the orderManagement page to extract the orderId code
+        {
+          path: "orderManagement/:orderId",
+          element: <OrderManagement />,
+        },
+
+        // Base routing
         {
           path: "orderManagement",
-          element: <OrderManagement />,
+          element: <OrderManagement />, // The base page without an orderId
         },
         {
           // Define UserDashboard as a sibling to OrderManagement
@@ -82,7 +90,7 @@ function AppRouter () {
           ],
         },
         {
-          path: "orderRequestSent",
+          path: "orderRequestSent/:orderId",
           element: <OrderRequestSent />,
         },
 

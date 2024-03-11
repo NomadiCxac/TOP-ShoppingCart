@@ -15,16 +15,13 @@ const CheckoutPage = () => {
   useEffect(() => {
     // Redirect or show empty cart message if cart is empty
     if (cartItems.length === 0) {
-      // Option 1: Redirect to the shopping cart page or home page
-      navigate('/shoppingCartPage'); // Adjust the route as necessary
-      
-      // Option 2: Alternatively, you could render an empty cart component or message directly here
-      // However, using a navigate redirect is likely more user-friendly in this context
+
+      navigate('/shoppingCartPage'); 
+
     }
     console.log(cartItems)
   }, [cartItems, navigate]);
 
-  // If there are items in the cart, render the checkout page content
   return (
     <div id="checkoutPage">
         <div className="formContainer">

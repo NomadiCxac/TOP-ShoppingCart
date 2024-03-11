@@ -13,6 +13,21 @@
   color:   rgb(89, 74, 71);
 }
 
+.line-between {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.line-between#completed {
+  color:  rgb(248, 221, 171);
+}
+
+.line-between#current {
+  color:  rgb(255, 185, 54);
+}
+
 .stepContainer {
   display: flex;
   flex-direction: column;

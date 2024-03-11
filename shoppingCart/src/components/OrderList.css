@@ -144,11 +144,6 @@
     margin-bottom: 1em;
 }
 
-.modalText {
-    font-size: small;
-    font-weight: 700;
-    font-style: italic;
-}
 
 .loadOrdersButton {
     background-color: rgb(245, 167, 22);

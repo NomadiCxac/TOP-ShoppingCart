@@ -11,6 +11,8 @@ const TimeSelector = ({ onDateChange, onTimeChange, currentDate }) => {
   const monthName = monthNames[date.getMonth()];
   const year = date.getFullYear();
 
+  const [currentMonthIndex, setCurrentMonthIndex] = useState(date.getMonth());
+
   function createDateFromMonthDayYear(monthName, year, day) {
     const monthIndex = monthNames.indexOf(monthName);
     if (monthIndex === -1) {
@@ -26,6 +28,12 @@ const TimeSelector = ({ onDateChange, onTimeChange, currentDate }) => {
   const [selectedTime, setSelectedTime] = useState(null);
   const { getPickupTimesForDate, getPickupDatesForMonth } = useFirebaseOrders();
 
+  function addDays(date, days) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+
   async function fetchPickupDates(monthIndex, monthName) {
     setPickUpDates([]);
     setSelectedDate(null);
@@ -40,11 +48,17 @@ const TimeSelector = ({ onDateChange, onTimeChange, currentDate }) => {
       pickupDates.sort((a, b) => a - b);
 
       const today = new Date();
-      today.setHours(0, 0, 0, 0); // Normalize today's date for comparison
+      today.setHours(0, 0, 0, 0); // normalize the date today for comparison purposes
+
+      // buffer date to allow 1 week lead time for production
+      const bufferDate = addDays(today, 7);
+
 
       const firstValidDateIndex = pickupDates.findIndex(date => {
+
+        // candidate date is a date that is set by the admin as a valid pickup date
         const candidateDate = createDateFromMonthDayYear(monthName, year, date);
-        return candidateDate > today;
+        return candidateDate > bufferDate;
       });
 
       if (firstValidDateIndex !== -1) {
@@ -104,14 +118,27 @@ const TimeSelector = ({ onDateChange, onTimeChange, currentDate }) => {
           onChange={handleDateSelection}
           onMonthChange={(month) => {
             const monthIndex = month.getMonth();
+            setCurrentMonthIndex(monthIndex); 
             setAvailableTimes([]);
             fetchPickupDates(monthIndex, monthNames[monthIndex]);
           }}
           filterDate={date => {
             const today = new Date();
             today.setHours(0, 0, 0, 0);
+            const bufferDate = addDays(today, 7);
+            const dateMonth = date.getMonth();
+
+            // Check if the date is greater than the buffer date
+            const isAfterBufferDate = date > bufferDate;
+
+            // Ensure the date is within the currently selected month
+            const isSelectedMonth = dateMonth === currentMonthIndex;
+
+            // Check if the day is included in the list of valid pickup dates
             const dateString = date.getDate().toString();
-            return date > today && pickupDates.includes(dateString);
+            const isValidPickupDate = pickupDates.includes(dateString);
+
+            return isAfterBufferDate && isSelectedMonth && isValidPickupDate;
           }}
           inline
         />

@@ -5,6 +5,7 @@ import React from "react";
 import Modal from "./Modal";
 import formatName from "../functions/formatName";
 import './OrderList.css'
+import { Pagination } from '@mui/material';
 
 
 const OrderList = () => {
@@ -16,6 +17,9 @@ const OrderList = () => {
     const [currentOrder, setCurrentOrder] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [editComment, setEditComment] = useState("")
+    const [page, setPage] = useState(1);
+
+    const itemsPerPage = 10;
 
   
 const enterEditMode = () => {
@@ -77,9 +81,11 @@ const handleRetrieveOrdersByPhase = async () => {
     setOrdersData(orders); // Update the state with the fetched orders
 };
 
-  useEffect (() => {
-    console.log(ordersData.length > 0)
-  })
+const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+};
+
+const displayOrders = ordersData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   function getOrderStatusDisplay(orderStatus) {
     if (orderStatus === "Please select a pickup date") {
@@ -134,51 +140,65 @@ const handleRetrieveOrdersByPhase = async () => {
             <button onClick={handleRetrieveOrdersByPhase}>Retrieve Order By Phase</button>
         </div>
         <div className="scrollable-table-container"> 
-        <table className="orders-table">
+          <table className="orders-table">
             <thead>
-            <tr>
-
-            <th id="order-id" >Order ID</th>
-            <th id="date-order-generated">Order Req. Start</th>
-            <th id="customer-name">Customer Name</th>
-            <th id="order-subtotal">Order Subtotal</th>
-            <th id="order-status">Order Status</th>
-            <th className="booleanField" id="pickup-date">Pick Up Date</th>
-            <th className="booleanField" id="payment-status">Paid Status</th>
-            <th className="booleanField" id="production-status">Prod. Status</th>
-
-            </tr>
+              <tr>
+                <th id="order-id" >Order ID</th>
+                <th id="date-order-generated">Order Req. Start</th>
+                <th id="customer-name">Customer Name</th>
+                <th id="order-subtotal">Order Subtotal</th>
+                <th id="order-status">Order Status</th>
+                <th className="booleanField" id="pickup-date">Pick Up Date</th>
+                <th className="booleanField" id="payment-status">Paid Status</th>
+                <th className="booleanField" id="production-status">Prod. Status</th>
+              </tr>
             </thead>
+
             <tbody>
-  {ordersData.length > 0 ? (
-    ordersData.map(order => order && (
-      <React.Fragment key={order.id}>
-        <tr>
-          <td className="clickableOrderId" onClick={() => toggleModal(order)}>{order.id}</td>
-          <td>{order.dateOrderGenerated}</td>
-          <td>{order.name}</td>
-          <td>${order.subtotal.toFixed(2)}</td>
-          <td>{getOrderStatusDisplay(order.orderStatus)}</td>
-          <td className="booleanCell" id={order.pickUpDate ? "true" : "false"}>
-            {order.pickUpDate ? order.pickUpDate : "Not Set"}
-            </td>
-          <td className="booleanCell" id={order.clientPaid ? "true" : "false"}>
-            {order.clientPaid ? 'Paid' : 'Unpaid'}
-          </td>
-          <td className="booleanCell" id={order.productionReady ? "true" : "false"}>
-            {order.productionReady ? 'Yes' : 'No'}
-            </td>
-        </tr>
-      </React.Fragment>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="9" style={{ textAlign: 'center' }}>No orders found.</td>
-    </tr>
-  )}
-</tbody>
+            {displayOrders.length > 0 ? (
+              displayOrders.map(order => order && (
+                <React.Fragment key={order.id}>
+                  <tr>
+                    <td className="clickableOrderId" onClick={() => toggleModal(order)}>{order.id}</td>
+                    <td>{order.dateOrderGenerated}</td>
+                    <td>{order.name}</td>
+                    <td>${order.subtotal.toFixed(2)}</td>
+                    <td>{getOrderStatusDisplay(order.orderStatus)}</td>
+                    <td className="booleanCell" id={order.pickUpDate ? "true" : "false"}>
+                      {order.pickUpDate ? order.pickUpDate : "Not Set"}
+                      </td>
+                    <td className="booleanCell" id={order.clientPaid ? "true" : "false"}>
+                      {order.clientPaid ? 'Paid' : 'Unpaid'}
+                    </td>
+                    <td className="booleanCell" id={order.productionReady ? "true" : "false"}>
+                      {order.productionReady ? 'Yes' : 'No'}
+                      </td>
+                  </tr>
+                </React.Fragment>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="9" style={{ textAlign: 'center' }}>No orders found.</td>
+              </tr>
+            )}
+          </tbody>
       </table>
   </div>
+
+  {ordersData.length > 10 && (
+            <Pagination
+                count={Math.ceil(ordersData.length / itemsPerPage)}
+                page={page}
+                onChange={handleChangePage}
+                // Add any additional props you might need for styling or layout
+            />
+        )}
+        {/* Modal and any other components */}
+
+  
+
+
+
   {currentOrder && 
     <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} id={"payments-pending"}>
       <div className="leftHalf">

@@ -1,38 +1,76 @@
 import { useFirebase } from "../context/FirebaseContext";
-import { useNavigate } from 'react-router-dom';
-import { useState } from "react";
+import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
-// import { Link } from 'react-router-dom';
 import resolveImageUrl from "../functions/resolveImageUrl";
 
 import './OrderRequestSentPage.css'
+import { update } from "firebase/database";
 
 function OrderRequestSent() {
     const { cartItems, clearCart } = useCart();
     const { referenceOrderId } = useFirebase();
+    const { updateOrderCodeSent, retrieveOrderById } = useFirebaseOrders();
+    const { orderId } = useParams();
     const navigate = useNavigate(); 
 
-    const [emailButtonState, setEmailButtonState] = useState({ disabled: false, text: 'Send My Code Via Email', className: 'enabledButton' });
-    const [telButtonState, setTelButtonState] = useState({ disabled: false, text: 'Send My Code Via Tel.', className: 'enabledButton' });
-    let adminEmail = "kitchenonselwynrd@gmail.com"
+    const [emailButtonState, setEmailButtonState] = useState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
+    const [telButtonState, setTelButtonState] = useState({ disabled: true, text: 'Send My Code Via Tel.', className: 'disabledButton' });
 
-    const handleEmailButtonClick = () => {
-        // Logic to send the code via email
+    console.log(orderId)
+    useEffect(() => {
+        const fetchOrderDetails = async () => {
+            // Assuming referenceOrderId is available and valid
+            if (!referenceOrderId) {
+                return;
+            }
+    
+            const orderDetails = await retrieveOrderById(referenceOrderId);
+            if (orderDetails) {
+                console.log([orderDetails.items])
+                console.log(cartItems)
+                // Enable the email button only if orderCodeSentByEmail is explicitly false
+                setEmailButtonState(prevState => ({
+                    ...prevState,
+                    disabled: !(orderDetails.orderCodeSentByEmail === false),
+                    className: orderDetails.orderCodeSentByEmail === false ? 'enabledButton' : 'disabledButton',
+                    text: orderDetails.orderCodeSentByEmail === false ? 'Send My Code Via Email' : 'Reference Code Sent Via Email'
+                }));
+    
+                // Enable the telephone button only if orderCodeSentByPhone is explicitly false
+                setTelButtonState(prevState => ({
+                    ...prevState,
+                    disabled: !(orderDetails.orderCodeSentByPhone === false),
+                    className: orderDetails.orderCodeSentByPhone === false ? 'enabledButton' : 'disabledButton',
+                    text: orderDetails.orderCodeSentByPhone === false ? 'Send My Code Via Tel.' : 'Reference Code Sent Via Tel.'
+                }));
+            } else {
+                console.log("Order details not found.");
+            }
+        };
+    
+        fetchOrderDetails();
+    }, [referenceOrderId]); 
+
+    const handleEmailButtonClick = async () => {
         console.log("Sending code via Email...");
     
-        // Update the state to disable the button and change the text and class
-        setEmailButtonState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
-      };
+        if (!referenceOrderId) {
+            console.error("No reference Order ID available.");
+            return;
+        }
     
-      const handleTelButtonClick = () => {
-        // Logic to send the code via telephone
-        console.log("Sending code via Telephone...");
-    
-        // Update the state to disable the button and change the text and class
-        setTelButtonState({ disabled: true, text: 'Reference Code Sent Via Tel.', className: 'disabledButton' });
-      };
+        try {
+            await updateOrderCodeSent(referenceOrderId, 'orderCodeSentByEmail', true);
+            setEmailButtonState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
+            alert("Order reference code has been sent via email.");
+        } catch (error) {
+            console.error("Failed to send email: ", error);
+        }
 
-
+        clearCart()
+    };
 
     // Helper function to calculate the total price of an item
     const checkoutItemTotal = (item) => {
@@ -49,7 +87,6 @@ function OrderRequestSent() {
         return total;
     };
 
-    console.log(cartItems)
 
     // Calculate subtotal
     const subtotal = cartItems.reduce((acc, item) => acc + checkoutItemTotal(item), 0);
@@ -59,51 +96,35 @@ function OrderRequestSent() {
         navigate('/orderManagement'); // Navigate programmatically
     };
 
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(referenceOrderId)
+          .then(() => {
+            // Optional: Display some feedback to the user that the text was copied.
+            alert("Order Reference Code copied to clipboard!");
+          })
+          .catch(err => {
+            // Handle any errors (optional)
+            console.error("Error in copying text: ", err);
+          });
+      };
+
     return (
         <div>
-            <div className="orderNumberContainer">
 
-                <div className="orderCodeContainer"> IMPORTANT - PLEASE FOLLOW THE STEPS BELOW TO COMPLETE YOUR ORDER!</div>
-                <div className="orderCodeContainer">
-
-                    THIS IS YOUR ORDER REFERENCE CODE: {referenceOrderId}
-                    <button 
-          onClick={handleEmailButtonClick} 
-          disabled={emailButtonState.disabled} 
-          className={emailButtonState.className}
-        >
-          {emailButtonState.text}
-        </button>
-        <button 
-          onClick={handleTelButtonClick} 
-          disabled={telButtonState.disabled} 
-          className={telButtonState.className}
-        >
-          {telButtonState.text}
-        </button>
-                </div>
                     
-                <div className="orderCodeContainer"> NEXT STEPS: </div>
-                <div> (1.) - YOUR ORDER REQUEST HAS BEEN COMPLETED, HOWEVER YOUR ORDER IS NOT YET COMPLETE. </div>
-                <div> (2.) - A COMPLETED ORDER REQUIRES: (a). ORDER PAYMENT (b). A VALID PICKUP DATE</div> 
-                <div> (3.) - TO COMPLETE YOUR ORDER, LOG-IN THROUGH OUT ORDER MANAGEMENT PAGE USING: </div>
-                <div> (4.) - (a). THE REFERENCE CODE PROVIDED OR (b). A VALID GMAIL ACCOUNT USED TO PLACE THE ORDER</div>
-                <div> (5.) - ONCE LOGGED IN, CLICK YOUR ORDER AND FOLLOW THE STEPS THERE.</div>
-                <div>
-                
-                <div className="orderCodeContainer"> ADDITIONAL INFORMATION: </div>
-               <div> - IF THERE ARE ANY QUESTIONS PLEASE CONTACT {adminEmail} </div>
-               <div> - PICKUP DATE AVAILABILITIES WILL VARY AND ARE SUBJECT TO THE VOLUME OF ORDERS</div>
-          
-                
-
+                <div className="nextStepsContainer"> 
+                    <div className="nextStepTitle">Next Steps to Complete Your Order: </div>
+                    <div className="clientStep"> (1.) <Link> <span className="signInButton">Sign in</span></Link> to the order management page with your reference code or email used with the order. </div>
+                    <div className="clientStep"> (2.) Complete payment. </div> 
+                    <div className="clientStep"> (3.) Select a valid pick up date.</div>
                 </div>
+
                 
-            </div>
             <div className="orderItemsContainer" id="orderRequestSent">
-                <div className="orderReviewContainer" id='modal'>
+                <div className="orderRequestSummaryTitle">Order Request Summary:</div>
+                <div className="orderReviewContainer" id='orderRequestSent'>
                     {cartItems.map((item) => (
-                        <div className='orderItemContainer' id='modal' key={item.id + "-orderReview"}>
+                        <div className='orderItemContainer' id='orderRequestSent' key={item.id + "-orderReview"}>
                             <div className='orderItemContents' id='left'>
                                 <img className="orderIcon" key={item.id} src={resolveImageUrl(item.id)} alt={item.name} />
                                 <div className='orderItemDescription' id='left'>
@@ -133,17 +154,47 @@ function OrderRequestSent() {
                         </div>
                     ))}
                 </div>
-                <div className="orderSubtotal" id='modal'>
+
+                <div className="orderSubtotal" id='orderRequestSent'>
                     {`Total: ${subtotal.toFixed(2)} CAD`} 
                 </div>
 
-                <div className="orderCodeNextStepsContainer">
-                    <button className="orderManagementLink" onClick={handleOrderManagementClick}>
-                        I Understand
+            {/* OrderItemsContainer ending div */}
+            </div>
+
+
+            <div className="orderCodeContainer">
+
+                <div className="referenceNumberContainer">
+                    This is Your Order Reference Code: {referenceOrderId}
+                    <button id="clipboard" onClick={copyToClipboard} className="material-symbols-outlined"><span className="material-symbols-outlined">content_copy</span></button>
+                </div>
+
+                <div className="sendCodeContainer">
+                    {/* Send Code Via Email Button */}
+                    <button 
+                    className="sendRefCodeButton"
+                    onClick={handleEmailButtonClick} 
+                    disabled={emailButtonState.disabled} 
+                    id={emailButtonState.className}
+                    >
+                    {emailButtonState.text}
                     </button>
+
+                    {/* Send Code Via Phone Button */}
+                    {/* <button 
+                    className="sendRefCodeButton"
+                    onClick={handleTelButtonClick} 
+                    disabled={telButtonState.disabled} 
+                    id={telButtonState.className}
+                    >
+                    {telButtonState.text}
+                    </button>  */}
                 </div>
             </div>
-        </div>
+
+    {/* Parent jsx end div */}
+    </div>
     );
 }
 

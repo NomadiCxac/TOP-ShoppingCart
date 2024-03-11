@@ -26,14 +26,28 @@ function StepTracker({ orderPhase }) {
         const stepNumber = index + 1;
         // Determine if step is active, completed, or upcoming
         const stepClass = stepNumber === currentStep ? 'active' : stepNumber < currentStep ? 'completed' : '';
+  
         return (
-          <div key={index} className="stepContainer">
-            <div className={`circle ${stepClass}`}>
-              {stepNumber}
+          <React.Fragment key={index}>
+            {index > 0 && (
+              <div 
+                className='line-between'
+                id={`${
+                  index + 1 === currentStep ? 'current' : 
+                  index < currentStep ? 'completed' : ''
+                }`} 
+                key={`line-between-${index}`}
+              >
+                - - - - - - - - - - - - - 
+              </div>
+            )}
+            <div className="stepContainer">
+              <div className={`circle ${stepClass}`}>
+                {stepNumber}
+              </div>
+              <h3 className={stepClass}>{info}</h3>
             </div>
-            <h3 className={stepClass}>{info}</h3>
-            {index < stepsInfo.length - 1 && <div className={`line ${stepNumber < currentStep ? 'completed' : ''}`}></div>}
-          </div>
+          </React.Fragment>
         );
       })}
     </div>

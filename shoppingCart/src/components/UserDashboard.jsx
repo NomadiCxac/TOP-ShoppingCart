@@ -274,8 +274,8 @@ const UserDashboard = () => {
                             </div>
 
                             <div className='pickUpDateContainer'> 
-                                <div id='pickUpDateContainerTitle'>
-                                    Please Select from the Available Pickup Dates:
+                                <div className='pickUpDateContainerInfo'>
+                                    <div id='select-prompt'>Please Select from the Available Pickup Dates:</div>
                                 </div>
                                 <TimeSelector
                                     selectedOrder = {selectedOrder}
@@ -290,7 +290,7 @@ const UserDashboard = () => {
                                     className='confirmPickUpDateButton'
                                     disabled={!selectedDate || !selectedTime} // Button is disabled if either selectedDate or selectedTime is falsy
                                     >
-                                    {selectedDate && selectedTime ? "Confirm" : "Choose a Valid Time" }</button>
+                                    {selectedDate && selectedTime ? "Confirm" : "Select a Date" }</button>
                                 </div>
                             </div>
                         </div>

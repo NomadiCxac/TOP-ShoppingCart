@@ -4,32 +4,193 @@
     text-decoration: underline;
 }
 
+.pageContent#orderRequestSent {
+    display: flex;
+    flex-direction: column;
+    /* height: 90%; */
+    /* overflow-y: hidden; */
+    justify-content: space-between;
+}
+
 .orderNumberContainer {
     margin-top: 1em;
 }
 
-.orderCodeContainer {
-    font-size: 24px;
-    font-weight: 700;
-}
 
-.enabledButton {
+
+.sendRefCodeButton#enabledButton {
+    
+    font-size: 16px;
+
     background-color: var(--primary-color, #007bff);
     color: white; /* Assuming you want white text, adjust as needed */
+
     border: none;
     padding: 0.5em 1em;
     border-radius: 4px;
+
     cursor: pointer;
     transition: box-shadow 0.2s ease, transform 0.2s ease; /* Smooth transition for box-shadow and transform */
-    
-    /* Raised effect */
     box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Adjust as needed */
 }
 
-.enabledButton:hover{
+.sendRefCodeButton#enabledButton:hover{
     background-color: var(--primary-color, #007bff);
     font-weight: 700;
-    color:  var(--secondary-color); /* Assuming you want white text, adjust as needed */
+    color:   rgb(96, 180, 60); /* Assuming you want white text, adjust as needed */
     box-shadow: 0 2px 3px rgba(0,0,0,0.2); /* Smaller shadow for a "pressed" effect */
     transform: translateY(2px); /* Slightly move the button down */
+}
+
+.sendRefCodeButton#disabledButton {
+    font-size: 16px;
+}
+
+.nextStepsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.nextStepTitle {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.signInButton {
+    font-weight: 700;
+}
+
+
+/* order item css */
+
+.orderItemsContainer#orderRequestSent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 2em;
+}
+
+.orderRequestSummaryTitle {
+    display: flex;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.orderImages {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: -1em;
+    width: 100%;
+}
+
+
+.orderReviewContainer#orderRequestSent { 
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1em;
+    color:   rgb(89, 74, 71);
+}
+
+.orderItemContainer#orderRequestSent { 
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.875em;
+    margin-bottom: 1.75em;
+}
+
+.orderItemContents#left,
+.orderItemContents#right {
+    display: flex;
+}
+
+.orderItemDescription#left {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1em;
+}
+
+.orderItemContents#right {
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.nameOfItem {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.itemBreakdown {
+    display: flex;
+    font-size: 0.8em;
+    padding-left: 0;
+}
+
+
+.orderSubtotal#orderRequestSent {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-top: -2em;
+    color:   rgb(89, 74, 71);
+}
+
+
+
+.orderIcon {
+    width: 4em;
+    height: 4em;
+}
+
+
+.orderCodeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.referenceNumberContainer {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+.sendCodeContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.sendCodeContainer > button {
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+
+#clipboard {
+    background-color: transparent;
+    width: 1em;
+    height: 1em;
+    border: none;
+    cursor: pointer; /* Change cursor on hover to indicate clickability */
+    padding: 0; /* Remove padding */
+    vertical-align: middle; /* Align with the text */
+    margin-left: 0.25em;
+    margin-bottom: 0.15em;
+}
+
+#clipboard:hover {
+    color: var(--primary-color, #007bff);
 }

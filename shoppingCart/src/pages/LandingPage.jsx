@@ -1,6 +1,8 @@
 // import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
+import Footer from '../components/Footer';
+
 import './pageNavigation.css'
 import { useFirebase } from '../context/FirebaseContext';
 // import FoodMenu from '../components/FoodMenu';
@@ -15,6 +17,9 @@ const LandingPage = () => {
 
     const hideNavigationBar = location.pathname.includes('/adminPage');
 
+    const footerPages = ['/shoppingCartPage', '/checkoutPage', '/orderRequestSent', '/orderManagement' ]
+    const showFooter = footerPages.some(pagePath => location.pathname.includes(pagePath));
+
 
     return (
         <>
@@ -23,7 +28,7 @@ const LandingPage = () => {
             <div className='pageContent' id={pageId}>
                 <Outlet />
             </div>
-            {/* This will render child routes */}
+            {showFooter && <Footer />}
         </>
     );
 }

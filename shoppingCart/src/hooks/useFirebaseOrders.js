@@ -92,6 +92,8 @@ export const useFirebaseOrders = () => {
         return true;
     }
 
+
+
     
     const updateOrderPhase = async (selectedOrder, phase, status) => {
         setLoading(true);
@@ -165,6 +167,29 @@ export const useFirebaseOrders = () => {
         return true;
     }
 
+    const updateOrderCodeSent = async (orderId, fieldName) => {
+        setLoading(true); // Assuming setLoading changes a state to show a loading indicator
+        setError(null); // Assuming setError is used to display any error messages
+    
+        if (!orderId) {
+            setError('Invalid Order ID');
+            setLoading(false);
+            return; // Exit the function early if orderId is not provided
+        }
+    
+        const orderRef = ref(database, `orders/${orderId}`);
+    
+        try {
+            await update(orderRef, { [fieldName]: true });
+            console.log(`${fieldName} updated successfully.`);
+        } catch (error) {
+            setError(error.message); // Set the error state to the error message
+            console.error(`Error updating ${fieldName}: `, error);
+        } finally {
+            setLoading(false); // Ensure loading state is false after operation completes
+        }
+    };
+
     const retrieveAllOrdersFromDatabase = async () => {
 
         let ordersRef = ref(database, `orders`)
@@ -190,7 +215,6 @@ export const useFirebaseOrders = () => {
 
     const retrieveOrderById = async (orderId) => {
 
-        console.log(orderId)
 
         let ordersRef = ref(database, `orders/${orderId}`)
 
@@ -201,6 +225,7 @@ export const useFirebaseOrders = () => {
                     return { ...orderData};
             } else {
                 console.log("No orders found.");
+                return null;
             }
         } catch (error) {
             console.error("Error retrieving orders:", error);
@@ -343,10 +368,7 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
     }
 };
 
-    const validEmail = (email) => {
-        let safe = email.replace(/\./g, '_');
-        return safe;
-    }
+
 
 
     const updatePickupTimesForDate = async (selectedDate, times) => {
@@ -456,6 +478,14 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
         }
     };
 
+    const validEmail = (email) => {
+
+        let safe = email.replace(/\./g, '_');
+
+        return safe;
+
+    }
+
 
     return {
         orders,
@@ -465,6 +495,7 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
         setDateAndTimeForOrder,
         updateOrderPhase,
         updateAdminComments,
+        updateOrderCodeSent,
         retrieveOrderDataByMonth,
         retrieveOrdersByCurrentDate,
         retrieveAllOrdersFromDatabase,
