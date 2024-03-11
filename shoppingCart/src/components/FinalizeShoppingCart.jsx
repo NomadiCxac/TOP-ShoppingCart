@@ -1,4 +1,4 @@
-import React from 'react'; // Ensure React is in scope when using JSX since React 17
+import React, { useEffect } from 'react'; // Ensure React is in scope when using JSX since React 17
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import CartItemCard from "./CartItemCard";
@@ -8,6 +8,9 @@ const FinalizeShoppingCart = ({pageName}) => {
     const { addToCart, removeFromCart, cartItems } = useCart();
 
     const maxQuantity = 10;
+    useEffect(() => {
+        console.log(cartItems)
+    })
 
     const quantityOptions = [];
     for (let i = 1; i <= maxQuantity; i++) {
@@ -73,7 +76,7 @@ const FinalizeShoppingCart = ({pageName}) => {
                     <CartItemCard
                         key={item.id}
                         item={item}
-                        handleQuantityChange={handleQuantityChange(item, false, true)}
+                        handleQuantityChange={handleQuantityChange(item, false, false)}
                         quantityOptions={quantityOptions}
                         batched={false}
                         dozenQuantity={0}

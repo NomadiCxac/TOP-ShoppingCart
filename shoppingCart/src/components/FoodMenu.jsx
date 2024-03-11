@@ -32,7 +32,7 @@ const FoodMenu = () => {
     }
 
     const quantityOptions = [];
-    const maxQuantity = 30;
+    const maxQuantity = 10;
     for (let i = 1; i <= maxQuantity; i++) {
         quantityOptions.push(<option key={i} value={i}>{i}</option>);
     }

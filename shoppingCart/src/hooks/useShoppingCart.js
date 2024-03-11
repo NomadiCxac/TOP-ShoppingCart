@@ -12,7 +12,7 @@ const useShoppingCart = () => {
         sessionStorage.setItem('shoppingCart', JSON.stringify(cartItems));
     }, [cartItems])
 
-    const addToCart = (item, userQuantity = 1, isDozen, isHalfDozen, singular, isEdit = false) => {
+    const addToCart = (item, userQuantity = 1, isDozen, isHalfDozen, isEdit = false) => {
 
         const maxQuantity = 10;
 
