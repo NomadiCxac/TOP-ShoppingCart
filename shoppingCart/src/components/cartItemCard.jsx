@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import resolveImageUrl from '../functions/resolveImageUrl';
 import './CartItemCard.css'
 
 
@@ -9,7 +10,7 @@ const CartItemCard = ({ item, handleQuantityChange, quantityOptions, isDozen }) 
     return (
         <div className="cart-item" id={item.id}>
             <img 
-                src={item.imageURL}  
+                src={resolveImageUrl(item.image)}  
                 className="cart-item-image" 
                 onError={(e) => e.currentTarget.src = '/images/defaultFood.jpeg'} 
                 alt={item.name} 
@@ -42,7 +43,7 @@ CartItemCard.propTypes = {
     item: PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      imageURL: PropTypes.string, 
+      image: PropTypes.string, 
       batched: PropTypes.bool.isRequired,
       dozenQuantity: PropTypes.number, // if batched
       halfDozenQuantity: PropTypes.number, // if batched 

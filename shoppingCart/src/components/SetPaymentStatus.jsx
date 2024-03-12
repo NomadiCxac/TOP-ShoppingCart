@@ -5,6 +5,7 @@ import React from "react";
 import Modal from "./Modal";
 import Instructions from "./Instructions";
 import formatName from "../functions/formatName";
+import { Pagination } from '@mui/material';
 import './SetPaymentStatus.css'
 
 
@@ -16,8 +17,10 @@ const SetPaymentStatus = ({ phase }) => {
     const [currentOrder, setCurrentOrder] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [editComment, setEditComment] = useState(""); // To hold the comment being edited
-
-
+    const [page, setPage] = useState(1);
+    
+    const itemsPerPage = 10;
+    
     const enterEditMode = () => {
       setIsEditMode(true); // Switch to edit mode
     };
@@ -50,10 +53,16 @@ const SetPaymentStatus = ({ phase }) => {
       setCurrentOrder(null);
   };
 
-  const handleSetPaymentStatus = () => {
+  const handleSetPaymentStatus = async () => {
       let updatePhase = "step2";
       let status = "Please select a pickup date";
-      updateOrderPhase(currentOrder, updatePhase, status);
+      await updateOrderPhase(currentOrder, updatePhase, status);
+
+      const updatedOrdersData = ordersData.filter(order => order.id !== currentOrder.id);
+      setOrdersData(updatedOrdersData);
+
+
+      handleCloseModal();
   }
 
   
@@ -61,6 +70,15 @@ const SetPaymentStatus = ({ phase }) => {
       const orders = await retrieveOrdersByPhase(phase);
       setOrdersData(orders); // Update the state with the fetched orders
   };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+};
+
+const displayOrders = ordersData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
+console.log(displayOrders)
+
 
   const renderItemsDetails = () => {
     const itemsArray = currentOrder ? Object.values(currentOrder.items) : [];
@@ -112,8 +130,8 @@ const SetPaymentStatus = ({ phase }) => {
           </tr>
         </thead>
             <tbody>
-  {ordersData.length > 0 ? (
-    ordersData.map(order => order && (
+  {displayOrders.length > 0 ? (
+    displayOrders.map(order => order && (
       <React.Fragment key={order.id}>
         <tr>
           <td>{order.id}</td>
@@ -132,9 +150,20 @@ const SetPaymentStatus = ({ phase }) => {
       <td colSpan="6" style={{ textAlign: 'center' }}>No orders found.</td>
     </tr>
   )}
-</tbody>
-      </table>
-  </div>
+    </tbody>
+  </table>
+</div>
+
+  {ordersData.length > 10 && (
+    <Pagination
+        count={Math.ceil(ordersData.length / itemsPerPage)}
+        page={page}
+        onChange={handleChangePage}
+        variant="outlined"
+        shape="rounded"
+    />
+)}
+
   {currentOrder && 
     <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} id={"payments-pending"}>
       <div className="leftHalf">

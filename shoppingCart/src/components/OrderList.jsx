@@ -10,8 +10,8 @@ import { Pagination } from '@mui/material';
 
 const OrderList = () => {
 
-    const { retrieveOrderById, retrieveAllOrdersFromDatabase, retrieveOrdersByEmail, retrieveOrdersByPhase, updateAdminComments } = useFirebaseOrders()
-    const [email, setEmail] = useState("")
+    const { retrieveOrderById, retrieveAllOrdersFromDatabase, retrieveOrdersByEmail, updateAdminComments } = useFirebaseOrders()
+    const [searchValue, setSearchValue] = useState(""); // Generic state for holding the input value
     const [ordersData, setOrdersData] = useState([])
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentOrder, setCurrentOrder] = useState(null);
@@ -20,82 +20,86 @@ const OrderList = () => {
     const [page, setPage] = useState(1);
 
     const itemsPerPage = 10;
+    
+    const enterEditMode = () => {
+      setIsEditMode(true); // Switch to edit mode
+    };
 
-  
-const enterEditMode = () => {
-  setIsEditMode(true); // Switch to edit mode
-};
+    // Handlers adjustments
+    const handleInputChange = (e) => {
+        setSearchValue(e.target.value);
+    };
 
-const handleSaveComment = async () => {
-  try {        
-    await updateAdminComments(currentOrder, editComment);
+    const handleSaveComment = async () => {
+      try {        
+        await updateAdminComments(currentOrder, editComment);
 
-    setIsEditMode(false); // Exit edit mode
+        setIsEditMode(false); // Exit edit mode
+          
+        // Optional: If your local state needs to be updated to reflect changes (depends on your state management)
+        setCurrentOrder({ ...currentOrder, adminComments: editComment });
+
+      } catch (error) {
+        console.error("Failed to update comment:", error);
+        // Optionally handle the error, e.g., show an error message to the user
+      }
+    };
+
+    const toggleModal = (order) => {
+      setCurrentOrder(order);
+      setModalOpen(!isModalOpen);
+      setEditComment(order ? order.adminComments : '');
+    };
+
+    const handleCloseModal = () => {
+      setModalOpen(false);
+      setCurrentOrder(null);
+    };
+
+
+    const handleRetrieveOrderById = async () => {
+      console.log(searchValue);
+      const orders = await retrieveOrderById(searchValue);
       
-    // Optional: If your local state needs to be updated to reflect changes (depends on your state management)
-    setCurrentOrder({ ...currentOrder, adminComments: editComment });
+      if (orders) {
+          setOrdersData([orders]);
+      } else {
+          alert("The input code does NOT match an existing order");
+      }
+  };
 
-  } catch (error) {
-    console.error("Failed to update comment:", error);
-    // Optionally handle the error, e.g., show an error message to the user
-  }
-};
+    const handleRetrieveOrders = async () => {
+        const orders = await retrieveAllOrdersFromDatabase();
+        setOrdersData(orders); // Update the state with the fetched orders
+    };
 
-const toggleModal = (order) => {
-  setCurrentOrder(order);
-  setModalOpen(!isModalOpen);
-  setEditComment(order ? order.adminComments : '');
-};
+    const handleRetrieveOrdersByEmail = async () => {
+        console.log(searchValue);
+        const orders = await retrieveOrdersByEmail(searchValue);
+        setOrdersData(orders); // Update the state with the fetched orders
+    };
 
-const handleCloseModal = () => {
-  setModalOpen(false);
-  setCurrentOrder(null);
-};
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
 
+    const displayOrders = ordersData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
+      function getOrderStatusDisplay(orderStatus) {
+        if (orderStatus === "Please select a pickup date") {
+          return "Client to Pick Date";
+        } else if (orderStatus === "Your Order is Ready for Pickup") {
+          return "Client to Pickup";
+        } else {
+          return orderStatus;
+        }
+      }
 
-function emailQueryHandler (e) {
-      setEmail(e.target.value);
-}
-
-const handleRetrieveOrderById = async (e) => {
-    let orderId = e.target.value
-    const orders = await retrieveOrderById(orderId);
-    setOrdersData(orders)
-}
-
-const handleRetrieveOrders = async () => {
-    const orders = await retrieveAllOrdersFromDatabase();
-    setOrdersData(orders); // Update the state with the fetched orders
-};
-
-const handleRetrieveOrdersByEmail = async () => {
-    const orders = await retrieveOrdersByEmail(email);
-    console.log(orders)
-    setOrdersData(orders); // Update the state with the fetched orders
-};
-
-
-const handleRetrieveOrdersByPhase = async () => {
-    const orders = await retrieveOrdersByPhase(phase);
-    setOrdersData(orders); // Update the state with the fetched orders
-};
-
-const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-};
-
-const displayOrders = ordersData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
-
-  function getOrderStatusDisplay(orderStatus) {
-    if (orderStatus === "Please select a pickup date") {
-      return "Client to Pick Date";
-    } else if (orderStatus === "Your Order is Ready for Pickup") {
-      return "Client to Pickup";
-    } else {
-      return orderStatus;
-    }
-  }
+      useEffect(() => {
+        console.log(page);
+        console.log(ordersData);
+        console.log(displayOrders)
+      })
 
   const renderItemsDetails = () => {
     const itemsArray = currentOrder ? Object.values(currentOrder.items) : [];
@@ -133,11 +137,10 @@ const displayOrders = ordersData.slice((page - 1) * itemsPerPage, page * itemsPe
   return (
         <div className="order-list">
         <div className="filters">
-            <input type="text" value={email} onChange={emailQueryHandler} placeholder="Filter by email..." />
-            <button onClick={handleRetrieveOrderById}>Retrieve Orders By Id</button>
+            <input type="text" value={searchValue} onChange={handleInputChange} placeholder="Enter search query..." />
+            <button onClick={handleRetrieveOrderById}>Retrieve Order By Id</button>
             <button onClick={handleRetrieveOrdersByEmail}>Retrieve Orders By Email</button>
             <button onClick={handleRetrieveOrders}>Retrieve All Orders</button>
-            <button onClick={handleRetrieveOrdersByPhase}>Retrieve Order By Phase</button>
         </div>
         <div className="scrollable-table-container"> 
           <table className="orders-table">
@@ -178,7 +181,7 @@ const displayOrders = ordersData.slice((page - 1) * itemsPerPage, page * itemsPe
               ))
             ) : (
               <tr>
-                <td colSpan="9" style={{ textAlign: 'center' }}>No orders found.</td>
+                <td colSpan="8" style={{ textAlign: 'center' }}>No orders found.</td>
               </tr>
             )}
           </tbody>
@@ -190,9 +193,10 @@ const displayOrders = ordersData.slice((page - 1) * itemsPerPage, page * itemsPe
                 count={Math.ceil(ordersData.length / itemsPerPage)}
                 page={page}
                 onChange={handleChangePage}
-                // Add any additional props you might need for styling or layout
+                variant="outlined"
+                shape="rounded"
             />
-        )}
+  )}
         {/* Modal and any other components */}
 
   

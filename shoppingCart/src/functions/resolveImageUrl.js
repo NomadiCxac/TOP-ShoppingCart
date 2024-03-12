@@ -1,5 +1,5 @@
 function resolveImageUrl (imageUrl) {
-    const extensions = ['jpeg', 'svg', 'png'];
+    const extensions = ['png', 'jpeg', 'svg', ];
 
     for (let ext of extensions) {
         return imageUrl ? `/images/${imageUrl}.${ext}`: '/images/defaultFood.jpeg'

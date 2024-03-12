@@ -5,13 +5,14 @@ import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import resolveImageUrl from "../functions/resolveImageUrl";
 import { calculateSubtotal } from "../functions/checkoutTotal";
+import formatName from "../functions/formatName";
 
 import './OrderRequestSentPage.css'
-import { update } from "firebase/database";
+
 
 function OrderRequestSent() {
     const { cartItems, clearCart } = useCart();
-    const { referenceOrderId, database, isFirebaseReady } = useFirebase();
+    const { database, isFirebaseReady } = useFirebase();
     const { updateOrderCodeSent, retrieveOrderById } = useFirebaseOrders();
     const [orderData, setOrderData] = useState([]);
     const { orderId } = useParams();
@@ -123,12 +124,12 @@ function OrderRequestSent() {
         <div>
 
                     
-                <div className="nextStepsContainer"> 
-                    <div className="nextStepTitle">Next Steps to Complete Your Order: </div>
-                    <div className="clientStep"> (1.) <Link> <span className="signInButton">Sign in</span></Link> to the order management page with your reference code or email used with the order. </div>
-                    <div className="clientStep"> (2.) Complete payment. </div> 
-                    <div className="clientStep"> (3.) Select a valid pick up date.</div>
-                </div>
+            <div className="nextStepsContainer"> 
+                <div className="nextStepTitle">Next Steps to Complete Your Order: </div>
+                <div className="clientStep"> (1.) <Link to={`/orderManagement/${orderId}`}> <span className="signInButton">Sign in</span></Link> to the order management page with your reference code or email used with the order. </div>
+                <div className="clientStep"> (2.) Complete payment. </div> 
+                <div className="clientStep"> (3.) Select a valid pick up date.</div>
+            </div>
 
                 
             <div className="orderItemsContainer" id="orderRequestSent">
@@ -137,24 +138,24 @@ function OrderRequestSent() {
                     {orderData.map((item) => (
                         <div className='orderItemContainer' id='orderRequestSent' key={item.id + "-orderReview"}>
                             <div className='orderItemContents' id='left'>
-                                <img className="orderIcon" key={item.id} src={resolveImageUrl(item.id)} alt={item.name} />
+                                <img className="orderIcon" key={item.id} src={resolveImageUrl(item.id)} alt={formatName(item.id)} />
                                 <div className='orderItemDescription' id='left'>
                                     <div className='nameOfItem'>
-                                        {item.name}
+                                        {formatName(item.id)}
                                     </div>
                                     {item.dozenQuantity > 0 && (
                                         <div className='itemBreakdown' id='dozen'>
-                                            {`Dozen ${item.name} @ ${item.dozenQuantity} x ${item.dozenPrice.toFixed(2)} CAD`}
+                                            {`Dozen ${formatName(item.id)} @ ${item.dozenQuantity} x ${item.dozenPrice.toFixed(2)} CAD`}
                                         </div>
                                     )}
                                     {item.halfDozenQuantity > 0 && (
                                         <div className='itemBreakdown' id='halfDozen'>
-                                            {`Half a Dozen ${item.name} @ ${item.halfDozenQuantity} x ${item.halfDozenPrice.toFixed(2)} CAD`}
+                                            {`Half a Dozen ${formatName(item.id)} @ ${item.halfDozenQuantity} x ${item.halfDozenPrice.toFixed(2)} CAD`}
                                         </div>
                                     )}
                                     {item.quantity > 0 && !item.batched && (
                                         <div className='itemBreakdown' id='singular'>
-                                            {`${item.name} @ ${item.quantity} x ${item.price.toFixed(2)} CAD`}
+                                            {`${formatName(item.id)} @ ${item.quantity} x ${item.price.toFixed(2)} CAD`}
                                         </div>
                                     )}
                                 </div>

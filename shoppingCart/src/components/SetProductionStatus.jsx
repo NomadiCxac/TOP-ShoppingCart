@@ -1,10 +1,9 @@
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 import { useEffect, useState } from "react";
-import OrderItemView from "./OrderItemView";
 import React from "react";
 import Modal from "./Modal";
-import Instructions from "./Instructions";
 import formatName from "../functions/formatName";
+import { Pagination } from "@mui/material";
 import './SetPaymentStatus.css'
 
 
@@ -16,6 +15,9 @@ const SetProductionStatus = ({ phase }) => {
     const [currentOrder, setCurrentOrder] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [editComment, setEditComment] = useState(""); // To hold the comment being edited
+    const [page, setPage] = useState(1);
+    
+    const itemsPerPage = 10;
 
     const enterEditMode = () => {
       setIsEditMode(true); // Switch to edit mode
@@ -50,10 +52,13 @@ const SetProductionStatus = ({ phase }) => {
       setCurrentOrder(null);
   };
 
-  const handleSetProductionStatus = () => {
+  const handleSetProductionStatus = async () => {
       let updatePhase = "step4";
       let status = "Your Order is Ready for Pickup";
-      updateOrderPhase(currentOrder, updatePhase, status);
+      await updateOrderPhase(currentOrder, updatePhase, status);
+
+      const updatedOrdersData = ordersData.filter(order => order.id !== currentOrder.id);
+      setOrdersData(updatedOrdersData);
       handleCloseModal();
   }
 
@@ -62,6 +67,12 @@ const SetProductionStatus = ({ phase }) => {
       const orders = await retrieveOrdersByPhase(phase);
       setOrdersData(orders); // Update the state with the fetched orders
   };
+
+  const displayOrders = ordersData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+  
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+};
 
   const renderItemsDetails = () => {
     const itemsArray = currentOrder ? Object.values(currentOrder.items) : [];
@@ -112,8 +123,8 @@ const SetProductionStatus = ({ phase }) => {
           </tr>
         </thead>
             <tbody>
-  {ordersData.length > 0 ? (
-    ordersData.map(order => order && (
+  {displayOrders.length > 0 ? (
+    displayOrders.map(order => order && (
       <React.Fragment key={order.id}>
         <tr>
           <td>{order.id}</td>
@@ -134,6 +145,18 @@ const SetProductionStatus = ({ phase }) => {
 </tbody>
       </table>
   </div>
+
+
+  {ordersData.length > 10 && (
+    <Pagination
+        count={Math.ceil(ordersData.length / itemsPerPage)}
+        page={page}
+        onChange={handleChangePage}
+        variant="outlined"
+        shape="rounded"
+    />
+)}
+
   {currentOrder && 
     <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} id={"production-status"}>
       <div className="leftHalf">

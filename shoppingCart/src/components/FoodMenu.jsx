@@ -45,6 +45,7 @@ const FoodMenu = () => {
             try {
                 const items = await fetchItems('items');
                 const resolvedItems = items.map(item => ({...item, imageURL: resolveImageUrl(item.image)}))
+                console.log(resolvedItems)
                 setFoodItems(resolvedItems);
             } catch (error) {
                 setError(true);

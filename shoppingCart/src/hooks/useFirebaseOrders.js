@@ -10,6 +10,7 @@ export const useFirebaseOrders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    
 
     const pushOrderToDatabase = async (orderDetails) => {
         if (!orderDetails || !orderDetails.email) {
