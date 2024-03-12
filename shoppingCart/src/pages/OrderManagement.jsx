@@ -7,19 +7,19 @@ import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
 import './OrderManagement.css';
 
 const OrderManagement = () => {
-    const { user, auth, signInAnonymously, anonymousOrderId, setAnonymousOrder, referenceOrderId } = useFirebase();
+    const { user, auth, signInAnonymously, setAnonymousOrder, referenceOrderId } = useFirebase();
     const navigate = useNavigate();
     const { orderId } = useParams();
     // Set orderId to referenceOrderId if it exists, otherwise initialize it as null.
-    const [orderIdLink, setOrderIdLink] = useState(referenceOrderId || '');
-
+    const [inputValue, setInputValue] = useState('');
     const { retrieveOrderById } = useFirebaseOrders();
 
     useEffect(() => {
-        console.log(anonymousOrderId);
-        console.log(user);
-        console.log(orderId);
-    }, []);
+        // This effect sets the input value based on the orderId from the URL.
+        // If orderId exists, the input is populated and made read-only. If not, it's left blank, allowing manual entry.
+        setInputValue(orderId || '');
+    }, [orderId]);
+
 
     const handleAnonymousAccessSubmit = async (e) => {
         e.preventDefault();
@@ -75,8 +75,9 @@ const OrderManagement = () => {
                                 <input 
                                     type="text" 
                                     placeholder='Input Order ID Here'
-                                    value={ orderId } 
-                                    onChange={(e) => setOrderIdLink(e.target.value)} 
+                                    value={orderId || "" } 
+                                    onChange={(e) => setInputValue(e.target.value)}
+                                    readOnly={!!orderId} // Make input read-only if orderId is present in the URL
                                     required />
                                 <button type="submit">Access Order</button>
                             </form>

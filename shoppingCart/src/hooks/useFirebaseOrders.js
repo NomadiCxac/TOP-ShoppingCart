@@ -216,6 +216,8 @@ export const useFirebaseOrders = () => {
 
     const retrieveOrderById = async (orderId) => {
 
+        console.log(orderId)
+
 
         let ordersRef = ref(database, `orders/${orderId}`)
 
