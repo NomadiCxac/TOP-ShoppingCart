@@ -4,10 +4,10 @@ const admins = [
 
 
   "christianxavier.cordero@gmail.com",  
-  "Paula.cordero@icloud.com",
+  // "Paula.cordero@icloud.com",
 
   // David Cordero
-  "dfcordero@hotmail.com",
+  // "dfcordero@hotmail.com",
   "scrdad333@gmail.com"
 ];
 
