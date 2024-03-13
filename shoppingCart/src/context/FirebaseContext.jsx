@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, onAuthStateChanged, signOut,  signInAnonymously as firebaseSignInAnonymously } from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
+import { getDatabase, ref, onValue, set, get } from 'firebase/database';
 import firebaseConfig from '../firebaseConfig';
 
 const FirebaseContext = createContext();
@@ -13,6 +13,8 @@ export const FirebaseProvider = ({ children }) => {
     const [database, setDatabase] = useState(null);
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isOrderingAvailable, setIsOrderingAvailable] = useState(true); // Add isOrderAvailable state
+
     const [anonymousOrderId, setAnonymousOrderId] = useState(null); // Add anonymousOrderId state
     const [anonymousOrder, setAnonymousOrder] = useState([]); // Add anonymousOrderId state
     const [referenceOrderId, setReferenceOrderId] = useState("");
@@ -63,6 +65,22 @@ export const FirebaseProvider = ({ children }) => {
         }
     }, []);
 
+
+    useEffect(() => {
+        // Firebase initialization logic...
+
+        if (database) { // Make sure database is initialized
+            const orderingAvailabilityRef = ref(database, 'settings/orderingAvailability');
+            const unsubscribeOrderingAvailability = onValue(orderingAvailabilityRef, (snapshot) => {
+                const isAvailable = snapshot.val();
+                setIsOrderingAvailable(isAvailable !== null ? isAvailable : false); // 
+            });
+
+            return () => unsubscribeOrderingAvailability(); // Return the cleanup function
+        }
+    }, [database]); // Rerun this effect if the database instance changes
+
+
     // Log when isAdmin changes
     useEffect(() => {
         console.log("isAdmin state updated:", isAdmin);
@@ -85,6 +103,28 @@ export const FirebaseProvider = ({ children }) => {
         }
     };
 
+    const switchOrderingAvailability = async () => {
+
+        if (database && isAdmin) {
+            try {
+                const orderingAvailabilityRef = ref(database, 'settings/orderingAvailability');
+
+                const snapshot = await get(orderingAvailabilityRef);
+                const availabilityStatus = snapshot.val();
+
+                if (availabilityStatus) {
+                    set(orderingAvailabilityRef, false)
+                } else {
+                    set(orderingAvailabilityRef, true)
+                }
+
+            } catch (error) {
+                console.error("Could not access the reference location", error);
+                return
+            }
+        }
+    }
+
     const userSignOut = async () => {
         console.log("Attempting to sign out");
         try {
@@ -102,9 +142,11 @@ export const FirebaseProvider = ({ children }) => {
         auth,
         database,
         isFirebaseReady,
+        isOrderingAvailable,
         anonymousOrderId,
         anonymousOrder,
         referenceOrderId,
+        switchOrderingAvailability,
         setReferenceOrderId,
         setAnonymousOrder,
         userSignOut,

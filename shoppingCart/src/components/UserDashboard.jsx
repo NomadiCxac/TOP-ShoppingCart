@@ -22,7 +22,7 @@ import './Modal.css';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
-    const { user, anonymousOrderId, anonymousOrder } = useFirebase(); // Use the useFirebase hook to access the current user
+    const { user, anonymousOrderId } = useFirebase(); // Use the useFirebase hook to access the current user
     const { retrieveOrdersByEmail, retrieveOrderById, setDateAndTimeForOrder, updateOrderPhase} = useFirebaseOrders();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);

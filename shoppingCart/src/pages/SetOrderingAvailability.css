@@ -1,0 +1,8 @@
+.ordering-availability-switch > span#disabled {
+    color: rgb(255, 2, 2);
+}
+
+
+.ordering-availability-switch > span#enabled {
+    color: rgb(23, 207, 20);
+}

@@ -11,6 +11,7 @@ const Sidebar = () => {
         { id: 'order-searcher', label: 'Order Searcher', iconName: 'quick_reference_all', path: '/adminPage/orderSearcher' },
         { id: 'payments-pending', label: 'Set Payment Status', iconName: 'credit_card_gear', path: '/adminPage/paymentsPending' },
         { id: 'set-order-ready', label: 'Set Production Status', iconName: 'order_approve', path: '/adminPage/setOrderReady' },
+        { id: 'set-ordering-availability', label: 'Set Order Availability', iconName: 'tune', path: '/adminPage/setOrderingAvailability' },
         { id: 'logout', label: 'Logout', iconName: 'logout', path: '/' },
     ];
 

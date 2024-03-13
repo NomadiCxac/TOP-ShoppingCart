@@ -10,7 +10,7 @@ import './OrderForm.css';
 
 
 const OrderForm = () => {
-  const { setReferenceOrderId } = useFirebase();
+  const { setReferenceOrderId, isOrderingAvailable } = useFirebase();
   const { cartItems } = useCart()
   const { pushOrderToDatabase } = useFirebaseOrders();
   const navigate = useNavigate(); 
@@ -23,7 +23,7 @@ const OrderForm = () => {
 
 
   const pushOrderRequest = async () => {
-    if (cartItems.length > 0) {
+    if (isOrderingAvailable && cartItems.length > 0) {
 
       const formattedItems = cartItems.reduce((acc, item) => {
         // Start with the basic properties
@@ -192,7 +192,14 @@ const OrderForm = () => {
       />
       <label htmlFor="comments">Additional Comments</label>
       <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Please enter any specifications..."></textarea>
-      <button type="submit">Submit Order Request</button>
+      <button 
+        type="submit"
+        className="checkoutButton" 
+        id={isOrderingAvailable ? "enabled" : "disabled"}
+        disabled={!isOrderingAvailable || cartItems.length <= 0}
+      > 
+        {isOrderingAvailable ? "Submit Order Request" : "Ordering Unavailable"} 
+      </button>
       
     </form>
   );

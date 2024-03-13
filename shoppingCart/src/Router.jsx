@@ -13,6 +13,7 @@ import OrderRequestSent from "./pages/OrderRequestSentPage";
 import OrderSearcher from "./pages/OrderSearcher";
 import PaymentsPending from "./pages/PaymentsPending";
 import SetOrderReady from "./pages/SetOrderReady";
+import SetOrderingAvailability from "./pages/SetOrderingAvailability";
 
 
 // import components
@@ -70,8 +71,8 @@ function AppRouter () {
           element: isAdmin ? <AdminPage /> : <ErrorPage message="Unauthorized" />, // Only allow if user is an admin
           children: [
             {
-                path: "setPickUpDates", // Make this a nested route under adminPage
-                element: <SetPickUpDates />,
+              path: "setPickUpDates", // Make this a nested route under adminPage
+              element: <SetPickUpDates />,
             },
             {
               path: "orderSearcher", // Make this a nested route under adminPage
@@ -84,6 +85,10 @@ function AppRouter () {
             {
               path: "setOrderReady", // Make this a nested route under adminPage
               element: <SetOrderReady />,
+            },
+            {
+              path: "setOrderingAvailability", // Make this a nested route under adminPage
+              element: <SetOrderingAvailability />,
             },
 
             // Add other child routes as needed
