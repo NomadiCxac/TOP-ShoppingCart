@@ -24,7 +24,7 @@ function OrderRequestSent() {
     
     useEffect(() => {
 
-
+        console.log(emailButtonState.disabled)
         console.log("Database from context", database);
 
         console.log("Did this work")
@@ -126,7 +126,7 @@ function OrderRequestSent() {
                     
             <div className="nextStepsContainer"> 
                 <div className="nextStepTitle">Next Steps to Complete Your Order: </div>
-                <div className="clientStep"> (1.) <Link to={`/orderManagement/${orderId}`}> <span className="signInButton">Sign in</span></Link> to the order management page with your reference code or email used with the order. </div>
+                <div className="clientStep"> (1.) Sign in to the order management page with your reference code or email used with the order. </div>
                 <div className="clientStep"> (2.) Complete payment. </div> 
                 <div className="clientStep"> (3.) Select a valid pick up date.</div>
             </div>
@@ -183,6 +183,19 @@ function OrderRequestSent() {
                 </div>
 
                 <div className="sendCodeContainer">
+                    
+                                        {/* Send Code Via Email Button */}
+                <Link to={`/orderManagement/${orderId}`}>
+                    <button 
+                        className="loginWithLinkButton"
+                        disabled={!emailButtonState.disabled && !telButtonState.disabled} 
+                        id={!emailButtonState.disabled && !telButtonState.disabled ? "disabled" : "enabled"}
+                    >
+                        {(!emailButtonState.disabled && !telButtonState.disabled) ? "Please Select a Notification Method" : "Login with Order Reference Code"}
+                    </button>
+                </Link> 
+                    
+
                     {/* Send Code Via Email Button */}
                     <button 
                     className="sendRefCodeButton"

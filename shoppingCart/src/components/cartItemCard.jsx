@@ -19,7 +19,7 @@ const CartItemCard = ({ item, handleQuantityChange, quantityOptions, isDozen }) 
             <div className='cart-item-details'>
                 <div className="cart-item-info-container">
                     <h3 className="cart-item-name">{item.name} {item.batched ? (isDozen ? "(Box of 12)" : "(Box of 6)") : ""}</h3>
-                    <p className="cart-item-price">${item.batched ? (isDozen ? item.dozenPrice.toFixed(2) : item.halfDozenPrice.toFixed(2)) : item.price.toFixed(2)}</p>
+                    <p className="cart-item-price">${item.batched ? (isDozen ? item.dozenPrice.toFixed(2) * item.dozenQuantity : item.halfDozenPrice.toFixed(2) * item.halfDozenQuantity) : item.price.toFixed(2) * item.quantity}</p>
                 </div>
                 
                 <div className="cart-item-quantity-container">

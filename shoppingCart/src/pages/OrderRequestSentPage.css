@@ -16,6 +16,34 @@
     margin-top: 1em;
 }
 
+.loginWithLinkButton#enabled {
+    
+    font-size: 16px;
+
+    background-color: #007bff;
+    color: white; /* Assuming you want white text, adjust as needed */
+
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, transform 0.2s ease; /* Smooth transition for box-shadow and transform */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Adjust as needed */
+}
+
+.loginWithLinkButton#enabled:hover{
+    background-color: #007bff;
+    font-weight: 700;
+    color:   #00d9ff; /* Assuming you want white text, adjust as needed */
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2); /* Smaller shadow for a "pressed" effect */
+    transform: translateY(2px); /* Slightly move the button down */
+}
+
+.loginWithLinkButton#disabled {
+    font-size: 16px;
+}
+
 
 
 .sendRefCodeButton#enabledButton {

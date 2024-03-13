@@ -12,10 +12,10 @@ export const getFirebaseUIConfig = (auth) => ({
     signInSuccessUrl: '/',
     signInOptions: [
         GoogleAuthProvider.PROVIDER_ID,
-        FacebookAuthProvider.PROVIDER_ID,
-        EmailAuthProvider.PROVIDER_ID,
-        PhoneAuthProvider.PROVIDER_ID,
-        firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
+        // FacebookAuthProvider.PROVIDER_ID,
+        // EmailAuthProvider.PROVIDER_ID,
+        // PhoneAuthProvider.PROVIDER_ID,
+        // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
     ],
     signInFlow: 'popup',
     callbacks: {
