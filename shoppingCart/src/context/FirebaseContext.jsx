@@ -149,6 +149,7 @@ export const FirebaseProvider = ({ children }) => {
         switchOrderingAvailability,
         setReferenceOrderId,
         setAnonymousOrder,
+        setAnonymousOrderId,
         userSignOut,
         setUser,
         signInAnonymously

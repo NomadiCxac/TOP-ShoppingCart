@@ -22,7 +22,7 @@ import './Modal.css';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
-    const { user, anonymousOrderId } = useFirebase(); // Use the useFirebase hook to access the current user
+    const { user, anonymousOrderId, setAnonymousOrderId } = useFirebase(); // Use the useFirebase hook to access the current user
     const { retrieveOrdersByEmail, retrieveOrderById, setDateAndTimeForOrder, updateOrderPhase} = useFirebaseOrders();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -41,6 +41,7 @@ const UserDashboard = () => {
   
 
     const userGreeting = () => {
+
         if (user) {
             // Check if the user is anonymous
             if (user.isAnonymous) {
@@ -65,35 +66,47 @@ const UserDashboard = () => {
     
 
     useEffect(() => {
-        async function loadOrders() {
+        const loadOrders = async () => {
             setLoading(true);
-            setOrders([]); // Consider setting this at the beginning of loading to ensure UI consistency
+            setOrders([]);
             try {
                 let fetchedOrders = [];
-                if (user && !user.isAnonymous) {
-                    fetchedOrders = await retrieveOrdersByEmail(user.email, "incomplete");
-                } else if (user && user.isAnonymous && anonymousOrderId) {
-                    // Assuming retrieveOrderById can handle anonymousOrderId directly
-                    const anonOrder = await retrieveOrderById(anonymousOrderId);
-                    fetchedOrders = anonOrder ? [anonOrder] : [];
+    
+                if (user) {
+                    // If the user is not anonymous, fetch orders by email.
+                    if (!user.isAnonymous) {
+                        fetchedOrders = await retrieveOrdersByEmail(user.email, "incomplete");
+                    } else {
+                        // For anonymous users, get the anonymousOrderId from storage if it's not in context.
+                        const orderIdFromStorage = anonymousOrderId || localStorage.getItem('anonymousOrderId');
+                        if (orderIdFromStorage) {
+                            // If we have an orderId, fetch the order.
+                            const anonOrder = await retrieveOrderById(orderIdFromStorage);
+                            fetchedOrders = anonOrder ? [anonOrder] : [];
+                            // Update the context if the orderId was retrieved from storage.
+                            if (!anonymousOrderId) setAnonymousOrderId(orderIdFromStorage);
+                        }
+                    }
                 }
     
                 setOrders(fetchedOrders);
             } catch (error) {
-                console.error("Failed to fetch orders", error);
+                console.error("Failed to fetch orders:", error);
                 setError(error.message);
             } finally {
                 setLoading(false);
             }
-        }
+        };
     
-        // This conditional ensures we don't run the fetching logic unnecessarily
-        // It will run on mount, when user or anonymousOrderId changes, and when an order update is signaled
         if (user || orderUpdated) {
             loadOrders();
-            if (orderUpdated) setOrderUpdated(false); // Reset after fetching
         }
-    }, [user, anonymousOrderId, orderUpdated]); // Depend on user, anonymousOrderId, and orderUpdated to re-fetch orders
+    
+        // Reset orderUpdated flag after orders have been loaded.
+        return () => {
+            if (orderUpdated) setOrderUpdated(false);
+        };
+    }, [user, anonymousOrderId, orderUpdated]); // Dependencies array
 
 
 

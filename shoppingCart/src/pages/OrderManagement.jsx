@@ -22,6 +22,7 @@ const OrderManagement = () => {
         const anonOrder = await retrieveOrderById(orderToAccess);
         if (anonOrder) {
             // Assuming setAnonymousOrder stores the order for later use
+            localStorage.setItem('anonymousOrderId', orderToAccess);
             if (!user) {
                 await signInAnonymously(orderToAccess);
                 setAnonymousOrder([anonOrder]);
@@ -31,6 +32,7 @@ const OrderManagement = () => {
             console.error("Order does not exist.");
         }
     };
+
 
     useEffect(() => {
         if (!auth) {
