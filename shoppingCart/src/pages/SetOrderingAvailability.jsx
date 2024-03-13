@@ -25,7 +25,7 @@ const SetOrderingAvailability = () => {
           />
 
         <div>
-            {isOrderingAvailable ? "Ordering Available" : "Ordering Unvailable"}
+            {isOrderingAvailable ? "Ordering Available Status: ON" : "Ordering Available Status: OFF"}
         </div>
 
         <button className="ordering-availability-switch" onClick={handleSetOrderingAvailable}>

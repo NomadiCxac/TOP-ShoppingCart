@@ -7,30 +7,23 @@ import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
 import './OrderManagement.css';
 
 const OrderManagement = () => {
-    const { user, auth, signInAnonymously, setAnonymousOrder, referenceOrderId } = useFirebase();
+    const { user, auth, signInAnonymously, setAnonymousOrder } = useFirebase();
     const navigate = useNavigate();
     const { orderId } = useParams();
     // Set orderId to referenceOrderId if it exists, otherwise initialize it as null.
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState(orderId || '');
     const { retrieveOrderById } = useFirebaseOrders();
-
-    useEffect(() => {
-        // This effect sets the input value based on the orderId from the URL.
-        // If orderId exists, the input is populated and made read-only. If not, it's left blank, allowing manual entry.
-        setInputValue(orderId || '');
-    }, [orderId]);
 
 
     const handleAnonymousAccessSubmit = async (e) => {
         e.preventDefault();
+        const orderToAccess = inputValue; // Use inputValue to get the order ID.
 
-        console.log(orderId === "");
-
-        const anonOrder = await retrieveOrderById(orderId);
+        const anonOrder = await retrieveOrderById(orderToAccess);
         if (anonOrder) {
             // Assuming setAnonymousOrder stores the order for later use
             if (!user) {
-                await signInAnonymously(orderId);
+                await signInAnonymously(orderToAccess);
                 setAnonymousOrder([anonOrder]);
             }
             // Assuming there's a way to navigate or access the order directly here
@@ -75,7 +68,7 @@ const OrderManagement = () => {
                                 <input 
                                     type="text" 
                                     placeholder='Input Order ID Here'
-                                    value={orderId || "" } 
+                                    value={inputValue} 
                                     onChange={(e) => setInputValue(e.target.value)}
                                     readOnly={!!orderId} // Make input read-only if orderId is present in the URL
                                     required />
