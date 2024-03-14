@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import resolveImageUrl from "../functions/resolveImageUrl";
+import retrieveImageUrl from "../functions/retrieveImageUrl";
 import { calculateSubtotal } from "../functions/checkoutTotal";
 import formatName from "../functions/formatName";
 
@@ -39,7 +40,7 @@ function OrderRequestSent() {
             if (orderDetails) {
                 let orderArray = Object.values(orderDetails.items).map(item => ({
                     ...item,
-                    imageURL: resolveImageUrl(item.id),
+                    imageURL: retrieveImageUrl(item),
                 }));
 
                 setOrderData(orderArray);

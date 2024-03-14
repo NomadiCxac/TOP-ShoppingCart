@@ -36,7 +36,6 @@ async function sendTestEmail(email, ipAddress, orderDetails, orderReference, pag
       quantity: item.quantity,
       price: item.price ? item.price.toFixed(2) : null,
       batched: item.batched,
-      total: checkoutItemTotal(item).toFixed(2) // Assuming `checkoutItemTotal` is a function you have defined
     }));
     
     // Check if the email is valid
