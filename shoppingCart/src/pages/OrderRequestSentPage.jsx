@@ -14,12 +14,12 @@ function OrderRequestSent() {
     const { cartItems, clearCart } = useCart();
     const { database, isFirebaseReady } = useFirebase();
     const { updateOrderCodeSent, retrieveOrderById } = useFirebaseOrders();
-    const [orderData, setOrderData] = useState([]);
+    const [ orderData, setOrderData] = useState([]);
     const { orderId } = useParams();
     const navigate = useNavigate(); 
 
-    const [emailButtonState, setEmailButtonState] = useState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
-    const [telButtonState, setTelButtonState] = useState({ disabled: true, text: 'Send My Code Via Tel.', className: 'disabledButton' });
+    const [ emailButtonState, setEmailButtonState] = useState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
+    const [ telButtonState, setTelButtonState] = useState({ disabled: true, text: 'Send My Code Via Tel.', className: 'disabledButton' });
 
     
     useEffect(() => {
@@ -119,6 +119,10 @@ function OrderRequestSent() {
             console.error("Error in copying text: ", err);
           });
       };
+
+      useEffect(() => {
+        console.log(orderData)
+      })
 
     return (
         <div>

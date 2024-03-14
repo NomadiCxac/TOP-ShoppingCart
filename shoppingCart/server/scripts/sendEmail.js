@@ -5,6 +5,9 @@ import sgMail from '@sendgrid/mail';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
+import formatName from '../../src/functions/formatName.js';
+import resolveImageUrl from '../../src/functions/resolveImageUrl.js';
+import { checkoutItemTotal } from '../../src/functions/checkoutTotal.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -17,10 +20,24 @@ admin.initializeApp({
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-async function sendTestEmail(email, ipAddress) {
+async function sendTestEmail(email, ipAddress, orderDetails, orderReference, pageLink) {
+
   try {
     // Use the imported function to get the email validation result
     const validationResult = await processEmailValidation(email, ipAddress);
+    const orderItems = orderDetails.map(item => ({
+      id: item.id,
+      name: formatName(item.id), // Assuming `formatName` is a function you have defined
+      imageUrl: resolveImageUrl(item.id), // Adjust resolveImageUrl to get the full image URL
+      dozenQuantity: item.dozenQuantity,
+      dozenPrice: item.dozenPrice.toFixed(2),
+      halfDozenQuantity: item.halfDozenQuantity,
+      halfDozenPrice: item.halfDozenPrice.toFixed(2),
+      quantity: item.quantity,
+      price: item.price ? item.price.toFixed(2) : null,
+      batched: item.batched,
+      total: checkoutItemTotal(item).toFixed(2) // Assuming `checkoutItemTotal` is a function you have defined
+    }));
     
     // Check if the email is valid
     if (validationResult && validationResult.status === 'valid') {
@@ -31,7 +48,9 @@ async function sendTestEmail(email, ipAddress) {
         dynamic_template_data: {
           subject: 'Hello from SendGrid',
           name: validationResult.firstname || 'Recipient Name', // Use data from validation result
-          otherVariable: 'Other Value',
+          orderItems: orderItems, // This needs to be handled in your SendGrid template
+          orderReference: orderReference,
+          pageLink: pageLink,
         },
       };
 
