@@ -1,6 +1,5 @@
-export const signOutUser = async (user, userSignOut, setReferenceOrderId, navigate) => {
+export const signOutUser = async (user, userSignOut, navigate) => {
 
-    setReferenceOrderId(null);
     if (localStorage.getItem('anonymousOrderId')) {
         localStorage.removeItem('anonymousOrderId');
     }

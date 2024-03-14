@@ -1,22 +1,18 @@
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { useFirebase } from '../context/FirebaseContext';
+import { signOutUser } from '../functions/signOutUser'; // Adjust the import path as needed
 
 const SignOutButton = () => {
-    const { userSignOut, setReferenceOrderId } = useFirebase();
-    const navigate = useNavigate(); // Initialize useNavigate hook
+    const { user, userSignOut } = useFirebase();
+    const navigate = useNavigate();
 
-    const handleSignOut = async () => {
-        setReferenceOrderId(null)
-        await userSignOut(); // Wait for the sign-out process to complete
-        if (localStorage.getItem('anonymousOrderId')) {
-            localStorage.removeItem('anonymousOrderId');
-        }
-
-        navigate('/orderManagement'); // Redirect to the login page
+    // This wrapper function is necessary to use the hooks within the component
+    const handleSignOutClick = () => {
+        signOutUser(user, userSignOut, navigate);
     };
 
     return (
-        <button className='signoutButton' onClick={handleSignOut}>Sign Out</button>
+        <button onClick={handleSignOutClick}>Sign Out</button>
     );
 };
 

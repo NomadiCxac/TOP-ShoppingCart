@@ -1,9 +1,12 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useFirebase } from '../context/FirebaseContext';
+import { signOutUser } from '../functions/signOutUser';
 import './Sidebar.css';
 
 const Sidebar = () => {
-    const location = useLocation(); 
+    const { user } = useFirebase();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const adminActions = [
         { id: 'dashboard', label: 'Dashboard', iconName: 'space_dashboard', path: '/adminPage' },
@@ -12,7 +15,7 @@ const Sidebar = () => {
         { id: 'payments-pending', label: 'Set Payment Status', iconName: 'credit_card_gear', path: '/adminPage/paymentsPending' },
         { id: 'set-order-ready', label: 'Set Production Status', iconName: 'order_approve', path: '/adminPage/setOrderReady' },
         { id: 'set-ordering-availability', label: 'Set Order Availability', iconName: 'tune', path: '/adminPage/setOrderingAvailability' },
-        { id: 'logout', label: 'Logout', iconName: 'logout', path: '/' },
+        { id: 'logout', label: 'Logout', iconName: 'logout'},
     ];
 
     const userActions = [
@@ -25,7 +28,8 @@ const Sidebar = () => {
     const { userSignOut} = useFirebase();
 
     const handleLogOut = async () => {
-        await userSignOut(); // Wait for the sign-out process to complete
+        // Pass the necessary arguments to signOutUser function
+        await signOutUser(user, userSignOut, navigate);
     };
 
     return (
@@ -35,17 +39,29 @@ const Sidebar = () => {
                 <div className='sectionTitle'>
                     Admin Actions
                 </div>
-                {adminActions.map((item) => (
-                    <Link to={`${item.path}`} key={item.id}
-                          className={`sidebarNavContainer ${location.pathname === item.path ? 'current' : ''}`} // Step 3: Conditional class application
-                          id={`${item.id}`}>
-                        <span className="material-symbols-outlined icon">
-                            {item.iconName}
-                        </span>
-                        {item.label}
-                    </Link>
-                ))}
+                {adminActions.map((item) => {
+                    if (item.id === 'logout') {
+                        // Render a button or div for logout to handle click event
+                        return (
+                            <div key={item.id} className="sidebarNavContainer" onClick={handleLogOut}>
+                                <span className="material-symbols-outlined icon">{item.iconName}</span>
+                                {item.label}
+                            </div>
+                        );
+                    } else {
+                        // Other actions are handled as before
+                        return (
+                            <Link to={`${item.path}`} key={item.id}
+                                  className={`sidebarNavContainer ${location.pathname === item.path ? 'current' : ''}`}
+                                  id={`${item.id}`}>
+                                <span className="material-symbols-outlined icon">{item.iconName}</span>
+                                {item.label}
+                            </Link>
+                        );
+                    }
+                })}
             </div>
+
             <div className='menuNavContainer' id="userActions">
                 <div className='sectionTitle'>
                     Client Actions
