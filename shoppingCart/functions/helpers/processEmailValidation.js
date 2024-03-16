@@ -39,7 +39,7 @@ const storeValidatedEmail = async (email) => {
   const sanitizedEmail = email.replace(/\./g, ",");
   await db.ref(`validatedEmails/${sanitizedEmail}`).set({
     email: email,
-    validatedAt: admin.database.ServerValue.TIMESTAMP
+    validatedAt: admin.database.ServerValue.TIMESTAMP,
   });
 };
 
