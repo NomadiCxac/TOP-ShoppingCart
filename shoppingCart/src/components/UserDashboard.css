@@ -74,6 +74,19 @@
     width: 100%;
 }
 
+.orderLocation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 90%;
+}
+
+.orderLocation > h5,
+.orderLocation > div  {
+ margin-left: 1em;
+}
+
 
 .orderReviewContainer#modal { 
     display: flex;

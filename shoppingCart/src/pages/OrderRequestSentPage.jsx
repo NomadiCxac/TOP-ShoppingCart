@@ -7,6 +7,8 @@ import resolveImageUrl from "../functions/resolveImageUrl";
 import retrieveImageUrl from "../functions/retrieveImageUrl";
 import { calculateSubtotal } from "../functions/checkoutTotal";
 import formatName from "../functions/formatName";
+import sendTestEmail from "../../server/scripts/sendEmail";
+import processEmailValidation from "../../server/scripts/processEmailValidation";
 
 import './OrderRequestSentPage.css'
 
@@ -16,6 +18,7 @@ function OrderRequestSent() {
     const { database, isFirebaseReady } = useFirebase();
     const { updateOrderCodeSent, retrieveOrderById } = useFirebaseOrders();
     const [ orderData, setOrderData] = useState([]);
+    const [ contactInfo, setContantInfo ] = useState(null)
     const { orderId } = useParams();
     const navigate = useNavigate(); 
 
@@ -43,7 +46,14 @@ function OrderRequestSent() {
                     imageURL: retrieveImageUrl(item),
                 }));
 
+                console.log(orderDetails)
+
+                let contactObject = {
+                    email: orderDetails.email,
+                    phone: orderDetails.phone,
+                }
                 setOrderData(orderArray);
+                setContantInfo(contactObject)
 
                 setEmailButtonState(prevState => ({
                     ...prevState,
@@ -75,14 +85,25 @@ function OrderRequestSent() {
         }
     
         try {
-            await updateOrderCodeSent(orderId, 'orderCodeSentByEmail', true);
-            setEmailButtonState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
-            alert("Order reference code has been sent via email.");
+
+            const validationResult = await processEmailValidation(contactInfo.email, ""); // server side function
+            if (validationResult.status === 'valid') {
+                await sendTestEmail(contactInfo.email, "", orderData, orderId, `/orderManagement/${orderId}`); // server side function
+                await updateOrderCodeSent(orderId, 'orderCodeSentByEmail', true);
+                setEmailButtonState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
+                alert("Order reference code has been sent via email.");
+            } else {
+                // Handle invalid email scenario
+                console.log("Email validation failed, not sending email.");
+                setEmailButtonState({ disabled: true, text: 'Email Invalid', className: 'disabledButton' });
+                alert("Email was invalid. Order reference code could not be sent. Please redo your order request.");
+            }
         } catch (error) {
             console.error("Failed to send email: ", error);
+            // Update UI to reflect the error state
         }
-
-        clearCart()
+    
+        clearCart(); // Ensure this is the desired place to clear the cart
     };
 
     // Helper function to calculate the total price of an item
@@ -123,6 +144,7 @@ function OrderRequestSent() {
 
       useEffect(() => {
         console.log(orderData)
+        console.log(contactInfo)
       })
 
     return (

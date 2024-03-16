@@ -391,7 +391,6 @@ const UserDashboard = () => {
 
                          <div className="orderSummary" id="modal">
                              <div className="orderIdContainer"  id="modal"> 
-                                 {/* <h3>Order ID: {selectedOrder.id}</h3> */}
                                  <div>Your Pickup Date: {selectedOrder.pickUpDate} @ {selectedOrder.pickUpTime}</div>
                              </div>
 
@@ -403,51 +402,28 @@ const UserDashboard = () => {
                     
 
                          <div className='orderItemsContainer' id='modal'>
+
+                                
+                            <div className='mapContainer' id='map'>
+                                <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22990.550717128324!2d-79.4838431848177!3d43.92172459443965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882ad5ffc67aa1fd%3A0xbb74a7991d299797!2s225%20Selwyn%20Rd%2C%20Richmond%20Hill%2C%20ON%20L4E%200R4!5e0!3m2!1sen!2sca!4v1710603195778!5m2!1sen!2sca"
+                                width="800"
+                                height="380"
+                                style={{border:0}}
+                                allowFullScreen=""
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                >
+                                </iframe>
+                            </div>
+                                
                              
-                         <div className="orderImages" id='modal'>
-
-                             <div className="orderReviewContainer" id='modal'>
-                                {orderItemsArray.map((item) => (
-                                <div className='orderItemContainer' id='modal' key={item.id + "-orderReview"}>
-
-                                    <div className='orderItemContents' id='left'>
-                                        <img className="orderIcon" key={item.id} src={resolveImageUrl(item.id)} alt={item.name} />
-                                    <div className='orderItemDescription' id='left'>
-
-                                    <div className='nameOfItem'>
-                                        {formatName(item.id)}
-                                    </div>
-
-                                    {item.dozenQuantity > 0 && (
-                                        <div className='itemBreakdown' id='dozen'>
-                                            {`Dozen ${formatName(item.id)} @ ${item.dozenQuantity} x ${item.dozenPrice.toFixed(2)} CAD`}
-                                        </div>
-                                    )}
-                                    {item.halfDozenQuantity > 0 && (
-                                        <div className='itemBreakdown' id='halfDozen'>
-                                            {`Half a Dozen ${formatName(item.id)} @ ${item.halfDozenQuantity} x ${item.halfDozenPrice.toFixed(2)} CAD`}
-                                        </div>
-                                    )}
-                                    {item.quantity > 0 && item.batched === false && (
-                                        <div className='itemBreakdown' id='singular'>
-                                            {`${formatName(item.id)} @ ${item.quantity} x ${item.price.toFixed(2)} CAD`}
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-                                <div className='orderItemContents' id='right'>
-                                    {checkoutItemTotal(item).toFixed(2) + " CAD"}
-                                </div>
-                            </div>
-                            ))}
-                            </div>
-
-                            <div className="orderSubtotal" id='modal'>
-                               {`Total: ${selectedOrder.subtotal.toFixed(2)} CAD`} 
-                            </div> 
-
-                             
+                         <div className="orderLocation" id='modal'>
+                            <h5>Pickup Address:</h5>
+                            <div>225 Selwyn Rd, Richmond Hill</div>
+                            <div>ON L4E 0R4</div>
+                         
+                          
                                 </div>
                             </div> 
                         </div>
