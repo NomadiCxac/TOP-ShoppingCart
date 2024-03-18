@@ -7,8 +7,9 @@ import firebaseConfig from '../firebaseConfig';
 const FirebaseContext = createContext();
 export const useFirebase = () => useContext(FirebaseContext);
 
-export const FirebaseProvider = ({ children }) => {
+export const FirebaseProvider = ({children}) => {
     const [isFirebaseReady, setIsFirebaseReady] = useState(false);
+    const [app, setApp] = useState(null);
     const [auth, setAuth] = useState(null);
     const [database, setDatabase] = useState(null);
     const [user, setUser] = useState(null);
@@ -19,22 +20,20 @@ export const FirebaseProvider = ({ children }) => {
     const [anonymousOrder, setAnonymousOrder] = useState([]); // Add anonymousOrderId state
     const [referenceOrderId, setReferenceOrderId] = useState("");
     
-
     useEffect(() => {
-        console.log("Database initialized", database);
         
         try {
-            let app;
-            if (!getApps().length) {
-                app = initializeApp(firebaseConfig); // Initialize if no apps
-            } else {
-                app = getApps()[0]; // Use the existing app if already initialized
-            }
 
-           
+            let appInstance;
+            if (!getApps().length) {
+                appInstance = initializeApp(firebaseConfig); // Initialize if no apps
+            } else {
+                appInstance = getApps()[0]; // Use the existing app if already initialized
+            }
+            setApp(appInstance);
     
-            const authInstance = getAuth(app);
-            const databaseInstance = getDatabase(app);
+            const authInstance = getAuth(appInstance);
+            const databaseInstance = getDatabase(appInstance);
 
             setAuth(authInstance);
             setDatabase(databaseInstance);
@@ -67,8 +66,6 @@ export const FirebaseProvider = ({ children }) => {
 
 
     useEffect(() => {
-        // Firebase initialization logic...
-
         if (database) { // Make sure database is initialized
             const orderingAvailabilityRef = ref(database, 'settings/orderingAvailability');
             const unsubscribeOrderingAvailability = onValue(orderingAvailabilityRef, (snapshot) => {
@@ -137,6 +134,7 @@ export const FirebaseProvider = ({ children }) => {
     };
 
     const value = {
+        app,
         isAdmin, // Provide isAdmin in the context value for consumption by other components
         user,
         auth,

@@ -1,26 +1,25 @@
 import { useFirebase } from "../context/FirebaseContext";
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import resolveImageUrl from "../functions/resolveImageUrl";
 import retrieveImageUrl from "../functions/retrieveImageUrl";
 import { calculateSubtotal } from "../functions/checkoutTotal";
 import formatName from "../functions/formatName";
-import sendTestEmail from "../../server/scripts/sendEmail";
-import processEmailValidation from "../../server/scripts/processEmailValidation";
+import { getFunctions, httpsCallable } from 'firebase/functions';
+
 
 import './OrderRequestSentPage.css'
 
 
 function OrderRequestSent() {
-    const { cartItems, clearCart } = useCart();
-    const { database, isFirebaseReady } = useFirebase();
+    const { clearCart } = useCart();
+    const { app, database, isFirebaseReady } = useFirebase();
     const { updateOrderCodeSent, retrieveOrderById } = useFirebaseOrders();
     const [ orderData, setOrderData] = useState([]);
     const [ contactInfo, setContantInfo ] = useState(null)
     const { orderId } = useParams();
-    const navigate = useNavigate(); 
 
     const [ emailButtonState, setEmailButtonState] = useState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
     const [ telButtonState, setTelButtonState] = useState({ disabled: true, text: 'Send My Code Via Tel.', className: 'disabledButton' });
@@ -76,6 +75,11 @@ function OrderRequestSent() {
         fetchOrderDetails();
     }, [isFirebaseReady]); 
 
+
+    const functions = getFunctions(app);
+    const sendTestEmail = httpsCallable(functions, 'sendTestEmail');
+    // const processEmailValidation = httpsCallable(functions, 'processEmailValidation')
+
     const handleEmailButtonClick = async () => {
         console.log("Sending code via Email...");
     
@@ -83,12 +87,20 @@ function OrderRequestSent() {
             console.error("No reference Order ID available.");
             return;
         }
+
+        console.log(orderData)
     
         try {
-
-            const validationResult = await processEmailValidation(contactInfo.email, ""); // server side function
-            if (validationResult.status === 'valid') {
-                await sendTestEmail(contactInfo.email, "", orderData, orderId, `/orderManagement/${orderId}`); // server side function
+            let test = true;
+            // result.data.status === 'valid'
+            // const result = await processEmailValidation({email: contactInfo.email, ipAddress: ""}); // server side function
+            if (test) {
+                await await sendTestEmail({
+                    email: contactInfo.email,
+                    orderDetails: orderData,
+                    orderReference: orderId,
+                    pageLink: `https://kitchenonselwynroad.com/orderManagement/${orderId}`
+                });
                 await updateOrderCodeSent(orderId, 'orderCodeSentByEmail', true);
                 setEmailButtonState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
                 alert("Order reference code has been sent via email.");
@@ -119,15 +131,6 @@ function OrderRequestSent() {
             total += item.quantity * item.price;
         }
         return total;
-    };
-
-
-    // Calculate subtotal
-    const subtotal = cartItems.reduce((acc, item) => acc + checkoutItemTotal(item), 0);
-
-    const handleOrderManagementClick = () => {
-        clearCart(); // Clear the cart
-        navigate('/orderManagement'); // Navigate programmatically
     };
 
     const copyToClipboard = () => {

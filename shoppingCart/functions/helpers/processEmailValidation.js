@@ -53,12 +53,12 @@ exports.processEmailValidation = functions.https.onCall(async (data, context) =>
   const isEmailValidated = await checkValidatedEmail(email);
 
   if (isEmailValidated) {
-    return { status: "valid", email: email };
+    return {status: "valid", email: email};
   } else {
     const validationResult = await validateEmail(email, ipAddress);
     if (validationResult && validationResult.status === "valid") {
       await storeValidatedEmail(email);
-      return { status: "valid", email: email };
+      return {status: "valid", email: email};
     } else {
       throw new functions.https.HttpsError("failed-precondition", "Validation failed or email is not valid");
     }
