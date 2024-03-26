@@ -1,4 +1,4 @@
-
+import { useEffect } from "react";
 import SetProductionStatus from "../components/SetProductionStatus";
 import TopNavBar from "../components/TopNavBar";
 
@@ -6,6 +6,10 @@ import TopNavBar from "../components/TopNavBar";
 const SetOrderReady = () => {
     
     const phase = "step3"
+
+    useEffect(() => {
+        document.title = 'KSR - Set Production Status';
+      }, []);
 
 
     return (

@@ -22,8 +22,10 @@ const AdminPage = () => {
     const currentDateReadable = format(currentDate, "EEEE, MMMM d, yyyy");
 
     useEffect(() => {
-      document.title = 'KSR - Admin Page';
-    }, []);
+      if (location.pathname == "/adminPage") {
+        document.title = 'KSR - Admin Dashboard';
+      }
+    }, [location]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,17 +42,6 @@ const AdminPage = () => {
         fetchData();
 
     }, []); // Run on mount
-
-
-
-
-    useEffect(() => {
-        document.body.style.overflowY = 'hidden';
-        return () => {
-          document.body.style.overflowY = 'auto';
-        };
-      }, [])
-
 
     const convertStartTimeToComparableValue = (pickUpTime) => {
         const startTime = pickUpTime.split(' - ')[0]; // Extracts "HH:mm" before the dash

@@ -2,12 +2,13 @@
     {
     "id": "ensaymada",
     "name": "Ensaymada",
-    "description": "Our most popular and beloved item. The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
+    "description": "The Ensaymada is a luxurious Filipino brioche, famously soft, rich, and buttery, topped with creamy butter and a generous sprinkle of sugar and cheese, offering a unique blend of sweet and savory flavors.",
     "halfDozenPrice": 22.00,
     "dozenPrice": 40.00,
     "price": null,
     "image": "ensaymada",
-    "batched": true
+    "batched": true,
+    "popular": true
     },
 
     {
@@ -18,7 +19,8 @@
     "dozenPrice": 15.00,
     "price": null,
     "image": "chocolateCrinkleCookies",
-    "batched": true
+    "batched": true,
+    "popular": true
     },
 
 
@@ -30,7 +32,8 @@
     "dozenPrice": 36.00,
     "price": null,
     "image": "redVelvetCupcakes",
-    "batched": true
+    "batched": true,
+    "popular": false
     },
     
 
@@ -41,7 +44,8 @@
     "description": "Delight in our Chocolate Cake, a layered sensation of moist sponge and smooth ganache, offering a deeply satisfying chocolate experience.",
     "price": 48.00,
     "image": "chocolateCake",
-    "batched": false
+    "batched": false,
+    "popular": false
     },
 
 
@@ -51,7 +55,8 @@
     "description": "Enjoy the comforting blend of our Walnut & Chocolate Chip Banana Cake, a perfect mix of nutty crunch and sweet chocolate in every slice.",
     "price": 20.00,
     "image": "walnutAndChocolateChipBananaCake",
-    "batched": false
+    "batched": false,
+    "popular": false
     }
     
 

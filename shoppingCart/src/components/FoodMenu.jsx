@@ -84,25 +84,38 @@ const FoodMenu = () => {
 
                     <div className='detailsContainer'>
                         <h3 className='menuItemName'>{item.name}</h3>
-                        <p className='itemDescription'>{item.description}</p>
+                        {item.popular && (
+                            <div className='bestSellerContainer'>
+                                <span className="material-symbols-outlined">star</span>
+                                <p className='popularItemText'>Best Seller</p>
+                            </div>
+
+                                ) 
+                            }
+
+                            <p className='itemDescription'>
+                                {item.description}
+                            </p>
                         
                         {item.batched ? (
                             <>
                                 {/* Item details */}
                                 <div className='optionContainer'>
-                                    <button 
-                                        onClick={() => handleSelectedOption('dozen', item)} 
-                                        className={`option ${selectedItem === item && selectedOption === 'dozen' ? 'selectedOption' : ''}`}
-                                    >
 
-                                        One Dozen: ${item.dozenPrice.toFixed(2)} CAD
-                                    </button>
                                     <button 
                                         onClick={() => handleSelectedOption('halfDozen', item)} 
                                         className={`option ${selectedItem === item && selectedOption === 'halfDozen' ? 'selectedOption' : ''}`}
                                     >
                                         Half a Dozen: ${item.halfDozenPrice.toFixed(2)} CAD
                                     </button>
+
+                                    <button 
+                                        onClick={() => handleSelectedOption('dozen', item)} 
+                                        className={`option ${selectedItem === item && selectedOption === 'dozen' ? 'selectedOption' : ''}`}
+                                    >
+                                        One Dozen: ${item.dozenPrice.toFixed(2)} CAD
+                                    </button>
+
                                 </div>
                                 <div className='buttonContainer'>
 

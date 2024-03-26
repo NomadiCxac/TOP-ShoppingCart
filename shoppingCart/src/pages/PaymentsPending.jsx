@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import SetPaymentStatus from "../components/SetPaymentStatus";
 import TopNavBar from "../components/TopNavBar";
 
@@ -5,6 +6,10 @@ import TopNavBar from "../components/TopNavBar";
 const PaymentsPending = () => {
     
     const phase = "step1"
+
+    useEffect(() => {
+        document.title = 'KSR - Set Payment Status';
+      }, []);
 
 
     return (

@@ -14,7 +14,7 @@ const SetOrderingAvailability = () => {
     }
 
     useEffect(() => {
-        document.title = 'KSR - Order Request Sent';
+        document.title = 'KSR - Ordering Availability';
       }, []);
 
     useEffect(() => {
