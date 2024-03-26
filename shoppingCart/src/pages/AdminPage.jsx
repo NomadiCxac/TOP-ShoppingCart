@@ -2,17 +2,14 @@ import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import './pageNavigation.css';
 import './AdminPage.css'; // Import the CSS file
-import { useFirebase } from '../context/FirebaseContext';
 import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
 import Sidebar from '../components/Sidebar';
-import { parse, format } from 'date-fns';
-import SearchBar from '../components/SearchBar';
+import { format } from 'date-fns';
 import AdminCurrentDateOrders from '../components/AdminCurrentDateOrders';
 import TopNavBar from '../components/TopNavBar';
 
 const AdminPage = () => {
 
-    const { isAdmin, user } = useFirebase();
     const { retrieveOrderDataByMonth, retrieveOrdersByCurrentDate } = useFirebaseOrders()
     const location = useLocation(); 
     const [orderData, setOrderData] = useState([]);
@@ -23,6 +20,10 @@ const AdminPage = () => {
     const currentMonthFormat = format(currentDate, "yyyy-MM");
     const currentMonthYearReadable = format(currentDate, "MMMM, yyyy");
     const currentDateReadable = format(currentDate, "EEEE, MMMM d, yyyy");
+
+    useEffect(() => {
+      document.title = 'KSR - Admin Page';
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {

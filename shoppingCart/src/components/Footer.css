@@ -8,12 +8,12 @@
     left: 50%;
 
     background-color: rgb(255, 185, 54);
-    color: var(--secondary-color); /* Text color */
+    color: white; /* Text color */
     padding: 20px 10px;
 
     font-style: italic;
 
-    width: 60%; /* Ensure it spans the full width */
+    width: 100%; /* Ensure it spans the full width */
     z-index: 1000; /* Optional: ensure it sits above other content */
     transform: translateX(-50%);
 }

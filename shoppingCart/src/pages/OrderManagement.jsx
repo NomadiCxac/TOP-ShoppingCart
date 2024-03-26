@@ -14,6 +14,10 @@ const OrderManagement = () => {
     const [inputValue, setInputValue] = useState(orderId || '');
     const { retrieveOrderById } = useFirebaseOrders();
 
+    useEffect(() => {
+        document.title = 'KSR - Login to View Orders';
+      }, []);
+
 
     const handleAnonymousAccessSubmit = async (e) => {
         e.preventDefault();

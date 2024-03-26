@@ -24,6 +24,9 @@ function OrderRequestSent() {
     const [ emailButtonState, setEmailButtonState] = useState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
     const [ telButtonState, setTelButtonState] = useState({ disabled: true, text: 'Send My Code Via Tel.', className: 'disabledButton' });
 
+    useEffect(() => {
+        document.title = 'KSR - Order Request Sent';
+      }, []);
     
     useEffect(() => {
 

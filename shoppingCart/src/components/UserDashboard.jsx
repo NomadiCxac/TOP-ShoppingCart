@@ -38,6 +38,10 @@ const UserDashboard = () => {
 
     const currentDate = new Date()
 
+    useEffect(() => {
+        document.title = 'KSR - Your Orders';
+      }, []);
+
   
 
     const userGreeting = () => {

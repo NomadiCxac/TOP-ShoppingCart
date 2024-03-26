@@ -12,7 +12,10 @@ import './ShoppingCartPage.css'
 const ShoppingCartPage = () => {
   const navigate = useNavigate();
   const { cartItems } = useCart();
-  const { user } = useFirebase();
+
+  useEffect(() => {
+    document.title = 'KSR - Your Shopping Cart';
+  }, []);
 
   useEffect(() => {
     // Set overflow-y of the body to hidden when the component mounts

@@ -13,6 +13,10 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = 'KSR - Checkout Page';
+  }, []);
+
+  useEffect(() => {
     // Redirect or show empty cart message if cart is empty
     if (cartItems.length === 0) {
 

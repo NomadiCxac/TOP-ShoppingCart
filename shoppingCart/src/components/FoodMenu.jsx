@@ -16,6 +16,10 @@ const FoodMenu = () => {
 
     const { addToCart } = useCart();
 
+    useEffect(() => {
+        document.title = 'Kitchen on Selwyn Rd';
+      }, []);
+
     function handleSelectedOption (option, item) {
         setSelectedItem(item);
         setSelectedVariant(option);
