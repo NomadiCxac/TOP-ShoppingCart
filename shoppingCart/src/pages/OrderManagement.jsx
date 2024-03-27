@@ -17,6 +17,9 @@ const OrderManagement = () => {
     useEffect(() => {
         document.title = 'KSR - Login to View Orders';
       }, []);
+    
+      
+        
 
 
     const handleAnonymousAccessSubmit = async (e) => {
@@ -58,32 +61,26 @@ const OrderManagement = () => {
     return (
         <div className="login-page-container">
             {!user && (
-                <div className="login-options-container">
-                    <div className='accessContainer'>
-                        <div className="login-container">
-                            <h2>Access Your Orders Via: Login</h2>
-                            <h2>Login</h2>
-                            <div id="firebaseui-auth-container"></div>
-                        </div>
-
-                        <div className="or-divider">- OR -</div>
-                        
-                        <div className="anonymous-access-container">
-                            <h2>Please Enter Your Order Code Below to Set Pick Up Date</h2>
-                            <form onSubmit={handleAnonymousAccessSubmit}>
-                                <input 
-                                    type="text" 
-                                    placeholder='Input Order ID Here'
-                                    value={inputValue} 
-                                    onChange={(e) => setInputValue(e.target.value)}
-                                    readOnly={!!orderId} // Make input read-only if orderId is present in the URL
-                                    required />
-                                <button type="submit">Access Order</button>
-                            </form>
-                        </div>
+                <div className="login-modal">
+                    <h2 className='googleHeader'>View Order with Google Email Auth</h2>
+                    <div className="auth-options">
+                        <div id="firebaseui-auth-container"></div>
+                        <div className="or-divider">or</div>
+                        <form onSubmit={handleAnonymousAccessSubmit} className="order-id-form">
+                        <h2>View Order with Reference Code</h2>
+                            <input 
+                                type="text"
+                                className='anonymousAccessInteraction' 
+                                placeholder='Enter Order Code'
+                                value={inputValue} 
+                                onChange={(e) => setInputValue(e.target.value)}
+                                readOnly={!!orderId} // Make input read-only if orderId is present in the URL
+                                required />
+                            <button type="submit" className='anonymousAccessInteraction'>View Order</button>
+                        </form>
                     </div>
                 </div>
-            )}  
+            )}
         </div>
     );
 };

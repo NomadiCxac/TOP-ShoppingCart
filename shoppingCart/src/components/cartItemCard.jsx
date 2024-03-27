@@ -5,7 +5,7 @@ import './CartItemCard.css'
 import { useEffect } from 'react';
 
 
-const CartItemCard = ({ item, handleQuantityChange, quantityOptions, isDozen }) => {
+const CartItemCard = ({ item, handleQuantityChange, quantityOptions, isDozen, pageName }) => {
     // Determine the correct quantity based on the variant
     const currentQuantity = item.batched ? (isDozen ? item.dozenQuantity : item.halfDozenQuantity) : item.quantity
     
@@ -22,7 +22,7 @@ const CartItemCard = ({ item, handleQuantityChange, quantityOptions, isDozen }) 
 
             <div className='cart-item-details'>
                 <div className="cart-item-info-container">
-                    <h3 className="cart-item-name">{item.name} {item.batched ? (isDozen ? "(Box of 12)" : "(Box of 6)") : ""}</h3>
+                    <h3 className="cart-item-name" id={pageName}>{item.name} {item.batched ? (isDozen ? "(Box of 12)" : "(Box of 6)") : ""}</h3>
                     <div className='cart-item-section'>
                         <p className="cart-item-price">${item.batched ? (isDozen ? (item.dozenPrice * item.dozenQuantity).toFixed(2) : (item.halfDozenPrice * item.halfDozenQuantity).toFixed(2)) : (item.price * item.quantity).toFixed(2)}</p>
                         <p 
@@ -38,7 +38,7 @@ const CartItemCard = ({ item, handleQuantityChange, quantityOptions, isDozen }) 
                 </div>
                 
                 <div className="cart-item-quantity-container">
-                    <p className="cart-item-quantity">Quantity: {currentQuantity}</p>
+                    <p className="cart-item-quantity">Quantity:</p>
                 
                     <select 
                         className="quantity-input" 

@@ -54,6 +54,7 @@ const FinalizeShoppingCart = ({pageName}) => {
                                 dozenQuantity={item.dozenQuantity}
                                 halfDozenQuantity={0}
                                 isDozen={true}
+                                pageName={pageName}
                             />
                         )}
                         {item.halfDozenQuantity > 0 && (
@@ -66,6 +67,7 @@ const FinalizeShoppingCart = ({pageName}) => {
                                 dozenQuantity={0}
                                 halfDozenQuantity={item.halfDozenQuantity}
                                 isDozen={false}
+                                pageName={pageName}
                             />
                         )}
                     </React.Fragment>
@@ -79,6 +81,7 @@ const FinalizeShoppingCart = ({pageName}) => {
                         dozenQuantity={0}
                         halfDozenQuantity={0}
                         isDozen={false}
+                        pageName={pageName}
                     />
                 ))}
             </div>

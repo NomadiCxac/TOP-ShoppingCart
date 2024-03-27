@@ -141,7 +141,7 @@ const OrderForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="checkout-form">
-      <h2>Checkout Information</h2>
+      <h2>Order Request Information</h2>
       <label htmlFor="name">
         <div>
             <span className='requiredStar'>*</span>Name 
@@ -191,7 +191,7 @@ const OrderForm = () => {
         required
       />
       <label htmlFor="comments">Additional Comments</label>
-      <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Please enter any specifications..."></textarea>
+      <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Add comments"></textarea>
       <button 
         type="submit"
         className="checkoutButton" 

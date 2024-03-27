@@ -5,6 +5,41 @@
     color: var(--text-color);
     background-color: var(--background-color);
   }
+
+  .pageContent#orderManagement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-modal {
+    /* Modal specific styles for raised effect */
+    box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.1), 3px 3px 6px rgba(0, 0, 0, 0.2);
+    background: #fff; /* Assuming a light mode design */
+    border-radius: 5px; /* Optional: for rounded corners */
+    padding: 20px; /* Adjust as needed */
+    z-index: 1000; /* Ensure it's above other content */
+    position: relative; /* Adjust as necessary, could be absolute or fixed based on your layout */
+    margin-top: 5em;
+    height: 30em;
+    width: 100%;
+  }
+  
+  .login-page-container::before {
+    /* Creates an overlay effect on the rest of the page */
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 500; /* Below the modal, but above other content */
+  }
+
+  .googleHeader {
+    margin-top: 1.2em;
+    margin-bottom: 1.5em;
+  }
   
   /* Responsive container */
   .accessContainer {
@@ -21,18 +56,50 @@
   
 .login-container,
 .anonymous-access-container {
-  width: 45%; /* Each container takes up 45% of the accessContainer's width */
+  width: 85%; /* Each container takes up 45% of the accessContainer's width */
   padding: 1.25em; /* 20px */
   border: 0.0625em solid #ccc; /* 1px */
   border-radius: 0.25em; /* 4px */
-  background-color: #fff;
+  background-color: var(--primary-color)
 }
+
 .or-divider {
-  width: 10%; /* Divider takes up 10% of the accessContainer's width */
-  text-align: center; /* Centers the text within the divider */
-  align-self: center; /* Vertically centers itself within the flex container */
-  padding: 0.625em 0; /* Provides padding at the top and bottom */
+  text-align: center;
+  align-self: center;
+  position: relative;
+  line-height: 1; /* Aligns the line with the middle of the text */
+  margin-top: 3em;
+  margin-bottom: 2em;
 }
+
+.or-divider span {
+  background-color: #fff; /* Match the background color of your modal */
+  padding: 0 10px; /* Provide some space around the text */
+  position: relative; /* Needed to ensure the z-index applies */
+  z-index: 1; /* Places the text above the pseudo-elements */
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%; /* Length of the line */
+  height: 1px;
+  background-color: #ccc; /* Line color */
+  z-index: 0;
+}
+
+.or-divider::before {
+  left: 0;
+  margin-left: 5%; /* Space from the left side */
+}
+
+.or-divider::after {
+  right: 0;
+  margin-right: 5%; /* Space from the right side */
+}
+
 
 /* Adjustments for input and button elements within the form */
 .login-page-container form {
@@ -41,22 +108,67 @@
 
 .login-page-container input,
 .login-page-container button {
-  width: calc(100% - 1.25em); /* Adjusts width to account for padding */
   padding: 0.625em;
   margin-top: 0.3125em;
   border: 0.0625em solid #ccc;
   border-radius: 0.25em;
 }
 
-.login-page-container button {
+
+.order-id-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-id-form > button.anonymousAccessInteraction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  width: 25em;
+  transition: box-shadow 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc; /* Optional, depending on your design */
   cursor: pointer;
   background-color: #007bff;
   color: white;
+  box-shadow: 1px;
 }
 
-.login-page-container button:hover {
+.order-id-form > button.anonymousAccessInteraction:active,
+.order-id-form > button.anonymousAccessInteraction:hover {
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  transform: translateY(1px);
   background-color: #0056b3;
 }
+
+.firebaseui-container {
+  margin-left: 2.4em;
+}
+
+/* This will center the text inside the button */
+.firebaseui-idp-button .firebaseui-idp-text {
+  text-align: center;
+}
+
+/* To move the button, you'll likely need to adjust the container of the button */
+.firebaseui-idp-button, .firebaseui-tenant-button {
+  width: 25em;
+  max-width: 25em;
+}
+
+.order-id-form > input.anonymousAccessInteraction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  width: 23.5em;
+  border: 1px solid black;
+  margin-bottom: 2em;
+}
+
 
 @media (min-width: 48em) {
   /* Keeps the layout consistent for wider screens */
