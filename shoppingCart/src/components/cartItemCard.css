@@ -34,11 +34,24 @@
     flex-grow: 1;
 }
 
-
-
 .cart-item-name {
     font-size: 16px;
     margin-bottom: 5px;
+}
+
+.cart-item-section {
+    display: flex;
+}
+
+.cart-item-price {
+    display: flex;
+    margin-top: 2em;
+}
+
+.close-button#item-card {
+    font-size: 24px;
+    margin-top: -0.4em;
+    margin-right: -0.3em;
 }
 
 .cart-item-price,

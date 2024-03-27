@@ -15,7 +15,7 @@ const FinalizeShoppingCart = ({pageName}) => {
     }
 
     const handleQuantityChange = (item, isDozen, isHalfDozen) => (e) => {
-        const newQuantity = e.target.value;
+        const newQuantity = e.target.value || '0';
         if (newQuantity === '0') {
             removeFromCart(item, isDozen);
         } else {

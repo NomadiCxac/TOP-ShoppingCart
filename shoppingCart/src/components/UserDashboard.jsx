@@ -217,9 +217,6 @@ const UserDashboard = () => {
                                 </div>
                              </div>
 
-                             {/* <div className="orderConfirmationStatuses">
-                                 <h5> Order Status: {selectedOrder.orderStatus} </h5>
-                             </div> */}
                          </div>
                     
 

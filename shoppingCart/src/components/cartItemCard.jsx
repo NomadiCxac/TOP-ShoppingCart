@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import resolveImageUrl from '../functions/resolveImageUrl';
+import useShoppingCart from '../hooks/useShoppingCart';
 import './CartItemCard.css'
+import { useEffect } from 'react';
 
 
 const CartItemCard = ({ item, handleQuantityChange, quantityOptions, isDozen }) => {
     // Determine the correct quantity based on the variant
     const currentQuantity = item.batched ? (isDozen ? item.dozenQuantity : item.halfDozenQuantity) : item.quantity
+    
 
-    console.log(item)
 
     return (
         <div className="cart-item" id={item.id}>
@@ -21,7 +23,18 @@ const CartItemCard = ({ item, handleQuantityChange, quantityOptions, isDozen }) 
             <div className='cart-item-details'>
                 <div className="cart-item-info-container">
                     <h3 className="cart-item-name">{item.name} {item.batched ? (isDozen ? "(Box of 12)" : "(Box of 6)") : ""}</h3>
-                    <p className="cart-item-price">${item.batched ? (isDozen ? (item.dozenPrice * item.dozenQuantity).toFixed(2) : (item.halfDozenPrice * item.halfDozenQuantity).toFixed(2)) : (item.price * item.quantity).toFixed(2)}</p>
+                    <div className='cart-item-section'>
+                        <p className="cart-item-price">${item.batched ? (isDozen ? (item.dozenPrice * item.dozenQuantity).toFixed(2) : (item.halfDozenPrice * item.halfDozenQuantity).toFixed(2)) : (item.price * item.quantity).toFixed(2)}</p>
+                        <p 
+                        className="close-button" 
+                        id="item-card" 
+                        aria-label="Close modal"
+                        onClick={(e) => handleQuantityChange(e, item, isDozen)}
+                        >
+                            &times;
+                        </p>
+                    </div>
+                  
                 </div>
                 
                 <div className="cart-item-quantity-container">
