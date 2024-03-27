@@ -83,7 +83,7 @@ const FoodMenu = () => {
                     />
 
                     <div className='detailsContainer'>
-                        <h3 className='menuItemName'>{item.name}</h3>
+                        <div className='menuItemName'>{item.name}</div>
                         {item.popular && (
                             <div className='bestSellerContainer'>
                                 <span className="material-symbols-outlined">star</span>
@@ -102,19 +102,33 @@ const FoodMenu = () => {
                                 {/* Item details */}
                                 <div className='optionContainer'>
 
+                                <div className='nonDiscountContainer'>
                                     <button 
                                         onClick={() => handleSelectedOption('halfDozen', item)} 
                                         className={`option ${selectedItem === item && selectedOption === 'halfDozen' ? 'selectedOption' : ''}`}
                                     >
-                                        Half a Dozen: ${item.halfDozenPrice.toFixed(2)} CAD
+                                        Box of 6 : ${item.halfDozenPrice.toFixed(2)} CAD
                                     </button>
+                                </div>
+
+                                <div className='discountContainer'>
 
                                     <button 
                                         onClick={() => handleSelectedOption('dozen', item)} 
                                         className={`option ${selectedItem === item && selectedOption === 'dozen' ? 'selectedOption' : ''}`}
                                     >
-                                        One Dozen: ${item.dozenPrice.toFixed(2)} CAD
+                                        Box of 12 : ${item.dozenPrice.toFixed(2)} CAD
                                     </button>
+
+                                    {item.discount && 
+                                        <span className='discount'>
+                                            {item.discount}% Off
+                                            {/* <span className="material-symbols-outlined"> sell </span> */}
+                                        </span>
+                                    }
+
+                                </div>
+ 
 
                                 </div>
                                 <div className='buttonContainer'>
@@ -125,7 +139,7 @@ const FoodMenu = () => {
                                         </button>
                                         ) : (
                                         <button className="invalidSelector" disabled={selectedItem && selectedItem !== item} onClick={() => console.log(`Please select an option first for ${item.name}`)}>
-                                            Please Select an Option 
+                                            Add to Cart 
                                         </button>
                                         )
                                     } 
@@ -135,18 +149,23 @@ const FoodMenu = () => {
                             <>
                                 <div className='optionContainer'>
                                     <span className="option">${item.price.toFixed(2)} per {getItemBaseName(item.name)}</span>
-                                    <label htmlFor={`${item.name}amount`}>Quantity:</label>
-                                    <select 
-                                        id={`${item.name}amount`}
-                                        value={selectedItem === item ? quantity || 0 : 0}
-                                        onChange={(e) => handleIndividualQuantities(e, item)}
-                                    >
-                                    {/* Drop down select set at 0 */}
-                                    <option value={0}> 0 </option>
+                                    
+                                    <div className='selectContainer'>
+                                        <label htmlFor={`${item.name}amount`}>Quantity:</label>
+                                        <select
+                                            id={`${item.name}amount`}
+                                            value={selectedItem === item ? quantity || 0 : 0}
+                                            onChange={(e) => handleIndividualQuantities(e, item)}
+                                        >
+                                        {/* Drop down select set at 0 */}
+                                        <option value={0}> 0 </option>
 
-                                    {/* Array of quantity options from 1 to 30 */}
-                                    {quantityOptions}
-                                    </select>
+                                        {/* Array of quantity options from 1 to 30 */}
+                                        {quantityOptions}
+                                        </select>
+                                    </div>
+
+
                                 </div>
                                 
                                 <div className='buttonContainer'>
@@ -154,7 +173,7 @@ const FoodMenu = () => {
                                         <button className="validSelector" onClick={() => addToCart(item, quantity, false, false)}>Add to Cart</button>
                                         ) : (
                                             <button className="invalidSelector" disabled={selectedItem && selectedItem !== item} onClick={() => console.log(`Please select an option first for ${item.name}`)}>
-                                                Please Select a Valid Quantity
+                                                Add to Cart 
                                             </button>
                                         )}
                                 </div>

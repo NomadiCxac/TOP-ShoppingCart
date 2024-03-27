@@ -14,12 +14,11 @@
     align-items: center;
     justify-content: space-evenly;
     height: 300px;
-    margin-right: -0.5em;
+    margin-right: -1em;
 }
 
 #food-menu {
     position: relative;
-    /* background-image: url('/path-to-your-background-image.jpg'); */
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -27,6 +26,8 @@
     padding: 50px 0;
     margin-top: 2em;
 }
+
+
 
 .food-item {
     background: rgba(255, 255, 255, 0.9);
@@ -40,33 +41,67 @@
 }
 
 .menuItemName {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 24px;
     font-weight: 700;
-    margin-top: 1em;
+    margin-top: 0.5em;
     margin-bottom: -0.5em;
     color: rgb(255, 185, 54)
 }
 
 .menuItemImage {
-    height: 250px;
-    width: 250px;
-    object-fit: cover; /* This property ensures the image covers the area without distorting its aspect ratio */
-    border-radius: 8px; /* Optional: If you want rounded corners */
+    height: 18em;
+    width: 18em;
+    object-fit: cover; 
+    border-radius: 8px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: If you want to add a shadow */
 }
 
 .optionContainer {
     display: flex;
+    align-items: center;
     width: 100%;
-    align-items: flex-start;
+    margin-bottom: 1em;
 }
 
-.optionContainer > label {
+.selectContainer > label {
     margin-right: 1em;
 }
 
+.selectContainer > select {
+    width: 5.5em;
+    border-radius: 4px;
+}
+
+
+
+.nonDiscountContainer {
+    display: flex;
+    align-items: center;
+}
+
+.discountContainer {
+    display: flex;
+}
+
+.discount {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: red;
+    font-size: 12px;
+    font-style: italic;
+    margin-left: -2em;
+    margin-top: -2px;
+}
+
 span.option { 
-    padding: 0.5em;
+    border-radius: 8px;
+    padding: 0.6em 0;
+    background-color: rgb(89, 74, 71);
+    color: rgb(243, 235, 235);
 }
 
 
@@ -75,22 +110,33 @@ span.option {
     background-color: rgb(243, 235, 235);
     font-weight: 600;
     margin-right: 2em;
+    width: 15em;
+}
+
+.selectContainer {
+    color: rgb(89, 74, 71);
+    background-color: rgb(243, 235, 235);
+    font-weight: 600;
+    margin-right: 2em;
+    width: 15em;
+    border-radius: 8px;
+    padding: 0.6em 0;
 }
 
 .selectedOption {
     background-color: rgb(153, 196, 135);
-    color: white; /* Optional: change text color for better contrast */
-    /* Add any other styles to highlight the selected button */
+    color: white; 
 }
 
 .validSelector {
     background-color: rgb(255, 185, 54);
     color: rgb(255, 255, 255);
     font-weight: 600;
+    width: 15em;;
 }
 
 .validSelector:hover {
-    color:   rgb(89, 74, 71);
+    color: rgb(89, 74, 71);
 }
 
 .buttonContainer {
@@ -101,18 +147,17 @@ span.option {
 }
 
 .buttonContainer {
-    margin-top: 1em;
 }
 
 .buttonContainer > button {
-    min-width: 230px;
+    width: 15em;;
+}
+
+.invalidSelector {
+    width: 15em;;
 }
 
 
-
-.invalidSelector:hover {
-    color: red;
-}
 
 .food-item p {
     margin-bottom: 0;
