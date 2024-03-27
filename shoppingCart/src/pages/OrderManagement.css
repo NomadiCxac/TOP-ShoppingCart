@@ -59,7 +59,7 @@
   width: 85%; /* Each container takes up 45% of the accessContainer's width */
   padding: 1.25em; /* 20px */
   border: 0.0625em solid #ccc; /* 1px */
-  border-radius: 0.25em; /* 4px */
+  border-radius: 16px; /* 4px */
   background-color: var(--primary-color)
 }
 
@@ -111,7 +111,7 @@
   padding: 0.625em;
   margin-top: 0.3125em;
   border: 0.0625em solid #ccc;
-  border-radius: 0.25em;
+  border-radius: 16px;
 }
 
 
@@ -135,6 +135,7 @@
   background-color: #007bff;
   color: white;
   box-shadow: 1px;
+  border-radius: 16px;
 }
 
 .order-id-form > button.anonymousAccessInteraction:active,
