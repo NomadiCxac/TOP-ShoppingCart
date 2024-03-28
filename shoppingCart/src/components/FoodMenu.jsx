@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+import CartDropdown from './CartDropdown';
 
 import './FoodMenu.css'; // Make sure to import the CSS file
 import fetchItems from '../functions/fetchItems';
@@ -11,14 +13,50 @@ const FoodMenu = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [selectedOption, setSelectedVariant] = useState(null)
+    const [selectedVariant, setSelectedVariant] = useState(null)
     const [quantity, setQuantity] = useState(null);
+    const [dropdownAnimation, setDropdownAnimation] = useState('exited'); // New state for animation
+    const [animationTrigger, setAnimationTrigger] = useState(false);
+    const [recentlyAddedItem, setRecentlyAddedItem] = useState({});
 
     const { addToCart } = useCart();
+    const mounted = useRef(false);
+
+    useEffect(() => {
+        console.log('FoodMenu Mounted');
+        return () => {
+            console.log('FoodMenu Unmounted');
+        };
+    }, []);
 
     useEffect(() => {
         document.title = 'Kitchen on Selwyn Rd';
+        return () => clearTimeout(); // Logic to clear timeouts
       }, []);
+
+    useEffect(() => {
+        
+        if (!mounted.current) {
+            // On the initial mount, set the flag to true and exit early.
+            mounted.current = true;
+            return;
+        }
+
+        setDropdownAnimation('entering');
+        setTimeout(() => {
+            setDropdownAnimation('entered');
+        }, 0); // Proceed to 'entered' state almost immediately
+
+        // Schedule the exiting animation
+        const hideTimeout = setTimeout(() => {
+            setDropdownAnimation('exiting');
+            setTimeout(() => {
+                setDropdownAnimation('exited');
+            }, 500); // Delay to match the exit animation duration
+        }, 2500); // Time shown before starting the exit animation
+
+        return () => clearTimeout(hideTimeout);
+    }, [animationTrigger]);
 
     function handleSelectedOption (option, item) {
         setSelectedItem(item);
@@ -35,6 +73,28 @@ const FoodMenu = () => {
         setQuantity(e.target.value)
     }
 
+    const handleAddToCart = (item, quantityOption, isDozen, isHalfDozen) => {
+
+        setRecentlyAddedItem({});
+        addToCart(item, quantityOption, isDozen, isHalfDozen);
+    
+        // Set details for the recently added item
+        setRecentlyAddedItem({
+            name: item.name,
+            quantity: selectedVariant ? (selectedVariant== 'dozen' ? 'Box of 12' : 'Box of 6') : quantityOption,
+            option: isDozen ? 'Dozen' : isHalfDozen ? 'Half-Dozen' : 'Single',
+            imageURL: resolveImageUrl(item.image)
+        });
+        
+        setAnimationTrigger(prev => !prev);
+    
+        // Show the dropdown
+
+        setSelectedItem(null);
+        setSelectedVariant(null)
+        setQuantity(null);
+    };
+
     const quantityOptions = [];
     const maxQuantity = 10;
     for (let i = 1; i <= maxQuantity; i++) {
@@ -49,7 +109,6 @@ const FoodMenu = () => {
             try {
                 const items = await fetchItems('items');
                 const resolvedItems = items.map(item => ({...item, imageURL: resolveImageUrl(item.image)}))
-                console.log(resolvedItems)
                 setFoodItems(resolvedItems);
             } catch (error) {
                 setError(true);
@@ -75,6 +134,13 @@ const FoodMenu = () => {
 
     return (
         <div id="food-menu">
+            <CartDropdown
+                  isVisible={dropdownAnimation !== 'exited'}
+                  item={recentlyAddedItem}
+                  onClose={() => setDropdownAnimation('exiting')} // Triggers exit animation
+                  imageURL={recentlyAddedItem.imageURL}
+                  className={`cartDropdown ${dropdownAnimation}`} //
+            />
             {foodItems.map((item) => (
                 <div key={item.name} className="menu-item">
                     <img className="menuItemImage" src={item.imageURL}
@@ -105,9 +171,9 @@ const FoodMenu = () => {
                                 <div className='nonDiscountContainer'>
                                     <button 
                                         onClick={() => handleSelectedOption('halfDozen', item)} 
-                                        className={`option ${selectedItem === item && selectedOption === 'halfDozen' ? 'selectedOption' : ''}`}
+                                        className={`option ${selectedItem === item && selectedVariant === 'halfDozen' ? 'selectedOption' : ''}`}
                                     >
-                                        Box of 6 : ${item.halfDozenPrice.toFixed(2)} CAD
+                                        Box of 6: ${item.halfDozenPrice.toFixed(2)} CAD
                                     </button>
                                 </div>
 
@@ -115,9 +181,9 @@ const FoodMenu = () => {
 
                                     <button 
                                         onClick={() => handleSelectedOption('dozen', item)} 
-                                        className={`option ${selectedItem === item && selectedOption === 'dozen' ? 'selectedOption' : ''}`}
+                                        className={`option ${selectedItem === item && selectedVariant === 'dozen' ? 'selectedOption' : ''}`}
                                     >
-                                        Box of 12 : ${item.dozenPrice.toFixed(2)} CAD
+                                        Box of 12: ${item.dozenPrice.toFixed(2)} CAD
                                     </button>
 
                                     {item.discount && 
@@ -133,12 +199,19 @@ const FoodMenu = () => {
                                 </div>
                                 <div className='buttonContainer'>
 
-                                    {selectedItem === item && selectedOption ? (
-                                        <button className="validSelector" onClick={() => addToCart(item, selectedOption === 'dozen' ? 12 : 6, selectedOption === 'dozen' ? true : false, selectedOption === 'dozen' ? false : true)}>
-                                            Add to Cart
+                                    {selectedItem === item && selectedVariant ? (
+                                        <button className="validSelector" 
+                                            onClick={() => 
+                                                handleAddToCart(
+                                                    item, 
+                                                    selectedVariant === 'dozen' ? 12 : 6, 
+                                                    selectedVariant === 'dozen', 
+                                                    selectedVariant !== 'dozen'
+                                                    )}>
+                                                Add to Cart
                                         </button>
                                         ) : (
-                                        <button className="invalidSelector" disabled={selectedItem && selectedItem !== item} onClick={() => console.log(`Please select an option first for ${item.name}`)}>
+                                        <button className="invalidSelector" disabled={selectedItem && selectedItem !== item}>
                                             Add to Cart 
                                         </button>
                                         )
@@ -170,9 +243,9 @@ const FoodMenu = () => {
                                 
                                 <div className='buttonContainer'>
                                     {selectedItem === item && quantity > 0 ? ( 
-                                        <button className="validSelector" onClick={() => addToCart(item, quantity, false, false)}>Add to Cart</button>
+                                        <button className="validSelector" onClick={() => handleAddToCart(item, quantity, false, false)}>Add to Cart</button>
                                         ) : (
-                                            <button className="invalidSelector" disabled={selectedItem && selectedItem !== item} onClick={() => console.log(`Please select an option first for ${item.name}`)}>
+                                            <button className="invalidSelector" disabled={selectedItem && selectedItem !== item}>
                                                 Add to Cart 
                                             </button>
                                         )}

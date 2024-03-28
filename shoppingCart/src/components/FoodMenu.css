@@ -25,6 +25,7 @@
     background-size: cover;
     padding: 50px 0;
     margin-top: 2em;
+    margin-left: -3em;
 }
 
 
@@ -133,6 +134,7 @@ span.option {
     color: rgb(255, 255, 255);
     font-weight: 600;
     width: 15em;;
+    border-color: transparent; /* Maintain transparency on hover */
 }
 
 .validSelector:hover {
@@ -146,16 +148,23 @@ span.option {
     justify-content: flex-start;
 }
 
-.buttonContainer {
-}
 
 .buttonContainer > button {
     width: 15em;;
 }
 
 .invalidSelector {
-    width: 15em;;
+    width: 15em;
+    border-color: transparent; /* Maintain transparency on hover */
+    cursor: not-allowed;
 }
+
+.invalidSelector:hover {
+    width: 15em;
+    border-color: transparent; /* Maintain transparency on hover */
+    cursor: not-allowed;
+}
+
 
 
 
