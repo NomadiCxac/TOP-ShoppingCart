@@ -1,6 +1,12 @@
 .checkoutPage {
     display: flex;
     width: 100%;
+    margin-bottom: 1em;
+}
+
+.formContainer,
+.checkoutItemsContainer {
+    margin-top: -0.7em;
 }
 
 .formContainer {
@@ -9,7 +15,7 @@
     justify-content: center;
     width: 55%;
     height: 85vh;
-    margin-left: -2em;
+    margin-left: -2.5em;
 }
 
 .checkoutItemsContainer {
@@ -18,7 +24,7 @@
     align-items: center;
     justify-content: center;
     width: 50%;
-    margin-left: 2em;
+    margin-left: 2.5em;
 }
 
 .subtotal-container#checkoutPage {
@@ -38,8 +44,8 @@
     position: sticky;
     align-self: start; /* Align to the start of the flex container */
     z-index: 10;
-    margin-top: 2.7em;
-    margin-bottom: 5em;
+    margin-top: 2.9em;
+    margin-bottom: 5.1em;
 }
 
 
