@@ -20,7 +20,7 @@ const FoodMenu = () => {
     const [recentlyAddedItem, setRecentlyAddedItem] = useState({});
 
     const { addToCart } = useCart();
-    const mounted = useRef(false);
+    const mounted = useRef(true);
 
     useEffect(() => {
         console.log('FoodMenu Mounted');
@@ -36,11 +36,10 @@ const FoodMenu = () => {
 
     useEffect(() => {
         
-        if (!mounted.current) {
-            // On the initial mount, set the flag to true and exit early.
-            mounted.current = true;
+        if (mounted.current) {
             return;
         }
+
 
         setDropdownAnimation('entering');
         setTimeout(() => {
@@ -86,10 +85,10 @@ const FoodMenu = () => {
             imageURL: resolveImageUrl(item.image)
         });
         
+        mounted.current = false
         setAnimationTrigger(prev => !prev);
-    
-        // Show the dropdown
 
+        // Show the dropdown
         setSelectedItem(null);
         setSelectedVariant(null)
         setQuantity(null);
