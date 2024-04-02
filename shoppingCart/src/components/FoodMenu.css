@@ -103,6 +103,7 @@ span.option {
     padding: 0.6em 0;
     background-color: rgb(89, 74, 71);
     color: rgb(243, 235, 235);
+    text-align: center;
 }
 
 
@@ -115,6 +116,9 @@ span.option {
 }
 
 .selectContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: rgb(89, 74, 71);
     background-color: rgb(243, 235, 235);
     font-weight: 600;

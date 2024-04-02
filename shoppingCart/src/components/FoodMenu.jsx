@@ -34,12 +34,12 @@ const FoodMenu = () => {
         return () => clearTimeout(); // Logic to clear timeouts
       }, []);
 
+      
     useEffect(() => {
-        
+
         if (mounted.current) {
             return;
         }
-
 
         setDropdownAnimation('entering');
         setTimeout(() => {

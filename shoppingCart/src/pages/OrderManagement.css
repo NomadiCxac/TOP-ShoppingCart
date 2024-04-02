@@ -10,48 +10,105 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100vw;
+    height: 90vh;
+    overflow-y: hidden;
   }
 
-  .login-modal {
-    /* Modal specific styles for raised effect */
-    box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.1), 3px 3px 6px rgba(0, 0, 0, 0.2);
-    background: #fff; /* Assuming a light mode design */
-    border-radius: 5px; /* Optional: for rounded corners */
-    padding: 20px; /* Adjust as needed */
-    z-index: 1000; /* Ensure it's above other content */
-    position: relative; /* Adjust as necessary, could be absolute or fixed based on your layout */
-    margin-top: 5em;
-    height: 30em;
+  .login-page-content {
+    display: flex;
     width: 100%;
+    height: 100%;
   }
+
+  .login-page-content-left {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 2em;
+  }
+
+  .login-page-order-summary-text {
+    height: 52%;
+    /* border: 1px solid black; */
+  }
+
   
-  .login-page-container::before {
-    /* Creates an overlay effect on the rest of the page */
+.login-page-content-right {
+  width: 35%;
+  padding: 2em;
+  background-color: #eeee;
+}
+
+.login-page-container {
+  height: 45%;
+}
+
+.login-page-container form {
+  width: 100%; 
+}
+
+.login-page-container input,
+.login-page-container button {
+  padding: 0.625em;
+  margin-top: 0.3125em;
+  border: 0.0625em solid #ccc;
+  border-radius: 16px;
+}
+
+
+.login-modal#standard {
+  /* Modal specific styles for raised effect */
+  box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.1), 3px 3px 6px rgba(0, 0, 0, 0.2);
+  background: #fff; /* Assuming a light mode design */
+  border-radius: 5px; /* Optional: for rounded corners */
+  padding: 20px; /* Adjust as needed */
+  position: relative; /* Adjust as necessary, could be absolute or fixed based on your layout */
+  /* margin-top: 5em; */
+  height: 30em;
+}
+
+.login-modal#confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Modal specific styles for raised effect */
+  box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.1), 3px 3px 6px rgba(0, 0, 0, 0.2);
+  background: #fff; /* Assuming a light mode design */
+  border-radius: 5px; /* Optional: for rounded corners */
+  padding: 20px; /* Adjust as needed */
+  position: relative; /* Adjust as necessary, could be absolute or fixed based on your layout */
+  height: 100%;
+  margin-top: -2.5em;
+  z-index: 0;
+}
+  
+  /* .login-page-container::before {
     content: '';
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 500; /* Below the modal, but above other content */
-  }
+    z-index: 500; 
+  } */
 
-  .googleHeader {
-    margin-top: 1.2em;
-    margin-bottom: 1.5em;
-  }
-  
-  /* Responsive container */
-  .accessContainer {
-    display: flex;
-    flex-direction: row; /* Keeps items side by side */
-    justify-content: space-between; /* Spaces out the children evenly */
-    align-items: stretch; /* Ensures children stretch to match height */
-    width: 100%; /* Ensures the container takes the full width of its parent */
-    gap: 2%; /* Adjusts the gap between items */
-    padding: 0; /* Resets any padding */
-    margin-top: 6em;
-  }
+.googleHeader {
+  text-align: center;
+  margin-top: 1em;
+}
+
+/* Responsive container */
+.accessContainer {
+  display: flex;
+  flex-direction: row; /* Keeps items side by side */
+  justify-content: space-between; /* Spaces out the children evenly */
+  align-items: stretch; /* Ensures children stretch to match height */
+  width: 100%; /* Ensures the container takes the full width of its parent */
+  gap: 2%; /* Adjusts the gap between items */
+  padding: 0; /* Resets any padding */
+  margin-top: 6em;
+}
   
   
 .login-container,
@@ -68,8 +125,10 @@
   align-self: center;
   position: relative;
   line-height: 1; /* Aligns the line with the middle of the text */
-  margin-top: 3em;
-  margin-bottom: 2em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  height: 10px;
+  width: 45%;
 }
 
 .or-divider span {
@@ -84,34 +143,21 @@
   content: '';
   position: absolute;
   top: 50%;
-  width: 40%; /* Length of the line */
+  transform: translateY(-50%); /* Center lines vertically */
+  width: 35%;
   height: 1px;
-  background-color: #ccc; /* Line color */
-  z-index: 0;
+  background-color: #ccc;
+  z-index: 0; /* Below the text */
 }
 
 .or-divider::before {
   left: 0;
-  margin-left: 5%; /* Space from the left side */
+  margin-left: 8%;
 }
 
 .or-divider::after {
   right: 0;
-  margin-right: 5%; /* Space from the right side */
-}
-
-
-/* Adjustments for input and button elements within the form */
-.login-page-container form {
-  width: 100%; /* Form takes the full width of its container */
-}
-
-.login-page-container input,
-.login-page-container button {
-  padding: 0.625em;
-  margin-top: 0.3125em;
-  border: 0.0625em solid #ccc;
-  border-radius: 16px;
+  margin-right: 8%;
 }
 
 
@@ -146,7 +192,7 @@
 }
 
 .firebaseui-container {
-  margin-left: 2.4em;
+  margin-right: 2.3em;
 }
 
 /* This will center the text inside the button */

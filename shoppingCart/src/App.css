@@ -26,10 +26,7 @@ body {
 }
 
 #root {
-  /* max-width: 1280px; */
   margin: 0 auto;
-  /* padding: 2rem; */
-  text-align: center;
   height: 100vh;
   --primary-color:  rgb(255, 185, 54); /* #FFB936 */
   --secondary-color:rgb(89, 74, 71); /* #594A47 */

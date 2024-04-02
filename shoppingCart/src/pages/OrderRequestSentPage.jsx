@@ -1,13 +1,15 @@
 import { useFirebase } from "../context/FirebaseContext";
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 import { Link, useParams } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCart } from "../context/CartContext";
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { calculateSubtotal } from "../functions/checkoutTotal";
 import resolveImageUrl from "../functions/resolveImageUrl";
 import retrieveImageUrl from "../functions/retrieveImageUrl";
-import { calculateSubtotal } from "../functions/checkoutTotal";
+
 import formatName from "../functions/formatName";
-import { getFunctions, httpsCallable } from 'firebase/functions';
+import OrderRequestSentDropDown from "../components/OrderRequestSentDropdown";
 
 
 import './OrderRequestSentPage.css'
@@ -23,9 +25,34 @@ function OrderRequestSent() {
 
     const [ emailButtonState, setEmailButtonState] = useState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
     const [ telButtonState, setTelButtonState] = useState({ disabled: true, text: 'Send My Code Via Tel.', className: 'disabledButton' });
+    
+    const [dropdownAnimation, setDropdownAnimation] = useState('exited'); // New state for animation
+    const mounted = useRef(true);
 
     useEffect(() => {
         document.title = 'KSR - Order Request Sent';
+      }, []);
+
+      useEffect(() => {
+  
+          if (mounted.current) {
+              return;
+          }
+  
+          setDropdownAnimation('entering');
+          setTimeout(() => {
+              setDropdownAnimation('entered');
+          }, 0); // Proceed to 'entered' state almost immediately
+  
+          // Schedule the exiting animation
+          const hideTimeout = setTimeout(() => {
+              setDropdownAnimation('exiting');
+              setTimeout(() => {
+                  setDropdownAnimation('exited');
+              }, 500); // Delay to match the exit animation duration
+          }, 2500); // Time shown before starting the exit animation
+  
+          return () => clearTimeout(hideTimeout);
       }, []);
     
     useEffect(() => {
@@ -46,9 +73,12 @@ function OrderRequestSent() {
                 let orderArray = Object.values(orderDetails.items).map(item => ({
                     ...item,
                     imageURL: retrieveImageUrl(item),
-                }));
+                }
 
-                console.log(orderDetails)
+
+                ));
+
+                console.log(orderArray)
 
                 let contactObject = {
                     email: orderDetails.email,
@@ -155,7 +185,11 @@ function OrderRequestSent() {
 
     return (
         <div>
-
+            <OrderRequestSentDropDown 
+                isVisible={dropdownAnimation !== 'exited'}
+                onClose={() => setDropdownAnimation('exiting')} // Triggers exit animation
+                className={`cartDropdown ${dropdownAnimation}`} //
+            />
                     
             <div className="nextStepsContainer"> 
                 <div className="nextStepTitle">Next Steps to Complete Your Order: </div>

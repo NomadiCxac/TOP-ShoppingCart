@@ -5,6 +5,8 @@ import { getFirebaseUIConfig, getFirebaseUIInstance } from '../functions/firebas
 import { useFirebase } from '../context/FirebaseContext';
 import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
 import './OrderManagement.css';
+import OrderConfirmationOrderSummary from '../components/OrderConfirmationOrderSummary';
+import OrderConfirmationText from '../components/OrderConfirmationText';
 
 const OrderManagement = () => {
     const { user, auth, signInAnonymously, setAnonymousOrder } = useFirebase();
@@ -59,28 +61,78 @@ const OrderManagement = () => {
     }, [user, auth]);
 
     return (
-        <div className="login-page-container">
+        <div className='login-page-content'>
+
+        {/* {!user && !orderId && (
+            <div className="login-page-container">
             {!user && (
-                <div className="login-modal">
-                    <h2 className='googleHeader'>View Order with Google Email Auth</h2>
-                    <div className="auth-options">
-                        <div id="firebaseui-auth-container"></div>
+                <div className="login-modal" id='confirmation'>
+                        <div className='googleAuth'> 
+                            <h2 className='googleHeader'>View Order with Google Email Auth</h2>
+                                <div id="firebaseui-auth-container"></div>
+                        </div>
+
                         <div className="or-divider">or</div>
-                        <form onSubmit={handleAnonymousAccessSubmit} className="order-id-form">
-                        <h2>View Order with Reference Code</h2>
+
+                        <div className='refCodeAuth'>
+                            <form onSubmit={handleAnonymousAccessSubmit} className="order-id-form">
+                            <h2>View Order with Reference Code</h2>
                             <input 
+                            type="text"
+                            className='anonymousAccessInteraction' 
+                            placeholder='Enter Order Code'
+                            value={inputValue} 
+                            onChange={(e) => setInputValue(e.target.value)}
+                            readOnly={!!orderId} // Make input read-only if orderId is present in the URL
+                            required />
+                            <button type="submit" className='anonymousAccessInteraction'>View Order</button>
+                            </form>
+                        </div>
+                </div>
+                )}
+            </div>
+            )
+        } */}
+
+            <div className='login-page-content-left'>
+                <div className='login-page-order-summary-text'>
+                    <OrderConfirmationText />
+                </div>
+
+                <div className="login-page-container">
+                    {!user && (
+                        <div className="login-modal" id='confirmation'>
+                            <div className='googleAuth'> 
+                                <h2 className='googleHeader'>View Order</h2>
+                                <div className='refCodeAuth'>
+                                <form onSubmit={handleAnonymousAccessSubmit} className="order-id-form">
+                                {/* <input 
                                 type="text"
                                 className='anonymousAccessInteraction' 
                                 placeholder='Enter Order Code'
                                 value={inputValue} 
                                 onChange={(e) => setInputValue(e.target.value)}
                                 readOnly={!!orderId} // Make input read-only if orderId is present in the URL
-                                required />
-                            <button type="submit" className='anonymousAccessInteraction'>View Order</button>
-                        </form>
-                    </div>
+                                required /> */}
+                                <button type="submit" className='anonymousAccessInteraction'>Sign in with Order Code</button>
+                                </form>
+                            </div>
+                               
+                            </div>
+
+                            <div className="or-divider">or</div>
+                            <div id="firebaseui-auth-container"></div>
+                            
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
+            <div className='login-page-content-right'>
+                <OrderConfirmationOrderSummary />
+            </div>
+           
+
+
         </div>
     );
 };

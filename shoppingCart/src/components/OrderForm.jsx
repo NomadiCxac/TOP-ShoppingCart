@@ -192,14 +192,17 @@ const OrderForm = () => {
       />
       <label htmlFor="comments">Additional Comments</label>
       <textarea id="comments" value={userDetails.comments} onChange={handleCommentsChange} placeholder="Add comments"></textarea>
-      <button 
-        type="submit"
-        className="checkoutButton" 
-        id={isOrderingAvailable ? "enabled" : "disabled"}
-        disabled={!isOrderingAvailable || cartItems.length <= 0}
-      > 
-        {isOrderingAvailable ? "Submit Order Request" : "Ordering Unavailable"} 
-      </button>
+      <div className='checkoutButtonContainer'>
+        <button 
+          type="submit"
+          className="checkoutButton" 
+          id={isOrderingAvailable ? "enabled" : "disabled"}
+          disabled={!isOrderingAvailable || cartItems.length <= 0}
+        > 
+          {isOrderingAvailable ? "Submit Order Request" : "Ordering Unavailable"} 
+        </button>
+      </div>
+
       
     </form>
   );

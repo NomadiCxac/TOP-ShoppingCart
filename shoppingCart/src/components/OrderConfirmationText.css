@@ -1,0 +1,46 @@
+/* OrderConfirmationText.css */
+
+.orderConfirmationStepsContainer {
+    display: flex;
+}
+
+.nextStepTitle {
+    margin-top: 1em;
+    margin-bottom: 0.3em;
+}
+
+@keyframes fadeInCheckmark {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .checkmark {
+    color: green; /* or any color you prefer */
+    animation: fadeInCheckmark 0.5s ease forwards;
+    margin-left: 0.5em;
+    margin-bottom: -2px;
+  }
+
+  .stepActive {
+    /* Style for the current active step */
+    color: var(--primary-color);
+    animation: fadeInCheckmark 0.5s ease forwards;
+    margin-left: 0.5em;
+    margin-bottom: -2px;
+  }
+  /* Add styles for your step containers if needed */
+  .stepCompleted {
+    /* Style for when a step is completed */
+    color: green;
+  }
+
+
+  .orderConfirmationStepsContainer > .step1 {
+    margin-right: 5em;
+  }

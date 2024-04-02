@@ -1,8 +1,7 @@
 // You might need to adjust the import path based on your project structure
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { useFirebase } from "../context/FirebaseContext";
 import FinalizeShoppingCart from "../components/FinalizeShoppingCart";
 import SubtotalChecker from "../components/SubtotalChecker";
 import EmptyShoppingCart from './EmptyShoppingCartPage';
@@ -11,7 +10,7 @@ import './ShoppingCartPage.css'
 
 const ShoppingCartPage = () => {
   const navigate = useNavigate();
-  const { cartItems, clearCart } = useCart();
+  const { cartItems } = useCart();
 
   useEffect(() => {
     document.title = 'KSR - Your Shopping Cart';
