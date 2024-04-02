@@ -8,9 +8,18 @@ const useShoppingCart = () => {
         return cartData ? JSON.parse(cartData) : [];
     })
 
+    const [cartEmail, setCartEmail] = useState(() => {
+        let cartEmailData = sessionStorage.getItem("cartEmail");
+        return cartEmailData ? JSON.parse(cartEmailData) : "";
+    });
+
     useEffect(() => {
         sessionStorage.setItem('shoppingCart', JSON.stringify(cartItems));
     }, [cartItems])
+
+    useEffect(() => {
+        sessionStorage.setItem('cartEmail', JSON.stringify(cartEmail));
+    }, [cartEmail])
 
     const addToCart = (item, userQuantity = 1, isDozen, isHalfDozen, isEdit = false) => {
 
@@ -100,7 +109,7 @@ const useShoppingCart = () => {
         sessionStorage.setItem('shoppingCart', JSON.stringify([])); // Also clear the shopping cart in sessionStorage
     };
 
-    return { cartItems, setCartItems, addToCart, removeFromCart, clearCart };
+    return { cartEmail, cartItems, setCartEmail, setCartItems, addToCart, removeFromCart, clearCart, };
 }
 
 export default useShoppingCart

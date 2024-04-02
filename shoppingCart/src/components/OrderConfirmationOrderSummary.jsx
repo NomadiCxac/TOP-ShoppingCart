@@ -5,32 +5,12 @@ import { calculateSubtotal } from "../functions/checkoutTotal"
 import { checkoutItemTotal } from "../functions/checkoutTotal"
 
 import './OrderConfirmationOrderSummary.css'
+import useShoppingCart from "../hooks/useShoppingCart"
 
 const OrderConfirmationOrderSummary = () => {
-    const [orderData, setOrderData] = useState([{
-        // Your initial object here
-        batched: true,
-        dozenPrice: 15,
-        dozenQuantity: 1,
-        halfDozenPrice: 10,
-        halfDozenQuantity: 1,
-        id: "chocolateCrinkleCookies",
-        imageURL: "https://firebasestorage.googleapis.com/v0/b/kitchen-on-selwyn-rd.appspot.com/o/food%20menu%20icons%2FdefaultFood.jpeg?alt=media&token=9f76128c-2ba3-4bb7-87eb-c38f58ed7eeb",
-        quantity: 0
-    },
+    const { cartItems } = useShoppingCart()
 
-    {
-        batched: true,
-        dozenPrice: 15,
-        dozenQuantity: 1,
-        halfDozenPrice: 10,
-        halfDozenQuantity: 1,
-        id: "ensaymada",
-        imageURL: "https://firebasestorage.googleapis.com/v0/b/kitchen-on-selwyn-rd.appspot.com/o/food%20menu%20icons%2FdefaultFood.jpeg?alt=media&token=9f76128c-2ba3-4bb7-87eb-c38f58ed7eeb",
-        quantity: 0
-    }
-    
-]);
+    const orderData = cartItems;
 
     return (
         <div className="orderConfirmationSummary">

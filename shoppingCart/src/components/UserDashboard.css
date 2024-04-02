@@ -1,5 +1,8 @@
 /* UserDashboard Container Styles */
 
+.user-info-container > h2 {
+    margin-left: 1em;
+}
 
 .orderListContainer {
     position: relative;

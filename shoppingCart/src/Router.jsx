@@ -94,10 +94,10 @@ function AppRouter () {
             // Add other child routes as needed
           ],
         },
-        {
-          path: "orderRequestSent/:orderId",
-          element: <OrderRequestSent />,
-        },
+        // {
+        //   path: "orderRequestSent/:orderId",
+        //   element: <OrderRequestSent />,
+        // },
 
       ],
      },

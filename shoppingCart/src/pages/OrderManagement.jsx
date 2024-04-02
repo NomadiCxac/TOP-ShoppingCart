@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import useShoppingCart from '../hooks/useShoppingCart';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import 'firebaseui/dist/firebaseui.css';
 import { getFirebaseUIConfig, getFirebaseUIInstance } from '../functions/firebaseUIConfig';
 import { useFirebase } from '../context/FirebaseContext';
@@ -10,23 +11,25 @@ import OrderConfirmationText from '../components/OrderConfirmationText';
 
 const OrderManagement = () => {
     const { user, auth, signInAnonymously, setAnonymousOrder } = useFirebase();
-    const navigate = useNavigate();
     const { orderId } = useParams();
-    // Set orderId to referenceOrderId if it exists, otherwise initialize it as null.
+    const { cartEmail } = useShoppingCart();
     const [inputValue, setInputValue] = useState(orderId || '');
     const { retrieveOrderById } = useFirebaseOrders();
 
+    const navigate = useNavigate();
+
+    const [searchParams] = useSearchParams();
+    const reviewPage = searchParams.get('reviewPage') === 'true'; // This will be true, false, or null
+
     useEffect(() => {
         document.title = 'KSR - Login to View Orders';
+        console.log(cartEmail)
       }, []);
-    
-      
-        
 
 
     const handleAnonymousAccessSubmit = async (e) => {
         e.preventDefault();
-        const orderToAccess = inputValue; // Use inputValue to get the order ID.
+        const orderToAccess = orderId || inputValue; // Use inputValue to get the order ID.
 
         const anonOrder = await retrieveOrderById(orderToAccess);
         if (anonOrder) {
@@ -58,83 +61,108 @@ const OrderManagement = () => {
             navigate('/userDashboard');
             console.log("User is already logged in");
         }
-    }, [user, auth]);
+    }, [user, auth, navigate]);
 
     return (
         <div className='login-page-content'>
 
-        {/* {!user && !orderId && (
-            <div className="login-page-container">
-            {!user && (
-                <div className="login-modal" id='confirmation'>
-                        <div className='googleAuth'> 
-                            <h2 className='googleHeader'>View Order with Google Email Auth</h2>
-                                <div id="firebaseui-auth-container"></div>
-                        </div>
+        {!user && !orderId && !reviewPage && (
+            <div className="login-page-container" id='standard'>
+                {!user && (
+                <div className="login-modal" id='standard'>
+                    <div className='googleAuth'>
+                    <h2 className='googleHeader'>View Order Details</h2>
+                    <div className='refCodeAuth'>
+                    <form onSubmit={handleAnonymousAccessSubmit} className="order-id-form">
+                        <input
+                        type="text"
+                        className='anonymousAccessInteraction'
+                        placeholder='Reference code'
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        readOnly={!!orderId} // Make input read-only if orderId is present in the URL
+                        required />
+                        <button type="submit" className='anonymousAccessInteraction'>View Order</button>
+                    </form>
+                    </div>
+                    </div>
 
-                        <div className="or-divider">or</div>
-
-                        <div className='refCodeAuth'>
-                            <form onSubmit={handleAnonymousAccessSubmit} className="order-id-form">
-                            <h2>View Order with Reference Code</h2>
-                            <input 
-                            type="text"
-                            className='anonymousAccessInteraction' 
-                            placeholder='Enter Order Code'
-                            value={inputValue} 
-                            onChange={(e) => setInputValue(e.target.value)}
-                            readOnly={!!orderId} // Make input read-only if orderId is present in the URL
-                            required />
-                            <button type="submit" className='anonymousAccessInteraction'>View Order</button>
-                            </form>
-                        </div>
+                    <div className="or-divider" id='standard'>or</div>
+                    <div id="firebaseui-auth-container"></div>
+                    
                 </div>
                 )}
             </div>
-            )
-        } */}
+            )}
 
+      
+          {!user && orderId && !reviewPage && (
+            <div className="login-page-container" id='standard'>
+              {!user && (
+                <div className="login-modal" id='standard'>
+                  <div className='googleAuth'>
+                    <h2 className='googleHeader'>View Order Details</h2>
+                    <div className='refCodeAuth'>
+                    <form onSubmit={handleAnonymousAccessSubmit} className="order-id-form">
+                      <input
+                        type="text"
+                        className='anonymousAccessInteraction'
+                        placeholder='Reference code'
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        readOnly={!!orderId} // Make input read-only if orderId is present in the URL
+                        required />
+                      <button type="submit" className='anonymousAccessInteraction'>Sign in with Code</button>
+                    </form>
+                  </div>
+                  </div>
+                  <div className="or-divider" id='standard'>or</div>
+                  <div id="firebaseui-auth-container"></div> 
+      
+                  
+                </div>
+              )}
+            </div>
+          )}
+      
+          {!user && orderId && reviewPage && (
             <div className='login-page-content-left'>
-                <div className='login-page-order-summary-text'>
-                    <OrderConfirmationText />
-                </div>
-
-                <div className="login-page-container">
-                    {!user && (
-                        <div className="login-modal" id='confirmation'>
-                            <div className='googleAuth'> 
-                                <h2 className='googleHeader'>View Order</h2>
-                                <div className='refCodeAuth'>
-                                <form onSubmit={handleAnonymousAccessSubmit} className="order-id-form">
-                                {/* <input 
-                                type="text"
-                                className='anonymousAccessInteraction' 
-                                placeholder='Enter Order Code'
-                                value={inputValue} 
-                                onChange={(e) => setInputValue(e.target.value)}
-                                readOnly={!!orderId} // Make input read-only if orderId is present in the URL
-                                required /> */}
-                                <button type="submit" className='anonymousAccessInteraction'>Sign in with Order Code</button>
-                                </form>
-                            </div>
-                               
-                            </div>
-
-                            <div className="or-divider">or</div>
-                            <div id="firebaseui-auth-container"></div>
-                            
-                        </div>
-                    )}
-                </div>
+              <div className='login-page-order-summary-text'>
+                <OrderConfirmationText 
+                    orderId={orderId}
+                />
+              </div>
+      
+              <div className="login-page-container">
+                {!user && (
+                  <div className="login-modal" id='confirmation'>
+                    <div className='googleAuth'>
+                      <h2 className='googleHeader'>View Order</h2>
+                      <div className='refCodeAuth'>
+                        <form onSubmit={handleAnonymousAccessSubmit} className="order-id-form">
+                          {/* Commented out input field for order code as it seems to be not required here anymore. */}
+                          <button type="submit" className='anonymousAccessInteraction'>Sign in with Order Code</button>
+                        </form>
+                      </div>
+                    </div>
+      
+                    <div className="or-divider">or</div>
+                    <div id="firebaseui-auth-container"></div>
+      
+                  </div>
+                )}
+              </div>
             </div>
+          )}
+      
+          {orderId && reviewPage && (
             <div className='login-page-content-right'>
-                <OrderConfirmationOrderSummary />
+              <OrderConfirmationOrderSummary />
             </div>
-           
-
-
+          )}
+      
         </div>
-    );
-};
+      );
+}
 
 export default OrderManagement;

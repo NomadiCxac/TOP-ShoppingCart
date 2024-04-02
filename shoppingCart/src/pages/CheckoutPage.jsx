@@ -13,7 +13,7 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = 'KSR - Checkout Page';
+    document.title = 'KSR - Submit Order Request';
   }, []);
 
   useEffect(() => {

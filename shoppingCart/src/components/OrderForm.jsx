@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
-import { useCart } from '../context/CartContext';
 import { useFirebase } from '../context/FirebaseContext';
 import { useNavigate } from 'react-router-dom';
 import { calculateSubtotal } from "../functions/checkoutTotal"; 
 
 import './OrderForm.css';
+import useShoppingCart from '../hooks/useShoppingCart';
 
 
 
 const OrderForm = () => {
   const { setReferenceOrderId, isOrderingAvailable } = useFirebase();
-  const { cartItems } = useCart()
+  const { cartItems, cartEmail, setCartEmail } = useShoppingCart()
   const { pushOrderToDatabase } = useFirebaseOrders();
   const navigate = useNavigate(); 
   const [userDetails, setUserDetails] = useState({
@@ -20,6 +20,7 @@ const OrderForm = () => {
     phone: '',
     comments: '',
   });
+
 
 
   const pushOrderRequest = async () => {
@@ -84,14 +85,10 @@ const OrderForm = () => {
       };
 
       try {
-        console.log("Attempting to push order", orderDetails);
         const orderId = await pushOrderToDatabase(orderDetails);
-        console.log("Order ID:", orderId); // Assuming pushOrderToDatabase returns the order ID
-
         setReferenceOrderId(orderId); // Set the reference order ID in your Firebase context
-        console.log("Setting reference order ID:", orderId);
-
-        navigate(`/orderRequestSent/${orderId}`); // Navigate to the orderRequestSent page
+        const reviewPage = true; // Or false, depending on the scenario
+        navigate(`/orderManagement/${orderId}?reviewPage=${reviewPage}`);
         return orderId;
       } catch (error) {
         console.error("Failed to push order to database:", error);
@@ -122,6 +119,9 @@ const OrderForm = () => {
   // Handler for the email input
   const handleEmailChange = (event) => {
     setUserDetails({ ...userDetails, email: event.target.value });
+    console.log(event.target.value)
+    setCartEmail(event.target.value)
+    console.log(cartEmail)
   };
 
   const handlePhoneChange = (event) => {
