@@ -10,8 +10,7 @@ const OrderConfirmationText = ({orderId}) => {
     useEffect(() => {
         // Since step 1 is always complete, we set it to true on component mount
         setStepCompleted(true);
-        console.log(cartEmail)
-        console.log(sessionStorage.getItem('cartEmail')); // Should log the new email value
+
     }, []);
 
     return (

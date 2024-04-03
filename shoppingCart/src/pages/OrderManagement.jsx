@@ -23,7 +23,6 @@ const OrderManagement = () => {
 
     useEffect(() => {
         document.title = 'KSR - Login to View Orders';
-        console.log(cartEmail)
       }, []);
 
 
@@ -48,7 +47,6 @@ const OrderManagement = () => {
 
     useEffect(() => {
         if (!auth) {
-            console.log("Auth not initialized.");
             return;
         }
 
@@ -59,7 +57,6 @@ const OrderManagement = () => {
             ui.start('#firebaseui-auth-container', uiConfig);
         } else {
             navigate('/userDashboard');
-            console.log("User is already logged in");
         }
     }, [user, auth, navigate]);
 

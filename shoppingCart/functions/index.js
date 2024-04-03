@@ -12,27 +12,27 @@ sgMail.setApiKey(functions.config().sendgrid.key);
 const apiKey = functions.config().zerobounce.key;
 const db = admin.database();
 
-exports.sendTestEmail = functions.https.onCall(async (data) => {
-  console.log("Received data:", data);
-  console.log("Order details:", data.orderDetails);
+exports.sendOrderReviewEmail = functions.https.onCall(async (data) => {
   const email = data.email;
-  const orderDetails = data.orderDetails;
+  const orderItemsArray = Object.values(data.orderDetails);
   const orderReference = data.orderReference;
   const pageLink = data.pageLink;
+  const subtotal = data.subtotal;
 
   // Process orderDetails to format email content
-  const orderItems = orderDetails.map((item) => ({
+  const orderItems = orderItemsArray.map((item) => ({
     id: item.id,
     name: formatName(item.id),
     imageUrl: retrieveImageUrl(item.id),
-    dozenQuantity: item.dozenQuantity,
-    dozenPrice: item.dozenPrice.toFixed(2),
-    halfDozenQuantity: item.halfDozenQuantity,
-    halfDozenPrice: item.halfDozenPrice.toFixed(2),
-    quantity: item.quantity,
-    price: item.price ? item.price.toFixed(2) : null,
+    dozenQuantity: item.dozenQuantity != null ? item.dozenQuantity : 0,
+    dozenPrice: typeof item.dozenPrice === "number" ? item.dozenPrice.toFixed(2) : "0.00",
+    halfDozenQuantity: item.halfDozenQuantity != null ? item.halfDozenQuantity : 0,
+    halfDozenPrice: typeof item.halfDozenPrice === "number" ? item.halfDozenPrice.toFixed(2) : "0.00",
+    quantity: item.quantity != null ? item.quantity : 0,
+    price: typeof item.price === "number" ? item.price.toFixed(2) : "0.00",
     batched: item.batched,
   }));
+
 
   // Prepare SendGrid email message
   const msg = {
@@ -43,14 +43,15 @@ exports.sendTestEmail = functions.https.onCall(async (data) => {
       subject: "Hello from SendGrid",
       name: "Recipient Name", // Modify as needed or extract from data
       orderItems: orderItems,
+      subtotal: subtotal,
       orderReference: orderReference,
       pageLink: pageLink,
     },
   };
 
+
   try {
     await sgMail.send(msg);
-    console.log("Email sent successfully");
     return {success: true, message: "Email sent successfully"};
   } catch (error) {
     console.error("SendGrid email not sent:", error);

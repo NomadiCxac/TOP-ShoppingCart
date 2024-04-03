@@ -18,9 +18,11 @@ admin.initializeApp({
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-async function sendTestEmail(email, orderDetails, orderReference, pageLink) {
+async function sendOrderReviewEmail(email, orderDetails, orderReference, pageLink) {
+
   try {
-      const orderItems = orderDetails.map(item => ({
+      const orderItemsArray = Object.values(orderDetails.items);
+      const orderItems = orderItemsArray.map(item => ({
           id: item.id,
           name: formatName(item.id),
           imageUrl: resolveImageUrl(item.id),
@@ -53,7 +55,7 @@ async function sendTestEmail(email, orderDetails, orderReference, pageLink) {
   }
 }
 
-export default sendTestEmail
+export default sendOrderReviewEmail
 
 async function testSendEmail() {
     const testOrderDetails = [
@@ -83,7 +85,7 @@ async function testSendEmail() {
     const testOrderReference = "12345ABC"; // Example order reference, replace with actual if needed
     const testPageLink = "https://kitchenonselwynroad.com/orderManagement";
 
-    await sendTestEmail(testEmail, testOrderDetails, testOrderReference, testPageLink);
+    await sendOrderReviewEmail(testEmail, testOrderDetails, testOrderReference, testPageLink);
 }
 
 testSendEmail().catch(console.error);

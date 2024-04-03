@@ -22,12 +22,6 @@ const FoodMenu = () => {
     const { addToCart } = useCart();
     const mounted = useRef(true);
 
-    useEffect(() => {
-        console.log('FoodMenu Mounted');
-        return () => {
-            console.log('FoodMenu Unmounted');
-        };
-    }, []);
 
     useEffect(() => {
         document.title = 'Kitchen on Selwyn Rd';

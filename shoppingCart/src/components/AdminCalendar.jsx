@@ -12,9 +12,7 @@ const AdminCalendar = () => {
   useEffect(() => {
     const fetchTimes = async () => {
       try {
-        console.log('Fetching times for:', selectedDate);
         const fetchedTimes = await getPickupTimesForDate(selectedDate);
-        console.log('Fetched times:', fetchedTimes);
         setTimesForSelectedDate(fetchedTimes || []);
       } catch (error) {
         console.error('Failed to fetch times:', error);
@@ -24,18 +22,15 @@ const AdminCalendar = () => {
   }, [selectedDate]);
 
   const toggleTimeSelection = (time) => {
-    console.log('Toggling time:', time);
     setTimesForSelectedDate(currentTimes => {
       const updatedTimes = currentTimes.includes(time)
         ? currentTimes.filter(t => t !== time)
         : [...currentTimes, time];
-      console.log('Updated times:', updatedTimes);
       return updatedTimes;
     });
   };
 
   const saveTimes = async () => {
-    console.log('Saving times:', timesForSelectedDate);
     try {
       await updatePickupTimesForDate(selectedDate, timesForSelectedDate);
       alert('Times saved successfully.');
@@ -50,7 +45,6 @@ const AdminCalendar = () => {
       <DatePicker
         selected={selectedDate}
         onChange={(date) => {
-          console.log('Date selected:', date);
           setSelectedDate(date);
         }}
         filterDate={date => date >= new Date().setHours(0, 0, 0, 0)}

@@ -9,8 +9,7 @@ const NotificationButton = () => (
 );
 
 const handleSearch = (searchTerm) => {
-    console.log(`Searching for: ${searchTerm}`);
-    // Implement your search logic here
+    console.log(searchTerm)
 };
 
     

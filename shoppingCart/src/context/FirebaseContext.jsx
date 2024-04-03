@@ -80,16 +80,12 @@ export const FirebaseProvider = ({children}) => {
 
     // Log when isAdmin changes
     useEffect(() => {
-        console.log("isAdmin state updated:", isAdmin);
     }, [isAdmin]); // Only re-run the effect if isAdmin changes
 
     const signInAnonymously = async (orderId) => {
-        console.log(orderId)
         if (!user) { // Only sign in if there's no current user
             try {
-                const result = await firebaseSignInAnonymously(auth);
-                console.log("Signed in as an anonymous user:", result.user);
-                console.log("Did not step into set Anonymous OrderId" + orderId)
+                await firebaseSignInAnonymously(auth);
                 if (orderId) {
                     localStorage.setItem('anonymousOrderId', orderId); // Store orderId in localStorage
                     setAnonymousOrderId(orderId);
@@ -123,11 +119,8 @@ export const FirebaseProvider = ({children}) => {
     }
 
     const userSignOut = async () => {
-        console.log("Attempting to sign out");
         try {
             await signOut(auth);
-            console.log("User signed out successfully");
-            // Optionally, reset any user-related state here
         } catch (error) {
             console.error("Error signing out: ", error);
         }

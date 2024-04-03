@@ -2,7 +2,6 @@ import { useFirebase } from "../context/FirebaseContext";
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
-import { useCart } from "../context/CartContext";
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { calculateSubtotal } from "../functions/checkoutTotal";
 import resolveImageUrl from "../functions/resolveImageUrl";
@@ -16,14 +15,13 @@ import './OrderRequestSentPage.css'
 
 
 function OrderRequestSent() {
-    const { clearCart } = useCart();
     const { app, database, isFirebaseReady } = useFirebase();
     const { updateOrderCodeSent, retrieveOrderById } = useFirebaseOrders();
     const [ orderData, setOrderData] = useState([]);
     const [ contactInfo, setContantInfo ] = useState(null)
     const { orderId } = useParams();
 
-    const [ emailButtonState, setEmailButtonState] = useState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
+    const [ emailButtonState, setEmailButtonState ] = useState({ disabled: true, text: 'Reference Code Sent Via Email', className: 'disabledButton' });
     const [ telButtonState, setTelButtonState] = useState({ disabled: true, text: 'Send My Code Via Tel.', className: 'disabledButton' });
     
     const [dropdownAnimation, setDropdownAnimation] = useState('exited'); // New state for animation
@@ -110,9 +108,7 @@ function OrderRequestSent() {
 
 
     const functions = getFunctions(app);
-    const sendTestEmail = httpsCallable(functions, 'sendTestEmail');
-    // const processEmailValidation = httpsCallable(functions, 'processEmailValidation')
-
+    const sendOrderReviewEmail = httpsCallable(functions, 'sendOrderReviewEmail');
     const handleEmailButtonClick = async () => {
         console.log("Sending code via Email...");
     
@@ -128,7 +124,7 @@ function OrderRequestSent() {
             // result.data.status === 'valid'
             // const result = await processEmailValidation({email: contactInfo.email, ipAddress: ""}); // server side function
             if (test) {
-                await await sendTestEmail({
+                await await sendOrderReviewEmail({
                     email: contactInfo.email,
                     orderDetails: orderData,
                     orderReference: orderId,
@@ -147,8 +143,7 @@ function OrderRequestSent() {
             console.error("Failed to send email: ", error);
             // Update UI to reflect the error state
         }
-    
-        clearCart(); // Ensure this is the desired place to clear the cart
+
     };
 
     // Helper function to calculate the total price of an item

@@ -130,13 +130,11 @@ const UserDashboard = () => {
 
         // Callback function to update selected date
     const handleDateChange = (date) => {
-        console.log("Date selected:", date);
         setSelectedDate(date);
     };
 
     // Callback function to update selected time
     const handleTimeChange = (time) => {
-        console.log("Time selected:", time);
         setSelectedTime(time);
     };
 

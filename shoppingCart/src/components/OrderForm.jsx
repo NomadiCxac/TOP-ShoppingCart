@@ -3,6 +3,7 @@ import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
 import { useFirebase } from '../context/FirebaseContext';
 import { useNavigate } from 'react-router-dom';
 import { calculateSubtotal } from "../functions/checkoutTotal"; 
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import './OrderForm.css';
 import useShoppingCart from '../hooks/useShoppingCart';
@@ -10,9 +11,9 @@ import useShoppingCart from '../hooks/useShoppingCart';
 
 
 const OrderForm = () => {
-  const { setReferenceOrderId, isOrderingAvailable } = useFirebase();
-  const { cartItems, cartEmail, setCartEmail } = useShoppingCart()
-  const { pushOrderToDatabase } = useFirebaseOrders();
+  const { app, isOrderingAvailable } = useFirebase();
+  const { cartItems, setCartEmail } = useShoppingCart()
+  const { updateOrderCodeSent, pushOrderToDatabase } = useFirebaseOrders();
   const navigate = useNavigate(); 
   const [userDetails, setUserDetails] = useState({
     name: '',
@@ -20,6 +21,26 @@ const OrderForm = () => {
     phone: '',
     comments: '',
   });
+
+  // Get back end functions
+  const functions = getFunctions(app);
+  const sendOrderReviewEmail = httpsCallable(functions, 'sendOrderReviewEmail');
+
+  const sendEmailNotification = async (orderId, orderDetails, subtotal) => {
+    try {
+      await sendOrderReviewEmail({
+        email: userDetails.email,
+        orderDetails: orderDetails,
+        subtotal: subtotal,
+        orderReference: orderId,
+        pageLink: `https://kitchenonselwynroad.com/orderManagement/${orderId}`
+      });
+      await updateOrderCodeSent(orderId, 'orderCodeSentByEmail', true);
+    } catch (error) {
+      console.error("Failed to send email: ", error);
+    }
+  }
+
 
 
 
@@ -86,9 +107,10 @@ const OrderForm = () => {
 
       try {
         const orderId = await pushOrderToDatabase(orderDetails);
-        setReferenceOrderId(orderId); // Set the reference order ID in your Firebase context
-        const reviewPage = true; // Or false, depending on the scenario
+        const reviewPage = true; 
         navigate(`/orderManagement/${orderId}?reviewPage=${reviewPage}`);
+        await sendEmailNotification(orderId, orderDetails.items, subtotal.toFixed(2));
+
         return orderId;
       } catch (error) {
         console.error("Failed to push order to database:", error);
@@ -119,9 +141,7 @@ const OrderForm = () => {
   // Handler for the email input
   const handleEmailChange = (event) => {
     setUserDetails({ ...userDetails, email: event.target.value });
-    console.log(event.target.value)
     setCartEmail(event.target.value)
-    console.log(cartEmail)
   };
 
   const handlePhoneChange = (event) => {
@@ -135,7 +155,6 @@ const OrderForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(userDetails)
     await pushOrderRequest();
   };
 

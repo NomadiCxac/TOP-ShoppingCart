@@ -9,7 +9,6 @@ export const signOutUser = async (user, userSignOut, navigate) => {
             // If the user is anonymous, delete the user before signing out
             try {
                 await user.delete();
-                console.log('Anonymous user deleted');
             } catch (error) {
                 console.error('Error deleting anonymous user:', error);
             }
@@ -18,7 +17,6 @@ export const signOutUser = async (user, userSignOut, navigate) => {
         // For non-anonymous users or after deleting an anonymous user, call the sign out function
         try {
             await userSignOut();
-            console.log('User signed out');
         } catch (error) {
             console.error('Error signing out:', error);
         }

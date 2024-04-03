@@ -17,9 +17,6 @@ const SetOrderingAvailability = () => {
         document.title = 'KSR - Ordering Availability';
       }, []);
 
-    useEffect(() => {
-        console.log(isOrderingAvailable)
-    }, [isOrderingAvailable])
 
 
     return (

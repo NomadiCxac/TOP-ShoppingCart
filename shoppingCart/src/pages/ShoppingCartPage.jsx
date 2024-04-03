@@ -16,10 +16,6 @@ const ShoppingCartPage = () => {
     document.title = 'KSR - Your Shopping Cart';
   }, []);
 
-  useEffect(() => {
-    // clearCart();
-    console.log(cartItems)
-}, [])
 
   useEffect(() => {
     // Set overflow-y of the body to hidden when the component mounts

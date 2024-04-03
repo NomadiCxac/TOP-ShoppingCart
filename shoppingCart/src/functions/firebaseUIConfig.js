@@ -20,7 +20,6 @@ export const getFirebaseUIConfig = (auth) => ({
     signInFlow: 'popup',
     callbacks: {
         signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-            console.log("Successful sign in:", authResult.user);
             return false; // Avoids redirects after sign-in.
         },
         signInFailure: async (error) => {

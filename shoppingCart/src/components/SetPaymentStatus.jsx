@@ -1,9 +1,7 @@
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
-import { useEffect, useState } from "react";
-import OrderItemView from "./OrderItemView";
+import { useState } from "react";
 import React from "react";
 import Modal from "./Modal";
-import Instructions from "./Instructions";
 import formatName from "../functions/formatName";
 import { Pagination } from '@mui/material';
 import './SetPaymentStatus.css'
@@ -77,7 +75,6 @@ const SetPaymentStatus = ({ phase }) => {
 
 const displayOrders = ordersData.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
-console.log(displayOrders)
 
 
   const renderItemsDetails = () => {

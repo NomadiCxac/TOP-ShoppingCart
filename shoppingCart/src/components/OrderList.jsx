@@ -1,6 +1,5 @@
 import { useFirebaseOrders } from "../hooks/useFirebaseOrders";
-import { useEffect, useState } from "react";
-import OrderItemView from "./OrderItemView";
+import { useState } from "react";
 import React from "react";
 import Modal from "./Modal";
 import formatName from "../functions/formatName";
@@ -58,7 +57,6 @@ const OrderList = () => {
 
 
     const handleRetrieveOrderById = async () => {
-      console.log(searchValue);
       const orders = await retrieveOrderById(searchValue);
       
       if (orders) {
@@ -74,7 +72,6 @@ const OrderList = () => {
     };
 
     const handleRetrieveOrdersByEmail = async () => {
-        console.log(searchValue);
         const orders = await retrieveOrdersByEmail(searchValue);
         setOrdersData(orders); // Update the state with the fetched orders
     };
@@ -94,12 +91,6 @@ const OrderList = () => {
           return orderStatus;
         }
       }
-
-      useEffect(() => {
-        console.log(page);
-        console.log(ordersData);
-        console.log(displayOrders)
-      })
 
   const renderItemsDetails = () => {
     const itemsArray = currentOrder ? Object.values(currentOrder.items) : [];
