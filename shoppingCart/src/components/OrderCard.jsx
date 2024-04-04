@@ -1,4 +1,6 @@
 // OrderCard.jsx
+import PropTypes from 'prop-types';
+
 import formatName from "../functions/formatName";
 import resolveImageUrl from "../functions/resolveImageUrl";
 import countItems from "../functions/countItems";
@@ -12,7 +14,7 @@ const OrderCard = ({ order, onClick }) => {
         imageUrl: resolveImageUrl(itemDetails.id)
     })) : [];
 
-
+    console.log(order)
     
 
     return (
@@ -42,6 +44,7 @@ const OrderCard = ({ order, onClick }) => {
             </div>
         </div>
     );
+
 
 
 

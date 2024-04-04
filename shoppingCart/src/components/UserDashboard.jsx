@@ -181,9 +181,9 @@ const UserDashboard = () => {
         <div className="orderListContainer">
         {user && orders.length > 0 ? (
                 <div className="ordersContainer">
-                    {orders.map((order) => (
+                    {orders.map((order, index) => (
                         <OrderCard
-                            key={order.id}
+                            key={`${order.id}-${index}`}
                             order={order}
                             onClick={() => handleOpenModal(order)}
                         />

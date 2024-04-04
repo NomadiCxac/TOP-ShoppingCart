@@ -7,11 +7,15 @@ import './SetOrderingAvailability.css'
 
 
 const SetOrderingAvailability = () => {
-    const { isOrderingAvailable, switchOrderingAvailability } = useFirebase();
+    const { isOrderingAvailable, switchOrderingAvailability, isOrderCodeNotificationAvailable, switchOrderCodeNotificationAvailability } = useFirebase();
 
     const handleSetOrderingAvailable = async () => {
         await switchOrderingAvailability()
     }
+
+    const handleSetOrderCodeNotifcationAvailable = async () => {
+      await switchOrderCodeNotificationAvailability()
+  }
 
     useEffect(() => {
         document.title = 'KSR - Ordering Availability';
@@ -22,21 +26,34 @@ const SetOrderingAvailability = () => {
     return (
         <div className='adminPageContent'>
           <TopNavBar 
-            pageName={"Set Ordering Availability"}
+            pageName={"Admin Controls"}
           />
 
-        <div>
-            {isOrderingAvailable ? "Ordering Available Status: ON" : "Ordering Available Status: OFF"}
-        </div>
+          <div>
+              {isOrderingAvailable ? "Ordering Available Status: ON" : "Ordering Available Status: OFF"}
+          </div>
 
-        <button className="ordering-availability-switch" onClick={handleSetOrderingAvailable}>
-            <span 
-                className="material-symbols-outlined icon"
-                id={isOrderingAvailable ? "enabled" : "disabled"}
-            >
-                {isOrderingAvailable ? "toggle_on" : "toggle_off"}
-            </span>
-        </button>
+          <button className="ordering-availability-switch" onClick={handleSetOrderingAvailable}>
+              <span 
+                  className="material-symbols-outlined icon"
+                  id={isOrderingAvailable ? "enabled" : "disabled"}
+              >
+                  {isOrderingAvailable ? "toggle_on" : "toggle_off"}
+              </span>
+          </button>
+
+          <div>
+              {isOrderCodeNotificationAvailable? "Email Order Code Available Status: ON" : "Email Order Code Available Status: OFF"}
+          </div>
+
+          <button className="ordering-availability-switch" onClick={handleSetOrderCodeNotifcationAvailable}>
+              <span 
+                  className="material-symbols-outlined icon"
+                  id={isOrderCodeNotificationAvailable ? "enabled" : "disabled"}
+              >
+                  {isOrderCodeNotificationAvailable ? "toggle_on" : "toggle_off"}
+              </span>
+          </button>
         </div>
       );
 }

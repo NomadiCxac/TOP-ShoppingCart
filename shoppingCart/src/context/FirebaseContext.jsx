@@ -15,6 +15,7 @@ export const FirebaseProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isOrderingAvailable, setIsOrderingAvailable] = useState(true); // Add isOrderAvailable state
+    const [isOrderCodeNotificationAvailable, setIsOrderCodeNotificationAvailable] = useState(true);
 
     const [anonymousOrderId, setAnonymousOrderId] = useState(null); // Add anonymousOrderId state
     const [anonymousOrder, setAnonymousOrder] = useState([]); // Add anonymousOrderId state
@@ -68,12 +69,25 @@ export const FirebaseProvider = ({children}) => {
     useEffect(() => {
         if (database) { // Make sure database is initialized
             const orderingAvailabilityRef = ref(database, 'settings/orderingAvailability');
+            const orderCodeNotificationAvailabilityRef = ref(database, 'settings/orderCodeNotificationAvailability');
+
+            // Listen to order availability changes
             const unsubscribeOrderingAvailability = onValue(orderingAvailabilityRef, (snapshot) => {
                 const isAvailable = snapshot.val();
                 setIsOrderingAvailable(isAvailable !== null ? isAvailable : false); // 
             });
 
-            return () => unsubscribeOrderingAvailability(); // Return the cleanup function
+            // Listen to order code notification availability changes
+            const unsubscribeOrderCodeNotificationAvailability = onValue(orderCodeNotificationAvailabilityRef, (snapshot) => {
+                const isNotificationAvailable = snapshot.val();
+                setIsOrderCodeNotificationAvailable(isNotificationAvailable !== null ? isNotificationAvailable : false);
+            });
+
+            // Return the cleanup function
+            return () => {
+                unsubscribeOrderingAvailability();
+                unsubscribeOrderCodeNotificationAvailability();
+            };
         }
     }, [database]); // Rerun this effect if the database instance changes
 
@@ -118,6 +132,29 @@ export const FirebaseProvider = ({children}) => {
         }
     }
 
+    const switchOrderCodeNotificationAvailability = async () => {
+
+        if (database && isAdmin) {
+            try {
+                const orderCodeNotificationAvailabilityRef = ref(database, 'settings/orderCodeNotificationAvailability');
+
+                const snapshot = await get(orderCodeNotificationAvailabilityRef);
+                const availabilityStatus = snapshot.val();
+
+                if (availabilityStatus) {
+                    set(orderCodeNotificationAvailabilityRef, false)
+                } else {
+                    set(orderCodeNotificationAvailabilityRef, true)
+                }
+
+            } catch (error) {
+                console.error("Could not access the reference location", error);
+                return
+            }
+        }
+    }
+
+
     const userSignOut = async () => {
         try {
             await signOut(auth);
@@ -134,10 +171,12 @@ export const FirebaseProvider = ({children}) => {
         database,
         isFirebaseReady,
         isOrderingAvailable,
+        isOrderCodeNotificationAvailable,
         anonymousOrderId,
         anonymousOrder,
         referenceOrderId,
         switchOrderingAvailability,
+        switchOrderCodeNotificationAvailability,
         setReferenceOrderId,
         setAnonymousOrder,
         setAnonymousOrderId,

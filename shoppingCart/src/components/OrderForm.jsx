@@ -11,7 +11,7 @@ import useShoppingCart from '../hooks/useShoppingCart';
 
 
 const OrderForm = () => {
-  const { app, isOrderingAvailable } = useFirebase();
+  const { app, isOrderingAvailable, isOrderCodeNotificationAvailable } = useFirebase();
   const { cartItems, setCartEmail } = useShoppingCart()
   const { updateOrderCodeSent, pushOrderToDatabase } = useFirebaseOrders();
   const navigate = useNavigate(); 
@@ -109,7 +109,11 @@ const OrderForm = () => {
         const orderId = await pushOrderToDatabase(orderDetails);
         const reviewPage = true; 
         navigate(`/orderManagement/${orderId}?reviewPage=${reviewPage}`);
-        await sendEmailNotification(orderId, orderDetails.items, subtotal.toFixed(2));
+
+        if (isOrderCodeNotificationAvailable) {
+          await sendEmailNotification(orderId, orderDetails.items, subtotal.toFixed(2));
+        }
+
 
         return orderId;
       } catch (error) {
