@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import useShoppingCart from '../hooks/useShoppingCart';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import 'firebaseui/dist/firebaseui.css';
 import { getFirebaseUIConfig, getFirebaseUIInstance } from '../functions/firebaseUIConfig';
 import { useFirebase } from '../context/FirebaseContext';
@@ -8,14 +7,17 @@ import { useFirebaseOrders } from '../hooks/useFirebaseOrders';
 import './OrderManagement.css';
 import OrderConfirmationOrderSummary from '../components/OrderConfirmationOrderSummary';
 import OrderConfirmationText from '../components/OrderConfirmationText';
+import { useCart } from '../context/CartContext';
 
 const OrderManagement = () => {
     const { user, auth, signInAnonymously, setAnonymousOrder } = useFirebase();
     const { orderId } = useParams();
-    const { cartEmail } = useShoppingCart();
     const [inputValue, setInputValue] = useState(orderId || '');
     const { retrieveOrderById } = useFirebaseOrders();
 
+    const { cartItems, clearCart } = useCart()
+
+    const { pathname, search } = useLocation(); // This hook returns the current location object
     const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
@@ -24,6 +26,16 @@ const OrderManagement = () => {
     useEffect(() => {
         document.title = 'KSR - Login to View Orders';
       }, []);
+
+      useEffect(() => {
+        const isReviewPage = () => {
+            return pathname.includes('orderManagement') && new URLSearchParams(search).get('reviewPage') === 'true';
+        };
+
+        if (isReviewPage()) {
+            clearCart();
+        }
+    }, [pathname, search]); // React to changes in the path or search params
 
 
     const handleAnonymousAccessSubmit = async (e) => {

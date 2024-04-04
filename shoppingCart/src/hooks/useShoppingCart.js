@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback} from "react";
 
 
 const useShoppingCart = () => {
@@ -104,10 +104,11 @@ const useShoppingCart = () => {
         });
     };
 
-    const clearCart = () => {
-        setCartItems([]); // Set cartItems to an empty array to clear the cart
-        sessionStorage.setItem('shoppingCart', JSON.stringify([])); // Also clear the shopping cart in sessionStorage
-    };
+    const clearCart = useCallback(() => {
+        console.log("I'm working");
+        sessionStorage.setItem('shoppingCart', JSON.stringify([]));
+        setCartItems([]);
+    }, []);
 
     return { cartEmail, cartItems, setCartEmail, setCartItems, addToCart, removeFromCart, clearCart, };
 }

@@ -14,7 +14,7 @@ const OrderCard = ({ order, onClick }) => {
         imageUrl: resolveImageUrl(itemDetails.id)
     })) : [];
 
-    console.log(order)
+
     
 
     return (
