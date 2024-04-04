@@ -7,6 +7,38 @@ const https = require("https");
 
 admin.initializeApp();
 
+const adminEmails = [
+  "kitchenonselwynrd@gmail.com",
+  "christianxavier.cordero@gmail.com",
+  "scrdad333@gmail.com",
+];
+
+exports.assignAdminRoles = functions.https.onCall(async (data, context) => {
+  // Ensure the function is called by an authenticated admin
+  if (!context.auth || !context.auth.token.admin) {
+    throw new functions.https.HttpsError("permission-denied", "Only admins can invoke this function.");
+  }
+
+  const errors = [];
+  const successes = [];
+
+  for (const email of adminEmails) {
+    try {
+      const user = await admin.auth().getUserByEmail(email);
+      await admin.auth().setCustomUserClaims(user.uid, {isAdmin: true});
+      successes.push(`Admin role assigned to ${email}`);
+    } catch (error) {
+      console.error(`Error assigning admin role to ${email}:`, error);
+      errors.push(`Error assigning admin role to ${email}: ${error.message}`);
+    }
+  }
+
+  return {
+    successes,
+    errors,
+  };
+});
+
 
 sgMail.setApiKey(functions.config().sendgrid.key);
 const apiKey = functions.config().zerobounce.key;

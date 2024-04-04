@@ -15,7 +15,7 @@ const OrderManagement = () => {
     const [inputValue, setInputValue] = useState(orderId || '');
     const { retrieveOrderById } = useFirebaseOrders();
 
-    const { cartItems, clearCart } = useCart()
+    const { clearCart } = useCart()
 
     const { pathname, search } = useLocation(); // This hook returns the current location object
     const navigate = useNavigate();

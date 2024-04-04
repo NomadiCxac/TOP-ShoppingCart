@@ -40,6 +40,7 @@ const UserDashboard = () => {
 
     useEffect(() => {
         document.title = 'KSR - Your Orders';
+        console.log(user)
       }, []);
 
   
@@ -48,12 +49,15 @@ const UserDashboard = () => {
 
         if (user) {
             // Check if the user is anonymous
+
             if (user.isAnonymous) {
                 return <h2>Hello, Guest!</h2>;
             } else {
                 // User is signed in with an email, display their displayName or email
                 return <h2>Hello, {user.displayName || user.email}!</h2>;
             }
+
+
         }
         return null; // Return null if there's no user object
     };

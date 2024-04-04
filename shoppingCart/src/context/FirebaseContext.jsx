@@ -44,7 +44,7 @@ export const FirebaseProvider = ({children}) => {
             
                 if (currentUser) {
                     try {
-                        const idTokenResult = await currentUser.getIdTokenResult();
+                        const idTokenResult = await currentUser.getIdTokenResult(true);
                         setIsAdmin(!!idTokenResult.claims.admin); // Update isAdmin based on the admin claim
                     } catch (error) {
                         console.error("Error fetching ID token result: ", error);
