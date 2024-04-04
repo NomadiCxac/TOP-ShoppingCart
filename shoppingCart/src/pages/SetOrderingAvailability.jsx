@@ -15,6 +15,7 @@ const SetOrderingAvailability = () => {
       const auth = getAuth();
       const user = auth.currentUser;
 
+
       if (user) {
           console.log('User UID:', user.uid);
           // Retrieve the token result to check for admin custom claims

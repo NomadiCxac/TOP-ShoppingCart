@@ -25,7 +25,7 @@ exports.assignAdminRoles = functions.https.onCall(async (data, context) => {
   for (const email of adminEmails) {
     try {
       const user = await admin.auth().getUserByEmail(email);
-      await admin.auth().setCustomUserClaims(user.uid, {isAdmin: true});
+      await admin.auth().setCustomUserClaims(user.uid, {admin: true});
       successes.push(`Admin role assigned to ${email}`);
     } catch (error) {
       console.error(`Error assigning admin role to ${email}:`, error);

@@ -40,7 +40,6 @@ const UserDashboard = () => {
 
     useEffect(() => {
         document.title = 'KSR - Your Orders';
-        console.log(user)
       }, []);
 
   

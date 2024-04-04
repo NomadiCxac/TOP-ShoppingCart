@@ -26,3 +26,8 @@ sendgrid.env
 *.njsproj
 *.sln
 *.sw?
+
+
+#back-end files
+functions/
+server/

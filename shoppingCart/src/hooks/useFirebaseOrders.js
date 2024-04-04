@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useFirebase } from '../context/FirebaseContext';
 import { ref, push, set, get, update, query, orderByChild, equalTo } from 'firebase/database';
 import { format } from 'date-fns';
+import { getAuth } from 'firebase/auth';
 
 export const useFirebaseOrders = () => {
     // Access database from context
@@ -359,53 +360,47 @@ const retrieveOrdersByEmail = async (email, status = 'all') => {
 
 
 
-    const updatePickupTimesForDate = async (selectedDate, times) => {
-        setLoading(true);
-        setError(null);
-        
-        // Extract the month in 'MM_MonthName' format and the formatted date
-        const yearMonth = `${selectedDate.getFullYear()}/${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}_${selectedDate.toLocaleString('default', { month: 'long' })}`;
-        const day = selectedDate.getDate().toString();
-        const formattedDate = `${yearMonth}/${day}`;
-        
-        // Define the paths for times and isPickUpDate at the day level, and pickUpDates at the month level
-        const timesPath = `validPickUpDates/${formattedDate}/times`;
-        const pickUpDateFlagPath = `validPickUpDates/${formattedDate}/isPickUpDate`;
-        const pickUpDatesPath = `validPickUpDates/${yearMonth}/pickUpDates`;
-        
-    
-        try {
-            // Update the times array for the selected date
-            await set(ref(database, timesPath), times);
-    
-            // Set the isPickUpDate flag based on whether any times are selected
-            const isPickUpDate = times.length > 0;
-            await set(ref(database, pickUpDateFlagPath), isPickUpDate);
-    
-            // Retrieve the current pickUpDates array for the month
-            if (isPickUpDate) {
-                const pickUpDatesRef = ref(database, pickUpDatesPath);
-                const snapshot = await get(pickUpDatesRef);
-                let pickUpDates = snapshot.exists() ? snapshot.val() : {};
-    
-                // Determine the next index for the new entry
-                let nextIndex = Object.keys(pickUpDates).length;
-    
-                // Manually set the date at the next index
-                pickUpDates[nextIndex] = day; // Adding the day as a new entry
-    
-                // Update the entire pickUpDates at once
-                await set(pickUpDatesRef, pickUpDates);
-            }
-            
-        
-        } catch (error) {
-            console.error('Error updating pickup times:', error);
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+const updatePickupTimesForDate = async (selectedDate, times) => {
+    try {
+      setLoading(true);
+      setError(null);
+  
+      // Ensure the user is authenticated and has the latest token
+      const auth = getAuth();
+      if (!auth.currentUser) throw new Error("No authenticated user found.");
+  
+      const idTokenResult = await auth.currentUser.getIdTokenResult(true);
+      if (!idTokenResult.claims.admin) throw new Error("User is not an admin.");
+  
+      // Now that you have verified admin status, proceed with your database operation
+      const yearMonth = `${selectedDate.getFullYear()}/${(selectedDate.getMonth() + 1).toString().padStart(2, '0')}_${selectedDate.toLocaleString('default', { month: 'long' })}`;
+      const day = selectedDate.getDate().toString();
+      const formattedDate = `${yearMonth}/${day}`;
+  
+      const timesPath = `validPickUpDates/${formattedDate}/times`;
+      const pickUpDateFlagPath = `validPickUpDates/${formattedDate}/isPickUpDate`;
+      const pickUpDatesPath = `validPickUpDates/${yearMonth}/pickUpDates`;
+  
+      await set(ref(database, timesPath), times);
+      const isPickUpDate = times.length > 0;
+      await set(ref(database, pickUpDateFlagPath), isPickUpDate);
+  
+      if (isPickUpDate) {
+        const pickUpDatesRef = ref(database, pickUpDatesPath);
+        const snapshot = await get(pickUpDatesRef);
+        let pickUpDates = snapshot.exists() ? snapshot.val() : {};
+        let nextIndex = Object.keys(pickUpDates).length;
+        pickUpDates[nextIndex] = day;
+        await set(pickUpDatesRef, pickUpDates);
+      }
+      alert('Times saved successfully.');
+    } catch (error) {
+      console.error('Error during operation:', error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
     const getPickupTimesForDate = async (selectedDate) => {
         setLoading(true);

@@ -105,7 +105,6 @@ const useShoppingCart = () => {
     };
 
     const clearCart = useCallback(() => {
-        console.log("I'm working");
         sessionStorage.setItem('shoppingCart', JSON.stringify([]));
         setCartItems([]);
     }, []);

@@ -148,7 +148,7 @@ const TimeSelector = ({ onDateChange, onTimeChange, currentDate }) => {
             {availableTimes.map((timeString, index) => {
             let [hours, minutes] = timeString.split(":");
               hours = (parseInt(hours, 10) + 1) % 24;
-              const endHourString = hours.toString().padStart(2, '0');
+              const endHourString = hours.toString().padStart(1, '0');
               const timeRange = `${timeString} - ${endHourString}:${minutes}`;
               return (
                 <button className="timeButton" key={index} onClick={() => handleTimeSelection(timeRange)}>
