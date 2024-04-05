@@ -27,7 +27,6 @@ sendgrid.env
 *.sln
 *.sw?
 
-
-#back-end files
-functions/
+# server functions
 server/
+functions/
