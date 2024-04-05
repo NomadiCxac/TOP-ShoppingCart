@@ -7,26 +7,11 @@ import { getAuth } from 'firebase/auth';
 
 
 const SetOrderingAvailability = () => {
-    const { isOrderingAvailable, switchOrderingAvailability, isOrderCodeNotificationAvailable, switchOrderCodeNotificationAvailability, isAdmin } = useFirebase();
+    const { isOrderingAvailable, switchOrderingAvailability, isOrderCodeNotificationAvailable, switchOrderCodeNotificationAvailability } = useFirebase();
 
     useEffect(() => {
       document.title = 'KSR - Ordering Availability';
       
-      const auth = getAuth();
-      const user = auth.currentUser;
-
-
-      if (user) {
-          console.log('User UID:', user.uid);
-          // Retrieve the token result to check for admin custom claims
-          user.getIdTokenResult().then((idTokenResult) => {
-              // Log the admin status and the entire token for inspection
-              console.log('Admin status:', idTokenResult.claims.admin);
-              console.log('Token result:', idTokenResult);
-          }).catch(error => console.log(error));
-      } else {
-          console.log('No user is signed in.');
-      }
   }, []);
 
     const handleSetOrderingAvailable = async () => {
