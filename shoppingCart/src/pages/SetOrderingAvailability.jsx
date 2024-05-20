@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import TopNavBar from "../components/TopNavBar";
 import { useFirebase } from "../context/FirebaseContext";
 import './SetOrderingAvailability.css'
-import { getAuth } from 'firebase/auth';
 
 
 const SetOrderingAvailability = () => {
